@@ -1,16 +1,15 @@
-<!-- Site style controls -->
-<!-- Edit these values to adjust the site's main look without touching CSS -->
-
+# Site style controls
+# Edit these values to adjust the site's main look without touching CSS.
+ 
 <font-sans>DM Sans, sans-serif</font-sans>
 <font-mono>DM Mono, monospace</font-mono>
-
+ 
 <radius-cursor>50%</radius-cursor>
 <radius-cursor-draw>2px</radius-cursor-draw>
 <radius-control>0px</radius-control>
 <radius-pill>999px</radius-pill>
 <radius-card>0px</radius-card>
-
-<!-- Light mode -->
+ 
 <light-bg>#ffffff</light-bg>
 <light-c1>#f5f5f5</light-c1>
 <light-c2>#e2e2e2</light-c2>
@@ -18,8 +17,7 @@
 <light-c4>#333333</light-c4>
 <light-c5>#0d0d0d</light-c5>
 <light-border>#e2e2e2</light-border>
-
-<!-- Dark mode -->
+ 
 <dark-bg>#0d0d0d</dark-bg>
 <dark-c1>#161616</dark-c1>
 <dark-c2>#2e2e2e</dark-c2>
@@ -27,3 +25,4 @@
 <dark-c4>#e0e0e0</dark-c4>
 <dark-c5>#f5f5f5</dark-c5>
 <dark-border>#2e2e2e</dark-border>
+ 
