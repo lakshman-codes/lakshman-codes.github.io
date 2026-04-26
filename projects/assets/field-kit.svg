@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520">
+  <rect width="800" height="520" fill="#ece4d8"/>
+  <rect x="88" y="82" width="624" height="356" fill="#f8f4ee" stroke="#806e5c" stroke-width="2"/>
+  <rect x="126" y="120" width="184" height="184" fill="#d8cbba"/>
+  <rect x="346" y="120" width="328" height="34" fill="#8d7a68"/>
+  <rect x="346" y="174" width="274" height="18" fill="#d6cabd"/>
+  <rect x="346" y="206" width="218" height="18" fill="#d6cabd"/>
+  <rect x="126" y="332" width="548" height="24" fill="#b9a794"/>
+  <rect x="126" y="372" width="420" height="18" fill="#d6cabd"/>
+  <text x="126" y="420" fill="#463c33" font-family="Arial, sans-serif" font-size="28">field kit</text>
+</svg>

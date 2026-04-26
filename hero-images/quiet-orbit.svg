@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1080" role="img" aria-label="Abstract orbital composition with rings and framed panels">
+  <rect width="900" height="1080" fill="#e9e2d8"/>
+  <rect x="72" y="72" width="756" height="936" fill="#f3eee6" stroke="#5f564f" stroke-width="2"/>
+  <circle cx="468" cy="430" r="228" fill="#ddd2c3" stroke="#5f564f" stroke-width="2"/>
+  <circle cx="468" cy="430" r="170" fill="none" stroke="#5f564f" stroke-width="2" stroke-dasharray="10 12"/>
+  <circle cx="468" cy="430" r="108" fill="none" stroke="#5f564f" stroke-width="2"/>
+  <circle cx="468" cy="430" r="22" fill="#5f564f"/>
+  <circle cx="622" cy="336" r="18" fill="#c3b29a" stroke="#5f564f" stroke-width="2"/>
+  <circle cx="324" cy="520" r="14" fill="#f3eee6" stroke="#5f564f" stroke-width="2"/>
+  <circle cx="550" cy="590" r="24" fill="#cdbda7" stroke="#5f564f" stroke-width="2"/>
+  <rect x="144" y="740" width="612" height="180" fill="#efe7dd" stroke="#5f564f" stroke-width="2"/>
+  <path d="M184 794 H716 M184 850 H650" stroke="#5f564f" stroke-width="3"/>
+  <rect x="184" y="896" width="164" height="44" fill="#d8cab7" stroke="#5f564f" stroke-width="2"/>
+  <rect x="372" y="896" width="304" height="44" fill="#f3eee6" stroke="#5f564f" stroke-width="2"/>
+</svg>

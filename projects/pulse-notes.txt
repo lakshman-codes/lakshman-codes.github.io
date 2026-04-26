@@ -1,0 +1,10 @@
+<main>pulse notes</main>
+<text>A lightweight note and capture tool for keeping half-finished ideas close without turning them into chores. Built around fast input, strong defaults, and the assumption that most thoughts should stay small.</text>
+<tag>notes</tag>
+<tag>productivity</tag>
+<tag>frontend</tag>
+<status>shipped</status>
+<year>2024</year>
+<image>projects/assets/pulse-notes.svg</image>
+<link>repo | https://github.com/yourusername/pulse-notes</link>
+<link>write-up | https://example.com/pulse-notes</link>

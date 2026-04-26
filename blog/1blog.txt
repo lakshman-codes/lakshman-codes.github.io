@@ -1,0 +1,11 @@
+<main>amazing and simple ui</main>
+<text>
+i like when something looks simple but clearly isn’t by accident.
+
+it’s usually small stuff that makes it feel right. spacing, speed, how your eyes move across the screen. nothing loud, just clean.
+
+i’ve been more interested in how this actually affects people, not just how to make it. like how design choices change what people notice or remember.
+</text>
+<link>The Role of Visual Complexity in User Experience | https://www.nngroup.com/articles/visual-complexity/</link>
+<link>Google UX Research on Visual Design | https://research.google/pubs/pub45542/</link>
+<link>Interaction of Color Study | https://yalebooks.yale.edu/book/9780300179354/interaction-of-color/</link>

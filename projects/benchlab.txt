@@ -1,0 +1,10 @@
+<main>benchlab</main>
+<text>A hardware-software prototype space for trying ideas quickly, testing weird concepts, and learning what survives contact with reality. The goal is speed without losing taste.</text>
+<tag>hardware</tag>
+<tag>prototype</tag>
+<tag>embedded</tag>
+<status>ongoing</status>
+<year>2024</year>
+<image>projects/assets/benchlab.svg</image>
+<link>notes | https://example.com/benchlab</link>
+<link>repo | https://github.com/yourusername/benchlab</link>

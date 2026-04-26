@@ -1,0 +1,13 @@
+<role>electrical & software co-lead</role>
+<company>SLSS Engineering — EV Car Team</company>
+<logo>experience/assets/SLSSEngineering_logo.jpeg</logo>
+<date>Sep 2024 – Present</date>
+<location>Mississauga, ON</location>
+<summary>Student-led engineering team building a competition electric vehicle for the Waterloo EV Race. Co-led the electrical and software systems — spanning embedded firmware, real-time sensor telemetry, and computer vision — on a car designed and wired entirely by the team.</summary>
+<bullet>Co-developed a real-time Raspberry Pi driver dashboard using MicroPython, C++, and Arduino that monitors speed, temperature, voltage, current draw, and battery runtime via GPIO sensors, with Bluetooth/WiFi transmission and LCD and Excel output.</bullet>
+<bullet>Integrated a Raspberry Pi camera module with OpenCV for real-time image processing and experimental cone and flag detection on a moving vehicle.</bullet>
+<bullet>Oversaw end-to-end electrical system design — schematic creation in EasyEDA, wiring, and component integration across all car systems.</bullet>
+<tag>embedded</tag>
+<tag>hardware</tag>
+<tag>systems</tag>
+<badge>ev</badge>

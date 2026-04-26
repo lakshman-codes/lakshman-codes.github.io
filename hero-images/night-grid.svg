@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1080" role="img" aria-label="Abstract grid study with lines, blocks, and framing">
+  <rect width="900" height="1080" fill="#e6dfd5"/>
+  <rect x="64" y="64" width="772" height="952" fill="#f4efe7" stroke="#5d544d" stroke-width="2"/>
+  <g stroke="#c8b9a5" stroke-width="1">
+    <path d="M128 128 V952"/>
+    <path d="M224 128 V952"/>
+    <path d="M320 128 V952"/>
+    <path d="M416 128 V952"/>
+    <path d="M512 128 V952"/>
+    <path d="M608 128 V952"/>
+    <path d="M704 128 V952"/>
+    <path d="M800 128 V952"/>
+    <path d="M128 128 H800"/>
+    <path d="M128 232 H800"/>
+    <path d="M128 336 H800"/>
+    <path d="M128 440 H800"/>
+    <path d="M128 544 H800"/>
+    <path d="M128 648 H800"/>
+    <path d="M128 752 H800"/>
+    <path d="M128 856 H800"/>
+    <path d="M128 952 H800"/>
+  </g>
+  <rect x="128" y="128" width="384" height="312" fill="#d8ccb9" stroke="#5d544d" stroke-width="2"/>
+  <rect x="544" y="128" width="256" height="208" fill="#c7b8a2" stroke="#5d544d" stroke-width="2"/>
+  <rect x="544" y="368" width="256" height="176" fill="#efe7dd" stroke="#5d544d" stroke-width="2"/>
+  <path d="M164 198 H474 M164 258 H426 M164 318 H448" stroke="#5d544d" stroke-width="3"/>
+  <path d="M164 618 L352 794 L540 650 L736 858" fill="none" stroke="#5d544d" stroke-width="4"/>
+  <circle cx="164" cy="618" r="9" fill="#5d544d"/>
+  <circle cx="352" cy="794" r="9" fill="#5d544d"/>
+  <circle cx="540" cy="650" r="9" fill="#5d544d"/>
+  <circle cx="736" cy="858" r="9" fill="#5d544d"/>
+  <rect x="128" y="888" width="256" height="40" fill="#f4efe7" stroke="#5d544d" stroke-width="2"/>
+  <rect x="416" y="888" width="384" height="40" fill="#d7c9b7" stroke="#5d544d" stroke-width="2"/>
+</svg>

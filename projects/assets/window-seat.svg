@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520">
+  <rect width="800" height="520" fill="#efe7dc"/>
+  <rect x="84" y="84" width="632" height="352" fill="#faf6ef" stroke="#7f6d5c" stroke-width="2"/>
+  <rect x="126" y="118" width="548" height="126" fill="#d9ccbe"/>
+  <rect x="158" y="152" width="116" height="82" fill="#f6f1ea"/>
+  <rect x="298" y="152" width="132" height="18" fill="#8b7968"/>
+  <rect x="298" y="186" width="208" height="18" fill="#b6a391"/>
+  <rect x="126" y="278" width="548" height="26" fill="#bca996"/>
+  <rect x="126" y="324" width="548" height="18" fill="#d8cdc1"/>
+  <rect x="126" y="356" width="402" height="18" fill="#d8cdc1"/>
+  <text x="126" y="406" fill="#463c33" font-family="Arial, sans-serif" font-size="28">window seat</text>
+</svg>

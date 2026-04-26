@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1080" role="img" aria-label="Abstract editorial composition with panels and line work">
+  <rect width="900" height="1080" fill="#e7e0d6"/>
+  <rect x="62" y="62" width="776" height="956" fill="#efe9df" stroke="#5d544d" stroke-width="2"/>
+  <rect x="112" y="122" width="676" height="396" fill="#d7cdbd" stroke="#5d544d" stroke-width="2"/>
+  <rect x="144" y="154" width="424" height="332" fill="#c6b8a3"/>
+  <rect x="594" y="154" width="162" height="332" fill="#f4efe7"/>
+  <line x1="112" y1="550" x2="788" y2="550" stroke="#6c6259" stroke-width="2"/>
+  <line x1="112" y1="706" x2="788" y2="706" stroke="#6c6259" stroke-width="2"/>
+  <line x1="112" y1="862" x2="788" y2="862" stroke="#6c6259" stroke-width="2"/>
+  <rect x="144" y="590" width="292" height="84" fill="#f4efe7" stroke="#6c6259" stroke-width="2"/>
+  <rect x="466" y="590" width="290" height="84" fill="#d9cfbf" stroke="#6c6259" stroke-width="2"/>
+  <rect x="144" y="746" width="612" height="84" fill="#f4efe7" stroke="#6c6259" stroke-width="2"/>
+  <circle cx="694" cy="232" r="42" fill="none" stroke="#6c6259" stroke-width="2"/>
+  <circle cx="694" cy="232" r="11" fill="#6c6259"/>
+  <path d="M192 248 H520 M192 306 H520 M192 364 H430" stroke="#6c6259" stroke-width="3"/>
+  <path d="M152 944 H748" stroke="#5d544d" stroke-width="2" stroke-dasharray="8 8"/>
+</svg>

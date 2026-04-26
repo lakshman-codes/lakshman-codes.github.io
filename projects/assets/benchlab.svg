@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520">
+  <rect width="800" height="520" fill="#eee6db"/>
+  <rect x="64" y="64" width="672" height="392" fill="#f8f4ee" stroke="#7d6b59" stroke-width="2"/>
+  <rect x="102" y="110" width="256" height="228" fill="#d8cab9"/>
+  <rect x="138" y="146" width="96" height="96" fill="#8b7968"/>
+  <rect x="252" y="146" width="68" height="18" fill="#8b7968"/>
+  <rect x="252" y="182" width="68" height="18" fill="#c5b7a7"/>
+  <rect x="396" y="110" width="300" height="62" fill="#b9a794"/>
+  <rect x="396" y="194" width="300" height="62" fill="#ddd1c4"/>
+  <rect x="396" y="278" width="300" height="26" fill="#8b7968"/>
+  <rect x="102" y="372" width="594" height="20" fill="#d8cabd"/>
+  <text x="102" y="430" fill="#463c33" font-family="Arial, sans-serif" font-size="28">benchlab</text>
+</svg>

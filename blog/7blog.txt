@@ -1,0 +1,10 @@
+<main>sports i enjoy playing with friends</main>
+<text>
+i really like badminton and volleyball even though i was never that good at either.
+
+it’s more about just playing with friends and having something fun and fast-paced to do.
+
+i still enjoy it a lot even if i’m not the best at it.
+</text>
+<link>Badminton Bible | https://www.badmintonbible.com</link>
+<link>Volleyball Coaching | https://www.theartofcoachingvolleyball.com</link>

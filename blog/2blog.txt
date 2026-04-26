@@ -1,0 +1,13 @@
+<main>startups and building something</main>
+<text>
+i think a lot about building something of my own one day.
+
+not even in a huge way, just something real that people actually use. something that starts small and slowly gets better.
+
+i’m usually open to working on random ideas. most of them don’t go anywhere but sometimes they turn into something worth sticking with.
+
+i like being around people who are building too.
+</text>
+<link>Make Something People Want | http://www.paulgraham.com/msp.html</link>
+<link>How to Get Startup Ideas | https://www.ycombinator.com/library/8g-how-to-get-startup-ideas</link>
+<link>Indie Hackers | https://www.indiehackers.com/stories</link>

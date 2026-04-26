@@ -1,0 +1,13 @@
+<role>junior backend developer</role>
+<company>ServiceDeck</company>
+<logo>experience/assets/Servicedeck_logo.png</logo>
+<date>Jun 2025 – Sep 2025</date>
+<location>Mississauga, ON</location>
+<summary>ServiceDeck is a platform connecting service businesses with customers. Worked on the backend team building AI-powered automation tools that helped businesses onboard, manage client communications, and process incoming service requests at scale.</summary>
+<bullet>Built an AI chat agent deployable to businesses on the platform — it scraped client data, handled customer queries over WhatsApp and SMS via Twilio, identified leads, and automated appointment booking end to end.</bullet>
+<bullet>Co-built a Python and C++ data pipeline that cleaned, validated, and reformatted 80,000+ customer Excel records using AI, reducing a 4-hour manual process by 90%.</bullet>
+<bullet>Implemented an email forwarding extension that used AI to categorize incoming client emails and convert them into structured service request events, achieving 85% conversion accuracy on live client data — stack: Python, Twilio, AI APIs.</bullet>
+<tag>backend</tag>
+<tag>ai</tag>
+<tag>internship</tag>
+<badge>bd</badge>

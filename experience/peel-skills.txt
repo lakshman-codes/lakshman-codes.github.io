@@ -1,0 +1,13 @@
+<role>hackathon competitor — 1st place</role>
+<company>Peel Skills HS Hackathon</company>
+<logo>experience/assets/PeelSkills_logo.png</logo>
+<date>May 2025</date>
+<location>Peel Region, ON</location>
+<summary>Peel Skills is a regional high school hackathon bringing together student developers across the Peel District. Competed against 40+ participants and placed 1st by building a fully functional Java attendance tracking application within an 8-hour window.</summary>
+<bullet>Built a Java CRUD attendance tracking app with administrator login, student search and filtering, form validation, and automated Excel Macro report generation — entirely within the 8-hour competition window.</bullet>
+<bullet>Designed a Java Swing UI connected to a SQL database backend, delivering a polished and functional product that placed 1st out of 40+ competitors across the Peel Region.</bullet>
+<bullet>Stack: Java, Java Swing, SQL, Excel Macros.</bullet>
+<tag>competition</tag>
+<tag>java</tag>
+<tag>hackathon</tag>
+<badge>ps</badge>

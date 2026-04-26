@@ -1,0 +1,13 @@
+<role>full stack & it intern</role>
+<company>TerryFox Medical Centre</company>
+<logo>experience/assets/terryfoxmd_logo.jpeg</logo>
+<date>Jan 2025 – Mar 2025</date>
+<location>Mississauga, ON</location>
+<summary>TerryFoxMD is a family medicine clinic serving a high-volume patient base. Worked across full stack development and IT infrastructure — modernizing clinical workflows, deploying internal tooling, and building patient-facing web prototypes to reduce staff overhead.</summary>
+<bullet>Built a full stack patient triage web app integrating Gemini AI for symptom triage, ER flagging, appointment duration prediction, and Twilio SMS reminders — deployed via Netlify using HTML, Tailwind CSS, JavaScript, and Firebase.</bullet>
+<bullet>Deployed and configured OSCAR EMR across all clinic workstations for 6 physicians, set up the clinic's local network, and built a Raspberry Pi HID automation device that streamlined repetitive EMR workflows for reception staff.</bullet>
+<bullet>Owned infrastructure end to end — from hardware setup to live deployment — across a production clinical environment used daily by medical staff.</bullet>
+<tag>platform</tag>
+<tag>systems</tag>
+<tag>automation</tag>
+<badge>pf</badge>

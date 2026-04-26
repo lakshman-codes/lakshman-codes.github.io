@@ -1,0 +1,13 @@
+<main>professional sidequest starter</main>
+<text>
+i tend to start things on the side without making it a big deal.
+
+sometimes it’s just an idea i want to test. sometimes it’s something small that slowly turns into more.
+
+i don’t really wait for things to be perfect. i just start and see what happens.
+
+most of it stays small but that’s kind of the point.
+</text>
+<link>Y Combinator MVP Guide | https://www.ycombinator.com/library/2u-how-to-build-an-mvp</link>
+<link>Build in Public | https://li.substack.com/p/build-in-public</link>
+<link>Vercel | https://vercel.com/guides</link>

@@ -1,0 +1,11 @@
+<main>science advances /newsletters</main>
+<text>
+i like reading about science and healthcare progress, even if i don’t go super deep into it.
+
+mostly through newsletters and short updates. new treatments, biotech stuff, small breakthroughs.
+
+it’s interesting seeing how fast things change over time.
+</text>
+<link>Nature Briefing | https://www.nature.com/briefing</link>
+<link>STAT News | https://www.statnews.com/</link>
+<link>MIT Technology Review Biomed | https://www.technologyreview.com/topic/biomedicine/</link>

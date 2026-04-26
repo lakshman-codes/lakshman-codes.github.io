@@ -1,0 +1,10 @@
+<main>field kit</main>
+<text>A compact toolkit for hardware checklists, test logs, and quick debugging notes when working away from a desk. The point was making practical engineering work feel less messy in the moment.</text>
+<tag>hardware</tag>
+<tag>workflow</tag>
+<tag>tools</tag>
+<status>ongoing</status>
+<year>2025</year>
+<image>projects/assets/field-kit.svg</image>
+<link>notes | https://example.com/field-kit</link>
+<link>repo | https://github.com/yourusername/field-kit</link>

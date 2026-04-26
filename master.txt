@@ -1,0 +1,7 @@
+# Add a section id on its own line to hide it from the site.
+# Available ids:
+# hero
+# about
+# experience
+projects
+# contact

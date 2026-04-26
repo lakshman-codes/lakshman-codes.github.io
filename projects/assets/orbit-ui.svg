@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520">
+  <rect width="800" height="520" fill="#efe8df"/>
+  <rect x="400" y="260" width="310" height="310" transform="translate(-400 -260) rotate(8 400 260)" fill="#f7f2ec" stroke="#7e6c5a" stroke-width="2"/>
+  <circle cx="250" cy="196" r="74" fill="#d7c9b8"/>
+  <circle cx="250" cy="196" r="44" fill="#f2ece4" stroke="#8b7968" stroke-width="2"/>
+  <rect x="360" y="126" width="214" height="20" fill="#8b7968"/>
+  <rect x="360" y="168" width="270" height="20" fill="#d4c7b8"/>
+  <rect x="172" y="314" width="456" height="26" fill="#b5a391"/>
+  <rect x="172" y="354" width="388" height="18" fill="#d8cec2"/>
+  <rect x="172" y="386" width="292" height="18" fill="#d8cec2"/>
+  <text x="172" y="448" fill="#463c33" font-family="Arial, sans-serif" font-size="28">orbit ui</text>
+</svg>

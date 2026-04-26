@@ -1,0 +1,10 @@
+<main>window seat</main>
+<text>An experiment in slower, more editorial portfolio design with generous type, clear hierarchy, and interactions that feel sharp without becoming loud. Mostly a visual sandbox with a few opinions baked in.</text>
+<tag>design</tag>
+<tag>portfolio</tag>
+<tag>motion</tag>
+<status>lab</status>
+<year>2026</year>
+<image>projects/assets/window-seat.svg</image>
+<link>preview | https://example.com/window-seat</link>
+<link>process | https://example.com/window-seat-process</link>

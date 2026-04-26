@@ -1,0 +1,10 @@
+<main>northstar</main>
+<text>A project hub for keeping ideas, experiments, and next steps in one place. Built to feel calm, fast, and obvious even when the actual work behind it is messy.</text>
+<tag>product</tag>
+<tag>frontend</tag>
+<tag>systems</tag>
+<status>featured</status>
+<year>2025</year>
+<featured>true</featured>
+<link>github | https://github.com/yourusername/northstar</link>
+<link>demo | https://example.com/northstar</link>

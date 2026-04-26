@@ -1,0 +1,11 @@
+<main>signal board</main>
+<text>A compact dashboard for surfacing updates, links, and project signals without feeling like another bloated admin panel. The fun part was making dense information still feel clean.</text>
+<tag>dashboard</tag>
+<tag>ui</tag>
+<tag>data</tag>
+<status>featured</status>
+<year>2024</year>
+<featured>true</featured>
+<image>projects/assets/signal-board.svg</image>
+<link>github | https://github.com/yourusername/signal-board</link>
+<link>case study | https://example.com/signal-board</link>

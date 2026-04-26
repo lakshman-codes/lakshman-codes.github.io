@@ -1,0 +1,13 @@
+<role>swim instructor & platform coordinator</role>
+<company>BSS</company>
+<logo>experience/assets/BSS_Logo.png</logo>
+<date>2025 – Present</date>
+<location>Mississauga, ON</location>
+<summary>Worked as a certified swim instructor while also taking on responsibility for managing the school's technical platform and student database — bridging a hands-on instructional role with backend data organization and system upkeep.</summary>
+<bullet>Managed and maintained the student records database and scheduling platform, ensuring data accuracy across enrollment, progress tracking, and session records for a multi-instructor aquatic program.</bullet>
+<bullet>Identified and resolved platform gaps that affected scheduling efficiency, contributing to smoother day-to-day operations for staff and families.</bullet>
+<bullet>Delivered structured swim instruction to students across skill levels while owning the technical coordination layer behind the program — certified National Lifeguard with Bronze Cross and Standard First Aid.</bullet>
+<tag>platform</tag>
+<tag>operations</tag>
+<tag>coordination</tag>
+<badge>bs</badge>

@@ -1,0 +1,11 @@
+<main>orbit ui</main>
+<text>An experimental interface system focused on motion, spatial structure, and layouts that feel intentional instead of generic. Mostly a playground, but one with sharp edges on purpose.</text>
+<tag>design</tag>
+<tag>motion</tag>
+<tag>frontend</tag>
+<status>lab</status>
+<year>2025</year>
+<featured>true</featured>
+<image>projects/assets/orbit-ui.svg</image>
+<link>github | https://github.com/yourusername/orbit-ui</link>
+<link>preview | https://example.com/orbit-ui</link>

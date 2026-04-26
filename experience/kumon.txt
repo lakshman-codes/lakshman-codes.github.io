@@ -1,0 +1,13 @@
+<role>advanced math tutor & centre assistant</role>
+<company>Kumon</company>
+<logo>experience/assets/kumon_logo.png</logo>
+<date>Dec 2024 – Aug 2025</date>
+<location>Mississauga, ON</location>
+<summary>Kumon is a structured academic enrichment program. Supported students through advanced mathematics and calculus, graded work with precision, and helped maintain the operational flow of a high-throughput tutoring centre.</summary>
+<bullet>Guided students through advanced math and calculus — providing step-by-step instruction, targeted feedback, and individualized support to accelerate understanding beyond grade level.</bullet>
+<bullet>Graded assignments accurately and tracked student progress over time, identifying areas of weakness early and adjusting support to improve learning outcomes.</bullet>
+<bullet>Maintained an organized and efficient centre environment, contributing to consistent student development across a high-volume program.</bullet>
+<tag>education</tag>
+<tag>mentorship</tag>
+<tag>operations</tag>
+<badge>km</badge>

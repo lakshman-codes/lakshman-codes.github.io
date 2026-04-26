@@ -1,0 +1,11 @@
+<main>tech news and updates i keep up with</main>
+<text>
+i don’t follow news in a super structured way.
+
+mostly just check a few places and see what’s happening. product launches, funding, new tools.
+
+it’s less about knowing everything and more about staying loosely aware.
+</text>
+<link>TechCrunch | https://techcrunch.com/category/startups/</link>
+<link>The Verge | https://www.theverge.com/tech</link>
+<link>Product Hunt | https://www.producthunt.com/</link>
