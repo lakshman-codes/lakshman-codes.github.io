@@ -1854,33 +1854,19 @@ section[data-display-number]::after {
 
 @media (max-width: 1200px) {
   :root {
-    --page-max: min(700px, 45vw);
+    --page-max: min(820px, 65vw);
     --page-gutter: clamp(18px, 4vw, 34px);
     --section-pad-top: clamp(90px, 14vh, 128px);
     --section-pad-bottom: clamp(50px, 10vh, 70px);
-  }
-  html {
-    font-size: 0.98rem;
-  }
-  .hero .content,
-  .about .inner,
-  .experience-layout,
-  .projects-layout,
-  .contact-inner,
-  .hero-carousel {
-    max-width: min(100%, var(--page-max));
   }
 }
 
 @media (max-width: 1024px) {
   :root {
-    --page-max: min(620px, 48vw);
+    --page-max: min(780px, 70vw);
     --page-gutter: clamp(16px, 4vw, 30px);
     --section-pad-top: clamp(84px, 13vh, 116px);
     --section-pad-bottom: clamp(46px, 9vh, 64px);
-  }
-  html {
-    font-size: 0.96rem;
   }
   .hero-roles {
     font-size: 0.96rem;
