@@ -35,10 +35,10 @@
   --c4: var(--c4-light);
   --c5: var(--c5-light);
   --border: var(--border-light);
-  --page-max: clamp(560px, 40vw, 820px);
-  --page-gutter: clamp(24px, 4vw, 56px);
-  --section-pad-top: clamp(112px, 16vh, 148px);
-  --section-pad-bottom: clamp(72px, 12vh, 104px);
+  --page-max: clamp(420px, 55vw, 820px);
+  --page-gutter: clamp(16px, 4vw, 38px);
+  --section-pad-top: clamp(88px, 14vh, 148px);
+  --section-pad-bottom: clamp(48px, 10vh, 104px);
 }
 [data-theme="dark"] {
   --bg: var(--bg-dark);
@@ -1852,9 +1852,53 @@ section[data-display-number]::after {
   pointer-events: all;
 }
 
+@media (max-width: 1200px) {
+  :root {
+    --page-max: min(700px, 45vw);
+    --page-gutter: clamp(18px, 4vw, 34px);
+    --section-pad-top: clamp(90px, 14vh, 128px);
+    --section-pad-bottom: clamp(50px, 10vh, 70px);
+  }
+  html {
+    font-size: 0.98rem;
+  }
+  .hero .content,
+  .about .inner,
+  .experience-layout,
+  .projects-layout,
+  .contact-inner,
+  .hero-carousel {
+    max-width: min(100%, var(--page-max));
+  }
+}
+
+@media (max-width: 1024px) {
+  :root {
+    --page-max: min(620px, 48vw);
+    --page-gutter: clamp(16px, 4vw, 30px);
+    --section-pad-top: clamp(84px, 13vh, 116px);
+    --section-pad-bottom: clamp(46px, 9vh, 64px);
+  }
+  html {
+    font-size: 0.96rem;
+  }
+  .hero-roles {
+    font-size: 0.96rem;
+  }
+  .hero-subtitle {
+    font-size: 0.82rem;
+  }
+}
+
 @media (max-width: 980px) {
   :root {
-    --page-max: 700px;
+    --page-max: min(680px, 90vw);
+    --page-gutter: clamp(16px, 4vw, 28px);
+    --section-pad-top: clamp(80px, 14vh, 120px);
+    --section-pad-bottom: clamp(48px, 10vh, 72px);
+  }
+  html {
+    font-size: 0.95rem;
   }
   .hero-carousel {
     position: relative;
@@ -1890,11 +1934,211 @@ section[data-display-number]::after {
 }
 
 @media (max-width: 860px) {
-  .contact-top {
-    flex-direction: column;
-    gap: 16px;
-    margin-bottom: 40px;
+  html {
+    font-size: 0.92rem;
   }
+  :root {
+    --page-gutter: clamp(14px, 4vw, 24px);
+    --section-pad-top: clamp(72px, 12vh, 100px);
+    --section-pad-bottom: clamp(40px, 8vh, 60px);
+  }
+  .hero .content,
+  .about .inner,
+  .experience-layout,
+  .projects-layout,
+  .contact-inner {
+    max-width: min(100%, 92vw);
+  }
+  .hero-carousel {
+    max-width: min(100%, 92vw);
+  }
+  .hero-roles {
+    font-size: 0.95rem;
+  }
+  .hero-subtitle {
+    font-size: 0.78rem;
+  }
+  .about-note,
+  .projects-note,
+  .contact-sub {
+    font-size: 0.72rem;
+  }
+  .project-title {
+    font-size: clamp(1rem, 2vw, 1.35rem);
+  }
+  .project-copy,
+  .experience-summary,
+  .about-card-preview {
+    font-size: 0.72rem;
+  }
+  .project-card,
+  .project-featured-card,
+  .experience-card,
+  .about-card {
+    padding: 14px;
+  }
+  .project-card {
+    min-height: 180px;
+  }
+  .project-featured-card {
+    min-height: clamp(220px, 24vh, 300px);
+  }
+  .about-card-inner {
+    gap: 14px;
+  }
+  .experience-card-inner,
+  .project-card-frame,
+  .about-card-inner {
+    padding: 18px;
+  }
+  .contact-heading {
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+  }
+  .sec-heading {
+    font-size: clamp(1.6rem, 3.2vw, 2.6rem);
+  }
+  .section-actions {
+    gap: 10px;
+  }
+  .next-section-btn {
+    min-width: 56px;
+    padding: 0 8px;
+  }
+  .topbar-right {
+    gap: 8px;
+  }
+  .nav-item {
+    padding: 0 10px;
+  }
+  .topbar-right button,
+  .resume-btn,
+  .about-control,
+  .hero-carousel-btn,
+  .about-link-btn,
+  .project-link-btn {
+    font-size: 0.52rem;
+    padding: 6px 10px;
+  }
+  .project-tag,
+  .experience-tag {
+    padding: 6px 10px;
+    font-size: 0.5rem;
+  }
+  .ll-left,
+  .ll-right {
+    gap: 16px;
+  }
+  .ll-name,
+  .ll-handle,
+  .ll-num {
+    font-size: 0.72rem;
+  }
+  .ll-icon {
+    width: 10px;
+    height: 10px;
+  }
+  .draw-mode #cursor {
+    width: 8px;
+    height: 8px;
+  }
+  .resume-actions {
+    gap: 10px;
+  }
+  .resume-btn {
+    padding: 0 10px;
+  }
+  .hero-carousel-top,
+  .hero-carousel-bottom,
+  .about-carousel-top,
+  .projects-right-top {
+    gap: 10px;
+  }
+  .project-featured-grid,
+  .projects-rail-list {
+    gap: 12px;
+  }
+  .hero-carousel-frame,
+  .about-card-inner,
+  .project-card,
+  .project-featured-card {
+    border-radius: 10px;
+  }
+  .hero-carousel-image {
+    aspect-ratio: 4 / 1.2;
+  }
+  .about-card-inner {
+    grid-template-columns: 1fr;
+  }
+  .hero-roles,
+  .hero-subtitle,
+  .project-copy,
+  .experience-summary,
+  .about-card-preview,
+  .contact-sub,
+  .projects-note {
+    line-height: 1.6;
+  }
+  .section-title-row {
+    max-width: 100%;
+  }
+  .experience-panel,
+  .projects-right,
+  .about-carousel,
+  .contact-inner {
+    width: 100%;
+  }
+  .about-note,
+  .projects-note,
+  .contact-sub {
+    max-width: 100%;
+  }
+  .hero-carousel-image,
+  .project-media {
+    border-radius: 12px;
+  }
+  .hero-carousel-image img,
+  .project-media img {
+    object-fit: cover;
+  }
+  .project-index,
+  .project-status,
+  .about-card-num,
+  .about-counter {
+    font-size: 0.55rem;
+  }
+  .about-card-title,
+  .project-title {
+    line-height: 1.15;
+  }
+  .about-card-title {
+    font-size: 1rem;
+  }
+  .about-card {
+    padding: 22px 0 24px;
+  }
+  .hero-carousel-slide {
+    padding: 16px 0 18px;
+  }
+  .hero-carousel-frame {
+    padding: 14px;
+  }
+  .about-card-inner,
+  .project-card-frame {
+    padding: 16px;
+  }
+  .about-footer,
+  .projects-right-top,
+  .hero-carousel-top,
+  .hero-carousel-bottom {
+    flex-wrap: wrap;
+  }
+  .about-footer {
+    gap: 10px;
+  }
+  .nav-label {
+    font-size: 0.5rem;
+  }
+}
   .contact-heading {
     white-space: normal;
   }
@@ -1925,14 +2169,18 @@ section[data-display-number]::after {
 }
 
 @media (max-width: 720px) {
+  html {
+    font-size: 0.9rem;
+  }
   :root {
     --page-max: 100%;
-    --section-pad-top: 108px;
-    --section-pad-bottom: 56px;
+    --page-gutter: clamp(12px, 6vw, 22px);
+    --section-pad-top: 88px;
+    --section-pad-bottom: 44px;
   }
   #topbar {
-    width: calc(100vw - 36px);
-    padding: 0 18px;
+    width: calc(100vw - 32px);
+    padding: 0 16px;
   }
   #sidenav {
     display: none;
@@ -1942,55 +2190,129 @@ section[data-display-number]::after {
   }
   section,
   .contact-section {
-    padding: var(--section-pad-top) 7vw var(--section-pad-bottom);
-  }
-  .about .inner {
-    padding-right: 0;
-  }
-  .experience-section {
-    padding-top: 14vh;
-  }
-  .projects-section {
-    padding-top: 14vh;
-  }
-  .hero-carousel {
-    display: none;
+    padding: var(--section-pad-top) 5vw var(--section-pad-bottom);
+    min-height: auto;
   }
   .hero {
-    min-height: 100vh;
+    min-height: auto;
+  }
+  .hero .content,
+  .about .inner,
+  .experience-layout,
+  .projects-layout,
+  .contact-inner {
+    max-width: min(100%, 95vw);
+    margin: 0 auto;
   }
   .hero-roles {
-    font-size: 0.9rem;
+    font-size: 0.88rem;
   }
-  .projects-right-top {
-    flex-direction: column;
-    align-items: flex-start;
+  .hero-subtitle {
+    font-size: 0.74rem;
+  }
+  .sec-heading {
+    font-size: clamp(1.4rem, 4vw, 2.4rem);
+  }
+  .about-note,
+  .projects-note,
+  .contact-sub {
+    font-size: 0.72rem;
+  }
+  .project-card,
+  .project-featured-card,
+  .experience-card,
+  .about-card,
+  .hero-carousel-frame,
+  .about-card-inner,
+  .project-card-frame {
+    padding: 14px;
+  }
+  .project-card {
+    min-height: 180px;
+  }
+  .project-featured-card {
+    min-height: clamp(220px, 22vh, 280px);
+  }
+  .section-actions {
+    gap: 10px;
+  }
+  .next-section-btn {
+    min-width: 56px;
+    padding: 0 8px;
+  }
+  .topbar-right {
+    gap: 8px;
+  }
+  .topbar-right button,
+  .resume-btn,
+  .about-control,
+  .hero-carousel-btn,
+  .about-link-btn,
+  .project-link-btn {
+    font-size: 0.52rem;
+    padding: 6px 10px;
+  }
+  .project-tag,
+  .experience-tag {
+    padding: 6px 10px;
+    font-size: 0.5rem;
+  }
+  .about-footer,
+  .projects-right-top,
+  .hero-carousel-top,
+  .hero-carousel-bottom {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .hero-carousel-image {
+    aspect-ratio: 4 / 1.2;
+  }
+  .about-card-inner {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .nav-label {
+    font-size: 0.5rem;
   }
 }
 
 @media (max-width: 540px) {
+  html {
+    font-size: 0.88rem;
+  }
+  :root {
+    --page-gutter: clamp(10px, 8vw, 18px);
+    --section-pad-top: 72px;
+    --section-pad-bottom: 36px;
+  }
   #topbar {
-    padding-right: 14px;
-    padding-left: 14px;
+    padding-right: 12px;
+    padding-left: 12px;
   }
   #sidenav {
     display: none;
   }
   .topbar-right {
-    gap: 8px;
+    gap: 6px;
   }
   #dm-btn,
-  #draw-btn {
-    font-size: 0.56rem;
-    padding: 6px 10px;
+  #draw-btn,
+  .resume-btn,
+  .about-control,
+  .hero-carousel-btn,
+  .about-link-btn,
+  .project-link-btn {
+    font-size: 0.5rem;
+    padding: 5px 8px;
   }
   .contact-sub {
     max-width: 100%;
-    font-size: 0.72rem;
+    font-size: 0.7rem;
   }
   .about-carousel-top {
     flex-direction: column;
     align-items: flex-start;
+    gap: 8px;
   }
   .about-meta {
     width: 100%;
@@ -2000,31 +2322,90 @@ section[data-display-number]::after {
     gap: 8px;
   }
   .about-control {
-    min-width: 40px;
+    min-width: 38px;
     min-height: 34px;
   }
   .about-footer {
     flex-direction: column;
     align-items: flex-start;
+    gap: 10px;
   }
   .experience-panel-top {
     flex-direction: column;
     align-items: flex-start;
+    gap: 10px;
   }
   section,
   .contact-section {
-    padding: var(--section-pad-top) 5vw 48px;
+    padding: var(--section-pad-top) 4vw var(--section-pad-bottom);
+  }
+  .hero {
+    min-height: auto;
+  }
+  .hero-roles {
+    font-size: 0.82rem;
+  }
+  .hero-subtitle {
+    font-size: 0.7rem;
+  }
+  .sec-heading {
+    font-size: clamp(1.3rem, 5vw, 2.2rem);
   }
   .section-actions {
-    margin-top: 16px;
+    margin-top: 14px;
+    gap: 8px;
   }
   .nav-label {
-    font-size: 0.52rem;
+    font-size: 0.48rem;
     letter-spacing: 0.1em;
   }
   .next-section-btn {
-    min-width: 60px;
-    padding: 0 10px;
+    min-width: 54px;
+    padding: 0 8px;
+  }
+  .project-title {
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+  }
+  .project-copy,
+  .experience-summary,
+  .about-card-preview {
+    font-size: 0.7rem;
+  }
+  .project-tag,
+  .experience-tag {
+    padding: 5px 8px;
+    font-size: 0.48rem;
+  }
+  .hero-carousel-frame,
+  .about-card-inner,
+  .project-card,
+  .project-featured-card {
+    padding: 12px;
+  }
+  .project-card {
+    min-height: 160px;
+  }
+  .project-featured-card {
+    min-height: clamp(200px, 22vh, 260px);
+  }
+  .about-card-inner {
+    gap: 12px;
+  }
+  .hero-carousel-image {
+    aspect-ratio: 4 / 1.1;
+  }
+  .ll-name,
+  .ll-handle,
+  .ll-num {
+    font-size: 0.68rem;
+  }
+  .ll-icon {
+    width: 9px;
+    height: 9px;
+  }
+  .draw-mode #cursor {
+    width: 6px;
+    height: 6px;
   }
 }
 
