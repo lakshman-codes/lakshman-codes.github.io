@@ -2265,7 +2265,7 @@ section[data-display-number]::after {
     gap: 10px;
   }
   .hero-carousel-image {
-    aspect-ratio: 4 / 1.2;
+    aspect-ratio: 4 / 2;
   }
   .about-card-inner {
     grid-template-columns: 1fr;
