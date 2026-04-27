@@ -11,18 +11,17 @@
 <radius-card>0px</radius-card>
  
 <light-bg>#ffffff</light-bg>
-<light-c1>#f5f5f5</light-c1>
-<light-c2>#e2e2e2</light-c2>
-<light-c3>#909090</light-c3>
-<light-c4>#333333</light-c4>
-<light-c5>#0d0d0d</light-c5>
-<light-border>#e2e2e2</light-border>
+<light-c1>#e0e0da</light-c1>
+<light-c2>#c8c8c2</light-c2>
+<light-c3>#888780</light-c3>
+<light-c4>#333330</light-c4>
+<light-c5>#1a1a18</light-c5>
+<light-border>#c8c8c2</light-border>
  
-<dark-bg>#0d0d0d</dark-bg>
-<dark-c1>#161616</dark-c1>
-<dark-c2>#2e2e2e</dark-c2>
-<dark-c3>#787878</dark-c3>
-<dark-c4>#e0e0e0</dark-c4>
-<dark-c5>#f5f5f5</dark-c5>
-<dark-border>#2e2e2e</dark-border>
- 
+<dark-bg>#111110</dark-bg>
+<dark-c1>#1a1a18</dark-c1>
+<dark-c2>#2a2a28</dark-c2>
+<dark-c3>#787872</dark-c3>
+<dark-c4>#d8d8d0</dark-c4>
+<dark-c5>#f0f0e8</dark-c5>
+<dark-border>#2a2a28</dark-border>

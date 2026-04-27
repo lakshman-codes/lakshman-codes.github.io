@@ -472,6 +472,7 @@ section[data-display-number]::after {
   flex-direction: column;
   gap: 32px;
   min-height: 100vh;
+  padding-top: 240px;
 }
 .hero .content {
   position: relative;
@@ -545,7 +546,7 @@ section[data-display-number]::after {
 }
 .hero-carousel-image {
   position: relative;
-  aspect-ratio: 4 / 2;
+  aspect-ratio: 4 / 2.75;
   border: 1px solid color-mix(in srgb, var(--c1) 22%, transparent);
   background:
     radial-gradient(

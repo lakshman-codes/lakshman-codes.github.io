@@ -1750,13 +1750,13 @@
             speed: 0.0019 + Math.random() * 0.0028,
             len: 0.028 + Math.random() * 0.055,
             op: 0.11 + Math.random() * 0.14,
-            w: 0.55 + Math.random() * 0.5,
+            w: 0.75 + Math.random() * 0.5,
           }));
           function loopHeroRain() {
             const W = rc.width;
             const H = rc.height;
             rx.clearRect(0, 0, W, H);
-            const rgb = isDarkTheme() ? "200,200,200" : "80,72,65";
+            const rgb = isDarkTheme() ? "200,200,200" : "48, 85, 171";
             drops.forEach((d) => {
               d.y += d.speed;
               if (d.y - d.len > 1) {
