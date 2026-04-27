@@ -1745,6 +1745,13 @@
         const cursorEl = document.getElementById("cursor");
         const canvas = document.getElementById("trail-canvas");
         const ctx = canvas.getContext("2d");
+        const isTouchDevice =
+          window.matchMedia("(hover: none), (pointer: coarse)").matches ||
+          navigator.maxTouchPoints > 0;
+        if (isTouchDevice) {
+          cursorEl.style.display = "none";
+          canvas.style.display = "none";
+        }
         function resizeTrail() {
           canvas.width = window.innerWidth;
           canvas.height = window.innerHeight;
@@ -1757,7 +1764,7 @@
         document.addEventListener("mousemove", (e) => {
           cursorEl.style.left = e.clientX + "px";
           cursorEl.style.top = e.clientY + "px";
-          if (drawMode) return;
+          if (drawMode || isTouchDevice) return;
           const now = performance.now();
           if (now - lastTime < 12) return;
           lastTime = now;

@@ -35,7 +35,7 @@
   --c4: var(--c4-light);
   --c5: var(--c5-light);
   --border: var(--border-light);
-  --page-max: 820px;
+  --page-max: clamp(560px, 40vw, 820px);
   --page-gutter: clamp(24px, 4vw, 56px);
   --section-pad-top: clamp(112px, 16vh, 148px);
   --section-pad-bottom: clamp(72px, 12vh, 104px);
@@ -475,6 +475,7 @@ section {
   overflow: hidden;
   scroll-snap-align: start;
   scroll-snap-stop: always;
+  scroll-margin-top: 90px;
 }
 section::before {
   content: "";
@@ -2027,6 +2028,48 @@ section[data-display-number]::after {
   .next-section-btn {
     min-width: 60px;
     padding: 0 10px;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  body {
+    cursor: auto;
+  }
+  #cursor,
+  #trail-canvas {
+    display: none !important;
+  }
+  #dm-btn,
+  #draw-btn,
+  .next-section-btn,
+  .about-control,
+  .hero-carousel-btn,
+  .about-link-btn,
+  .project-link-btn,
+  .resume-btn,
+  .ll-row,
+  .nav-item {
+    cursor: auto;
+  }
+  #sidenav {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .section-actions {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .about-controls {
+    flex-wrap: wrap;
+  }
+  .about-card-inner {
+    grid-template-columns: 1fr;
+  }
+  .about-card {
+    padding: 18px 0;
+  }
+  .about-note {
+    max-width: 100%;
   }
 }
 
