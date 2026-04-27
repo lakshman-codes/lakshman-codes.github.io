@@ -2155,7 +2155,6 @@ section[data-display-number]::after {
     width: 100%;
   }
 }
-
 @media (max-width: 720px) {
   html {
     font-size: 0.9rem;

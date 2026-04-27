@@ -94,9 +94,9 @@
       <canvas id="hero-rain" aria-hidden="true"></canvas>
       <div class="content section-nav-anchor" data-next-anchor>
         <div class="section-title-row">
-          <h1 class="name" id="hero-name"></h1>
+          <h1 class="name visible" id="hero-name"></h1>
         </div>
-        <div class="hero-roles" id="hero-roles"></div>
+        <div class="hero-roles visible" id="hero-roles"></div>
         <div class="divider"></div>
         <div class="hero-subtitle" id="hero-subtitle">
           <span>computer engineering @ waterloo.</span>
@@ -511,6 +511,7 @@
  
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
       (() => {
+        console.log("Script started");
         /* LOADER */
         const words = [
           "Hi!",
@@ -554,27 +555,41 @@
  
         /* REVEAL */
         function revealPage() {
+          console.log("revealPage called");
           const nameEl = document.getElementById("hero-name");
-          nameEl.style.opacity = '1';
-          nameEl.style.transform = 'translateY(0)';
+          console.log("nameEl:", nameEl);
+          if (nameEl) {
+            nameEl.classList.add("visible");
+            nameEl.style.opacity = '1';
+            // Removed red color, using CSS color
+          }
           
           const dividerEl = document.querySelector(".divider");
-          dividerEl.style.opacity = '1';
+          console.log("dividerEl:", dividerEl);
+          if (dividerEl) {
+            dividerEl.style.opacity = '1';
+          }
           
           const rolesEl = document.getElementById("hero-roles");
-          rolesEl.style.opacity = '1';
+          console.log("rolesEl:", rolesEl);
+          if (rolesEl) {
+            rolesEl.classList.add("visible");
+            rolesEl.style.opacity = '1';
+            // Removed red color, using CSS color
+          }
           
           const subtitleEl = document.getElementById("hero-subtitle");
-          subtitleEl.style.opacity = '1';
+          console.log("subtitleEl:", subtitleEl);
+          if (subtitleEl) {
+            subtitleEl.style.opacity = '1';
+          }
           
           const heroCarouselEl = document.getElementById("hero-carousel");
+          console.log("heroCarouselEl:", heroCarouselEl);
           if (heroCarouselEl) {
             heroCarouselEl.style.opacity = '1';
             heroCarouselEl.style.transform = 'translateY(0)';
           }
-          
-          const scrollHintEl = document.getElementById("scroll-hint");
-          scrollHintEl.style.display = 'block';
           
           startHeroTyping();
         }
@@ -594,8 +609,10 @@
           return new Promise((resolve) => setTimeout(resolve, ms));
         }
         async function typeText(el, text, speed = 42) {
+          console.log("typeText called with:", text);
           for (let i = 1; i <= text.length; i++) {
             el.textContent = text.slice(0, i);
+            console.log("Typing:", el.textContent);
             await wait(speed);
           }
         }
@@ -620,15 +637,25 @@
         async function startHeroTyping() {
           const nameEl = document.getElementById("hero-name");
           const rolesEl = document.getElementById("hero-roles");
+          
+          // Clear any existing text first
           nameEl.textContent = "";
           rolesEl.textContent = "";
-          await typeText(nameEl, heroIntro, 54);
+          
+          console.log("Starting typing animation");
+          
+          // Start the typing animation
+          await typeText(nameEl, heroIntro, 10); // Much faster
+          console.log("Typed intro");
           await wait(650);
           await eraseText(nameEl, 0, 34);
+          console.log("Erased intro");
           await wait(140);
           await typeText(nameEl, heroFinal, 60);
+          console.log("Typed final name");
           await wait(220);
           loopRoles(rolesEl);
+          console.log("Started role loop");
         }
  
         /* DARK MODE */
