@@ -555,13 +555,28 @@
  
         /* REVEAL */
         function revealPage() {
-          document.getElementById("hero-name").classList.add("visible");
-          document.querySelector(".divider").classList.add("visible");
-          document.getElementById("hero-roles").classList.add("visible");
-          document.getElementById("hero-subtitle").classList.add("visible");
+          const nameEl = document.getElementById("hero-name");
+          nameEl.style.opacity = '1';
+          nameEl.style.transform = 'translateY(0)';
+          
+          const dividerEl = document.querySelector(".divider");
+          dividerEl.style.opacity = '1';
+          
+          const rolesEl = document.getElementById("hero-roles");
+          rolesEl.style.opacity = '1';
+          
+          const subtitleEl = document.getElementById("hero-subtitle");
+          subtitleEl.style.opacity = '1';
+          
           const heroCarouselEl = document.getElementById("hero-carousel");
-          if (heroCarouselEl) heroCarouselEl.classList.add("visible");
-          document.getElementById("scroll-hint").classList.add("visible");
+          if (heroCarouselEl) {
+            heroCarouselEl.style.opacity = '1';
+            heroCarouselEl.style.transform = 'translateY(0)';
+          }
+          
+          const scrollHintEl = document.getElementById("scroll-hint");
+          scrollHintEl.style.display = 'block';
+          
           startHeroTyping();
         }
  
