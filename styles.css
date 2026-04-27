@@ -472,7 +472,7 @@ section[data-display-number]::after {
   flex-direction: column;
   gap: 32px;
   min-height: 100vh;
-  padding-top: 240px;
+  padding-top: clamp(90px, 18vh, 240px);
 }
 .hero .content {
   position: relative;
@@ -1785,6 +1785,66 @@ section[data-display-number]::after {
 #clear-btn.show {
   opacity: 1;
   pointer-events: all;
+}
+
+/* ── MID-RANGE SCREENS (1201–1600px): between Mac "More Space" and standard HD ── */
+@media (max-width: 1600px) {
+  html {
+    font-size: 15px;
+  }
+  :root {
+    --page-max: clamp(420px, 52vw, 820px);
+  }
+  .name {
+    font-size: clamp(2.4rem, 4.8vw, 4.2rem);
+  }
+  .sec-heading {
+    font-size: clamp(1.7rem, 3vw, 2.6rem);
+  }
+}
+
+/* ── SHORT VIEWPORTS: 900px height and below (common on 768p/1080p non-Retina) ── */
+@media (max-height: 900px) {
+  .hero {
+    padding-top: clamp(72px, 13vh, 160px);
+    gap: 20px;
+  }
+  :root {
+    --section-pad-top: clamp(72px, 11vh, 120px);
+    --section-pad-bottom: clamp(36px, 8vh, 80px);
+  }
+  .name {
+    font-size: clamp(2.2rem, 4.5vw, 4rem);
+    margin-bottom: 16px;
+  }
+  .divider {
+    margin-bottom: 16px;
+  }
+}
+
+@media (max-height: 800px) {
+  .hero {
+    padding-top: clamp(62px, 11vh, 120px);
+    gap: 14px;
+  }
+  :root {
+    --section-pad-top: clamp(62px, 10vh, 100px);
+    --section-pad-bottom: clamp(28px, 6vh, 60px);
+  }
+  .name {
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    margin-bottom: 12px;
+  }
+  .hero-roles {
+    font-size: clamp(0.82rem, 1.2vw, 0.98rem);
+    margin-bottom: 10px;
+  }
+  .hero-subtitle {
+    font-size: clamp(0.68rem, 0.9vw, 0.78rem);
+  }
+  .sec-heading {
+    font-size: clamp(1.5rem, 2.8vw, 2.4rem);
+  }
 }
 
 @media (max-width: 1200px) {
