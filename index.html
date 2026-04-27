@@ -557,14 +557,12 @@
           const nameEl = document.getElementById("hero-name");
           nameEl.style.opacity = '1';
           nameEl.style.transform = 'translateY(0)';
-          nameEl.textContent = "lakshman";
           
           const dividerEl = document.querySelector(".divider");
           dividerEl.style.opacity = '1';
           
           const rolesEl = document.getElementById("hero-roles");
           rolesEl.style.opacity = '1';
-          rolesEl.textContent = "> engineering at UWaterloo.";
           
           const subtitleEl = document.getElementById("hero-subtitle");
           subtitleEl.style.opacity = '1';
@@ -578,7 +576,7 @@
           const scrollHintEl = document.getElementById("scroll-hint");
           scrollHintEl.style.display = 'block';
           
-          // Removed startHeroTyping() to avoid animation
+          startHeroTyping();
         }
  
         /* HERO TYPING */
