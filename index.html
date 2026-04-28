@@ -91,7 +91,6 @@
  
     <!-- HERO -->
     <section class="hero" id="hero">
-      <canvas id="hero-rain" aria-hidden="true"></canvas>
       <div class="content section-nav-anchor" data-next-anchor>
         <div class="section-title-row">
           <h1 class="name visible" id="hero-name"></h1>
@@ -1733,56 +1732,6 @@
           isDrawing = false;
         });
  
-        /* HERO RAIN */
-        (() => {
-          const rc = document.getElementById("hero-rain");
-          const hero = document.getElementById("hero");
-          if (!rc || !hero) return;
-          const rx = rc.getContext("2d");
-          function resizeHeroRain() {
-            rc.width = hero.offsetWidth;
-            rc.height = hero.offsetHeight;
-          }
-          resizeHeroRain();
-          window.addEventListener("resize", resizeHeroRain);
-          const drops = Array.from({ length: 56 }, () => ({
-            x: Math.random(),
-            y: Math.random(),
-            speed: 0.0019 + Math.random() * 0.0028,
-            len: 0.028 + Math.random() * 0.055,
-            op: 0.11 + Math.random() * 0.14,
-            w: 0.75 + Math.random() * 0.5,
-          }));
-          function loopHeroRain() {
-            const W = rc.width;
-            const H = rc.height;
-            rx.clearRect(0, 0, W, H);
-            const rgb = isDarkTheme() ? "200,200,200" : "48, 85, 171";
-            drops.forEach((d) => {
-              d.y += d.speed;
-              if (d.y - d.len > 1) {
-                d.y = -d.len;
-                d.x = Math.random();
-              }
-              const x = d.x * W;
-              const y0 = (d.y - d.len) * H;
-              const y1 = d.y * H;
-              const g = rx.createLinearGradient(x, y0, x, y1);
-              g.addColorStop(0, `rgba(${rgb},0)`);
-              g.addColorStop(0.45, `rgba(${rgb},${d.op})`);
-              g.addColorStop(1, `rgba(${rgb},0)`);
-              rx.beginPath();
-              rx.moveTo(x, y0);
-              rx.lineTo(x, y1);
-              rx.strokeStyle = g;
-              rx.lineWidth = d.w;
-              rx.stroke();
-            });
-            requestAnimationFrame(loopHeroRain);
-          }
-          requestAnimationFrame(loopHeroRain);
-        })();
-        
         /* CURSOR TRAIL */
         const cursorEl = document.getElementById("cursor");
         const canvas = document.getElementById("trail-canvas");
