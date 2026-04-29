@@ -71,7 +71,7 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background-image: url('background.gif');
+  background-image: url('background2.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
