@@ -75,7 +75,7 @@ body::before {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: 0.25;
+  opacity: 0.35;
   z-index: -1;
   pointer-events: none;
 }
@@ -226,7 +226,7 @@ body.draw-mode #cursor {
   text-transform: lowercase;
   color: var(--c4);
   background: transparent;
-  border: 1px solid var(--c2);
+  border: 1px solid var(--border);
   border-radius: var(--radius-control);
   min-height: 34px;
   padding: 0 12px;
@@ -335,7 +335,7 @@ body.draw-mode #cursor {
   position: relative;
   text-decoration: none;
   padding: 0 12px;
-  border: 1px solid var(--c2);
+  border: 1px solid var(--border);
   border-radius: var(--radius-control);
   background: transparent;
   overflow: hidden;
@@ -1653,13 +1653,13 @@ section[data-display-number]::after {
   font-family: var(--font-mono);
   font-size: 0.56rem;
   letter-spacing: 0.1em;
-  color: var(--c1);
+  color: var(--c3);
   width: 20px;
   flex-shrink: 0;
   transition: color 0.25s ease;
 }
 .ll-row:hover .ll-num {
-  color: var(--c3);
+  color: var(--c4);
 }
 .ll-name {
   font-family: var(--font-mono);
@@ -1693,16 +1693,16 @@ section[data-display-number]::after {
   width: 12px;
   height: 12px;
   flex-shrink: 0;
-  opacity: 0.28;
+  opacity: 0.7;
   transition: opacity 0.18s ease;
 }
 .ll-row:hover .ll-icon {
-  opacity: 0.55;
+  opacity: 1;
 }
 .ll-arrow {
   font-family: var(--font-mono);
   font-size: 0.85rem;
-  color: var(--c3);
+  color: var(--c4);
   transform: translateX(-6px);
   transition:
     transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
@@ -1710,7 +1710,7 @@ section[data-display-number]::after {
 }
 .ll-row:hover .ll-arrow {
   transform: translateX(0);
-  color: var(--c4);
+  color: var(--c5);
 }
 
 /* standalone résumé button */

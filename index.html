@@ -908,6 +908,7 @@
               })[char],
           );
         }
+
  
         // Manifest files are newline-separated lists with optional `#` comments.
         function parseListFile(source) {
@@ -1395,7 +1396,25 @@
             startHeroCarouselAuto();
           });
         }
- 
+        
+
+        /* ABOUT AUTO-SWIPE */
+        let aboutAutoPlay = setInterval(() => {
+          aboutIndex = (aboutIndex + 1) % aboutEntries.length;
+          renderAboutCarousel();
+        }, 6000);
+
+        // Pause on manual interaction, resume after
+        [aboutPrev, aboutNext].forEach(btn => {
+          btn.addEventListener("click", () => {
+            clearInterval(aboutAutoPlay);
+            aboutAutoPlay = setInterval(() => {
+              aboutIndex = (aboutIndex + 1) % aboutEntries.length;
+              renderAboutCarousel();
+            }, 6000);
+          });
+        });
+
         loadHeroCarouselEntries();
         loadThoughtEntries();
  

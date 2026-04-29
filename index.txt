@@ -1,27 +1,27 @@
 # Site style controls
 # Edit these values to adjust the site's main look without touching CSS.
- 
+
 <font-sans>DM Sans, sans-serif</font-sans>
 <font-mono>DM Mono, monospace</font-mono>
- 
+
 <radius-cursor>50%</radius-cursor>
 <radius-cursor-draw>2px</radius-cursor-draw>
 <radius-control>0px</radius-control>
 <radius-pill>999px</radius-pill>
 <radius-card>0px</radius-card>
- 
-<light-bg>#ffffff</light-bg>
-<light-c1>#e0e0da</light-c1>
-<light-c2>#c8c8c2</light-c2>
-<light-c3>#888780</light-c3>
-<light-c4>#333330</light-c4>
-<light-c5>#1a1a18</light-c5>
-<light-border>#c8c8c2</light-border>
- 
-<dark-bg>#111110</dark-bg>
-<dark-c1>#1a1a18</dark-c1>
-<dark-c2>#2a2a28</dark-c2>
-<dark-c3>#787872</dark-c3>
-<dark-c4>#d8d8d0</dark-c4>
-<dark-c5>#f0f0e8</dark-c5>
-<dark-border>#2a2a28</dark-border>
+
+<light-bg>#fafaf7</light-bg>
+<light-c1>#e8e8e2</light-c1>
+<light-c2>#c8c8c0</light-c2>
+<light-c3>#888880</light-c3>
+<light-c4>#3a3a38</light-c4>
+<light-c5>#0a0a08</light-c5>
+<light-border>#1a1a18</light-border>
+
+<dark-bg>#e8e8e2</dark-bg>
+<dark-c1>#d0d0c8</dark-c1>
+<dark-c2>#a0a098</dark-c2>
+<dark-c3>#383836</dark-c3>
+<dark-c4>#141412</dark-c4>
+<dark-c5>#000000</dark-c5>
+<dark-border>#000000</dark-border>
