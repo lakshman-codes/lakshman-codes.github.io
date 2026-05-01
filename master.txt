@@ -5,3 +5,4 @@
 # experience
 projects
 # contact
+disable-hero-carousel

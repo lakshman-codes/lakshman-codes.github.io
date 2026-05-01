@@ -12,6 +12,92 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+
+    <script>
+      (async () => {
+        const MAP = {
+          "font-sans":          "--font-sans",
+          "font-mono":          "--font-mono",
+          "radius-cursor":      "--radius-cursor",
+          "radius-cursor-draw": "--radius-cursor-draw",
+          "radius-control":     "--radius-control",
+          "radius-pill":        "--radius-pill",
+          "radius-card":        "--radius-card",
+          "light-bg":           "--bg-light",
+          "light-c1":           "--c1-light",
+          "light-c2":           "--c2-light",
+          "light-c3":           "--c3-light",
+          "light-c4":           "--c4-light",
+          "light-c5":           "--c5-light",
+          "light-border":       "--border-light",
+          "dark-bg":            "--bg-dark",
+          "dark-c1":            "--c1-dark",
+          "dark-c2":            "--c2-dark",
+          "dark-c3":            "--c3-dark",
+          "dark-c4":            "--c4-dark",
+          "dark-c5":            "--c5-dark",
+          "dark-border":        "--border-dark",
+        };
+        try {
+          const res = await fetch("index.txt", { cache: "no-store" });
+          if (!res.ok) return;
+          const src = await res.text();
+          const root = document.documentElement;
+          for (const [tag, prop] of Object.entries(MAP)) {
+            const m = src.match(new RegExp(`<${tag}>([\\s\\S]*?)<\\/${tag}>`, "i"));
+            if (m) root.style.setProperty(prop, m[1].trim());
+          }
+        } catch (e) {
+          console.warn("index.txt config not loaded:", e);
+        }
+      })();
+    </script>
+
+    <style>
+      .hero {
+        justify-content: center !important;
+        align-items: stretch !important;
+        padding-top: 52px !important;
+        padding-bottom: 52px !important;
+        gap: 32px !important;
+      }
+      .scroll-hint {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 10px !important;
+        position: absolute !important;
+        bottom: 32px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        font-family: var(--font-mono) !important;
+        font-size: 0.58rem !important;
+        letter-spacing: 0.22em !important;
+        color: var(--c4) !important;
+        text-transform: lowercase !important;
+        opacity: 0 !important;
+        transition: opacity 0.6s ease 1.2s !important;
+        pointer-events: none !important;
+        white-space: nowrap !important;
+        z-index: 2 !important;
+      }
+      .scroll-hint.visible { opacity: 1 !important; }
+      .scroll-hint::after {
+        content: "" !important;
+        display: block !important;
+        width: 1px !important;
+        height: 44px !important;
+        background: var(--c5) !important;
+        transform-origin: top !important;
+        animation: scrollLine 2s cubic-bezier(0.22,1,0.36,1) infinite !important;
+      }
+      @keyframes scrollLine {
+        0%   { transform: scaleY(0); opacity: 0; }
+        20%  { opacity: 1; }
+        50%  { transform: scaleY(1); opacity: 1; }
+        100% { transform: scaleY(1) translateY(14px); opacity: 0; }
+      }
+    </style>
   </head>
   <body>
     <div id="loader">
@@ -21,11 +107,11 @@
         <p id="loader-note">lakshman here :)</p>
       </div>
     </div>
- 
-    <canvas id="draw-canvas"></canvas>
-    <canvas id="trail-canvas"></canvas>
+
+    <canvas id="draw-canvas" style="position:fixed;inset:0;pointer-events:none;z-index:15;"></canvas>
+    <canvas id="trail-canvas" style="position:fixed;inset:0;pointer-events:none;z-index:20;"></canvas>
     <div id="cursor"></div>
- 
+
     <div id="topbar">
       <span id="site-id">lakshman-codes</span>
       <nav id="sidenav">
@@ -88,27 +174,17 @@
       </div>
     </div>
 
- 
     <!-- HERO -->
     <section class="hero" id="hero">
-      <div class="content section-nav-anchor" data-next-anchor>
-        <div class="section-title-row">
-          <h1 class="name visible" id="hero-name"></h1>
-        </div>
-        <div class="hero-roles visible" id="hero-roles"></div>
+      <canvas id="hero-rain" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+      <div class="content">
+        <h1 class="name" id="hero-name"></h1>
+        <div class="hero-roles" id="hero-roles"></div>
         <div class="divider"></div>
         <div class="hero-subtitle" id="hero-subtitle">
           <span>computer engineering @ waterloo.</span>
           <span>i like building things that work.</span>
-          <span
-            >into hardware, software + optimization, and everything
-            inbetween.</span
-          >
-        </div>
-        <div class="section-actions">
-          <button class="next-section-btn" type="button">
-            <span>next</span>
-          </button>
+          <span>into hardware, software + optimization, and everything inbetween.</span>
         </div>
       </div>
       <div class="hero-carousel" id="hero-carousel" aria-label="Image archive">
@@ -122,20 +198,10 @@
               </p>
             </div>
             <div class="hero-carousel-controls">
-              <button
-                class="hero-carousel-btn"
-                id="hero-carousel-prev"
-                aria-label="Previous hero image"
-                type="button"
-              >
+              <button class="hero-carousel-btn" id="hero-carousel-prev" aria-label="Previous hero image" type="button">
                 <span>&larr;</span>
               </button>
-              <button
-                class="hero-carousel-btn"
-                id="hero-carousel-next"
-                aria-label="Next hero image"
-                type="button"
-              >
+              <button class="hero-carousel-btn" id="hero-carousel-next" aria-label="Next hero image" type="button">
                 <span>&rarr;</span>
               </button>
             </div>
@@ -151,16 +217,15 @@
           </div>
         </div>
       </div>
+      <div class="scroll-hint" id="scroll-hint">scroll down</div>
     </section>
- 
+
     <!-- ABOUT -->
     <section class="about" id="about">
       <div class="inner">
         <p class="sec-label">// about</p>
-        <div class="about-head section-nav-anchor" data-next-anchor>
-          <div class="section-title-row">
-            <h2 class="sec-heading">a little bit<br />about me.</h2>
-          </div>
+        <div class="about-head">
+          <h2 class="sec-heading">a little bit<br />about me.</h2>
           <p class="about-note">
             <span class="about-note-label">blog</span>
             <span>
@@ -168,11 +233,6 @@
               and things i am interested in.
             </span>
           </p>
-          <div class="section-actions">
-            <button class="next-section-btn" type="button">
-              <span>next</span>
-            </button>
-          </div>
         </div>
         <div class="about-carousel" id="about-carousel">
           <div class="about-carousel-top">
@@ -183,20 +243,10 @@
               </div>
             </div>
             <div class="about-controls">
-              <button
-                class="about-control"
-                id="about-prev"
-                aria-label="Previous about slide"
-                type="button"
-              >
+              <button class="about-control" id="about-prev" aria-label="Previous about slide" type="button">
                 <span>&larr;</span>
               </button>
-              <button
-                class="about-control"
-                id="about-next"
-                aria-label="Next about slide"
-                type="button"
-              >
+              <button class="about-control" id="about-next" aria-label="Next about slide" type="button">
                 <span>&rarr;</span>
               </button>
             </div>
@@ -209,23 +259,19 @@
           </div>
           <div class="about-footer">
             <div class="about-dots" id="about-dots"></div>
-            <p class="about-results-copy" id="about-results-copy">
-              loading thoughts
-            </p>
+            <p class="about-results-copy" id="about-results-copy">loading thoughts</p>
           </div>
         </div>
       </div>
     </section>
- 
+
     <!-- EXPERIENCE -->
     <section class="experience-section" id="experience">
       <div class="experience-layout">
         <div class="experience-copy">
           <p class="sec-label">// experience</p>
-          <div class="experience-head section-nav-anchor" data-next-anchor>
-            <div class="section-title-row">
-              <h2 class="sec-heading">experience.</h2>
-            </div>
+          <div class="experience-head">
+            <h2 class="sec-heading">experience.</h2>
             <p class="experience-note">
               <span class="experience-note-label">work archive</span>
               <span>
@@ -233,14 +279,8 @@
                 kinds of problems I have spent time working on.
               </span>
             </p>
-            <div class="section-actions">
-              <button class="next-section-btn" type="button">
-                <span>next</span>
-              </button>
-            </div>
           </div>
         </div>
- 
         <aside class="experience-panel">
           <div class="experience-panel-top">
             <p class="experience-panel-label">employment</p>
@@ -257,27 +297,19 @@
         </aside>
       </div>
     </section>
- 
+
     <!-- PROJECTS -->
     <section class="projects-section" id="projects">
       <div class="projects-layout">
-        <div class="projects-left section-nav-anchor" data-next-anchor>
+        <div class="projects-left">
           <p class="sec-label">// projects</p>
-          <div class="section-title-row">
-            <h2 class="ph-title">things i've<br />built.</h2>
-          </div>
+          <h2 class="ph-title">things i've<br />built.</h2>
           <p class="projects-note">
             <span class="projects-note-label">featured</span>
             <span>
-              scroll through some of my projects below<br />and on the rail to
-              right
+              scroll through some of my projects below<br />and on the rail to right
             </span>
           </p>
-          <div class="section-actions">
-            <button class="next-section-btn" type="button">
-              <span>next</span>
-            </button>
-          </div>
           <div class="project-featured-grid" id="project-featured-grid"></div>
           <div class="projects-empty" id="projects-featured-empty">
             featured projects will show up here once the project entries load.
@@ -298,59 +330,35 @@
         </aside>
       </div>
     </section>
- 
+
     <!-- CONTACT -->
     <section class="contact-section" id="contact">
       <div class="contact-inner">
-        <div class="contact-top section-nav-anchor" data-next-anchor>
-          <div class="section-title-row">
-            <h2 class="contact-heading">let's talk.</h2>
-          </div>
+        <div class="contact-top">
+          <h2 class="contact-heading">let's talk.</h2>
           <p class="contact-sub">
             <span class="contact-sub-label">// contact me for</span>
-            <span>
-              building something cool, collaborating, or just saying hi.
-            </span>
+            <span>building something cool, collaborating, or just saying hi.</span>
           </p>
         </div>
-        <div class="section-actions">
-          <button class="next-section-btn" type="button">
-            <span>next</span>
-          </button>
-        </div>
- 
+
         <a class="ll-row" href="mailto:lakshman.r.2008@gmail.com">
           <div class="ll-fill"></div>
           <div class="ll-left">
             <span class="ll-num">01</span>
             <span class="ll-name">email</span>
-            <span class="ll-handle"><span class="__cf_email__" data-cfemail="354c5a4075504d54584559501b565a58">lakshman.r.2008@gmail.com</span></span>
+            <span class="ll-handle">lakshman.r.2008@gmail.com</span>
           </div>
           <div class="ll-right">
-            <svg
-              class="ll-icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#8a8a8a"
-              stroke-width="1.6"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path
-                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-              />
+            <svg class="ll-icon" viewBox="0 0 24 24" fill="none" stroke="#8a8a8a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
               <polyline points="22,6 12,13 2,6" />
             </svg>
             <span class="ll-arrow">→</span>
           </div>
         </a>
- 
-        <a
-          class="ll-row"
-          href="https://linkedin.com/in/lakshmanr08/"
-          target="_blank"
-          rel="noopener"
-        >
+
+        <a class="ll-row" href="https://linkedin.com/in/lakshmanr08/" target="_blank" rel="noopener">
           <div class="ll-fill"></div>
           <div class="ll-left">
             <span class="ll-num">02</span>
@@ -358,31 +366,16 @@
             <span class="ll-handle">in/lakshmanr08</span>
           </div>
           <div class="ll-right">
-            <svg
-              class="ll-icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#8a8a8a"
-              stroke-width="1.6"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path
-                d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
-              />
+            <svg class="ll-icon" viewBox="0 0 24 24" fill="none" stroke="#8a8a8a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
               <rect x="2" y="9" width="4" height="12" />
               <circle cx="4" cy="4" r="2" />
             </svg>
             <span class="ll-arrow">→</span>
           </div>
         </a>
- 
-        <a
-          class="ll-row"
-          href="https://github.com/laxexe"
-          target="_blank"
-          rel="noopener"
-        >
+
+        <a class="ll-row" href="https://github.com/laxexe" target="_blank" rel="noopener">
           <div class="ll-fill"></div>
           <div class="ll-left">
             <span class="ll-num">03</span>
@@ -390,29 +383,14 @@
             <span class="ll-handle">@laxExe</span>
           </div>
           <div class="ll-right">
-            <svg
-              class="ll-icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#8a8a8a"
-              stroke-width="1.6"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path
-                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-              />
+            <svg class="ll-icon" viewBox="0 0 24 24" fill="none" stroke="#8a8a8a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
             </svg>
             <span class="ll-arrow">→</span>
           </div>
         </a>
- 
-        <a
-          class="ll-row"
-          href="https://www.instagram.com/lakshman_r.08/"
-          target="_blank"
-          rel="noopener"
-        >
+
+        <a class="ll-row" href="https://www.instagram.com/lakshman_r.08/" target="_blank" rel="noopener">
           <div class="ll-fill"></div>
           <div class="ll-left">
             <span class="ll-num">04</span>
@@ -420,15 +398,7 @@
             <span class="ll-handle">@lakshman_r.08</span>
           </div>
           <div class="ll-right">
-            <svg
-              class="ll-icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#8a8a8a"
-              stroke-width="1.6"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
+            <svg class="ll-icon" viewBox="0 0 24 24" fill="none" stroke="#8a8a8a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
               <rect x="2" y="2" width="20" height="20" rx="5" />
               <circle cx="12" cy="12" r="4" />
               <circle cx="17.5" cy="6.5" r="1" fill="#8a8a8a" stroke="none" />
@@ -436,13 +406,8 @@
             <span class="ll-arrow">→</span>
           </div>
         </a>
- 
-        <a
-          class="ll-row"
-          href="https://x.com/Lakshman_r08"
-          target="_blank"
-          rel="noopener"
-        >
+
+        <a class="ll-row" href="https://x.com/Lakshman_r08" target="_blank" rel="noopener">
           <div class="ll-fill"></div>
           <div class="ll-left">
             <span class="ll-num">05</span>
@@ -450,43 +415,24 @@
             <span class="ll-handle">@Lakshman_r08</span>
           </div>
           <div class="ll-right">
-            <svg
-              class="ll-icon"
-              viewBox="0 0 24 24"
-              fill="#8a8a8a"
-              stroke="none"
-            >
-              <path
-                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L2.002 2.25H8.08l4.26 5.632 5.905-5.632Zm-1.161 17.52h1.833L7.084 4.126H5.117Z"
-              />
+            <svg class="ll-icon" viewBox="0 0 24 24" fill="#8a8a8a" stroke="none">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L2.002 2.25H8.08l4.26 5.632 5.905-5.632Zm-1.161 17.52h1.833L7.084 4.126H5.117Z" />
             </svg>
             <span class="ll-arrow">→</span>
           </div>
         </a>
 
- 
-        <!-- standalone résumé button -->
         <div class="resume-actions">
-          <a
-            class="resume-btn"
-            href="https://1drv.ms/b/c/3dff5d964f45c124/IQBKrlGx5zLuQrR_MerrC5PGAUR3CEWyEC0CMVHYutzer0E?e=PfDG4g"
-            target="_blank"
-            rel="noopener"
-          >
+          <a class="resume-btn" href="https://1drv.ms/b/c/3dff5d964f45c124/IQBKrlGx5zLuQrR_MerrC5PGAUR3CEWyEC0CMVHYutzer0E?e=PfDG4g" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24">
-              <path
-                d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-              />
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
               <polyline points="14 2 14 8 20 8" />
               <line x1="16" y1="13" x2="8" y2="13" />
               <line x1="16" y1="17" x2="8" y2="17" />
             </svg>
             <span>view resume online</span>
           </a>
-          <a class="resume-btn" href="LakshmanR_TechnicalResume2025_MAY.pdf"
-            download="LakshmanR_TechnicalResume2025_MAY.pdf">
-
-            
+          <a class="resume-btn" href="LakshmanR_TechnicalResume2025_MAY.pdf" download="LakshmanR_TechnicalResume2025_MAY.pdf">
             <svg viewBox="0 0 24 24">
               <path d="M12 3v12" />
               <polyline points="7 11 12 16 17 11" />
@@ -504,28 +450,20 @@
         </div>
       </div>
     </section>
- 
+
     <div id="draw-hint">click + drag to draw anywhere</div>
+    <button id="next-section-btn" type="button"><span>next</span></button>
     <button id="clear-btn" type="button"><span>clear canvas</span></button>
- 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+
+    <script>
       (() => {
-        console.log("Script started");
+        let heroCarouselDisabled = false;
+
         /* LOADER */
         const words = [
-          "Hi!",
-          "Hola!",
-          "Bonjour!",
-          "Hallo!",
-          "Ciao!",
-          "こんにちは！",
-          "안녕하세요!",
-          "Привет!",
-          "مرحباً!",
-          "नमस्ते!",
-          "வணக்கம்!",
-          "Γεια!",
-          "Hej!",
+          "Hi!", "Hola!", "Bonjour!", "Hallo!", "Ciao!",
+          "こんにちは！", "안녕하세요!", "Привет!", "مرحباً!",
+          "नमस्ते!", "வணக்கம்!", "Γεια!", "Hej!",
         ];
         const wordEl = document.getElementById("welcome-word");
         const bar = document.getElementById("progress-bar");
@@ -551,48 +489,25 @@
         }
         bar.style.width = 100 / words.length + "%";
         setTimeout(nextWord, 320);
- 
+
         /* REVEAL */
         function revealPage() {
-          console.log("revealPage called");
-          const nameEl = document.getElementById("hero-name");
-          console.log("nameEl:", nameEl);
-          if (nameEl) {
-            nameEl.classList.add("visible");
-            nameEl.style.opacity = '1';
-            // Removed red color, using CSS color
-          }
-          
-          const dividerEl = document.querySelector(".divider");
-          console.log("dividerEl:", dividerEl);
-          if (dividerEl) {
-            dividerEl.style.opacity = '1';
-          }
-          
-          const rolesEl = document.getElementById("hero-roles");
-          console.log("rolesEl:", rolesEl);
-          if (rolesEl) {
-            rolesEl.classList.add("visible");
-            rolesEl.style.opacity = '1';
-            // Removed red color, using CSS color
-          }
-          
-          const subtitleEl = document.getElementById("hero-subtitle");
-          console.log("subtitleEl:", subtitleEl);
-          if (subtitleEl) {
-            subtitleEl.style.opacity = '1';
-          }
-          
+          document.getElementById("hero-name").classList.add("visible");
+          document.querySelector(".divider")?.classList.add("visible");
+          document.getElementById("hero-roles").classList.add("visible");
+          document.getElementById("hero-subtitle").classList.add("visible");
           const heroCarouselEl = document.getElementById("hero-carousel");
-          console.log("heroCarouselEl:", heroCarouselEl);
           if (heroCarouselEl) {
-            heroCarouselEl.style.opacity = '1';
-            heroCarouselEl.style.transform = 'translateY(0)';
+            if (heroCarouselDisabled) {
+              heroCarouselEl.style.display = "none";
+            } else {
+              heroCarouselEl.classList.add("visible");
+            }
           }
-          
+          document.getElementById("scroll-hint")?.classList.add("visible");
           startHeroTyping();
         }
- 
+
         /* HERO TYPING */
         const heroIntro = "Hi I'm lakshman!";
         const heroFinal = "Lakshman :)";
@@ -604,14 +519,10 @@
           "fascinated by systems that scale",
           "software engineer (aspiring ._. ).",
         ];
-        function wait(ms) {
-          return new Promise((resolve) => setTimeout(resolve, ms));
-        }
+        function wait(ms) { return new Promise((r) => setTimeout(r, ms)); }
         async function typeText(el, text, speed = 42) {
-          console.log("typeText called with:", text);
           for (let i = 1; i <= text.length; i++) {
             el.textContent = text.slice(0, i);
-            console.log("Typing:", el.textContent);
             await wait(speed);
           }
         }
@@ -636,431 +547,226 @@
         async function startHeroTyping() {
           const nameEl = document.getElementById("hero-name");
           const rolesEl = document.getElementById("hero-roles");
-          
-          // Clear any existing text first
           nameEl.textContent = "";
           rolesEl.textContent = "";
-          
-          console.log("Starting typing animation");
-          
-          // Start the typing animation
-          await typeText(nameEl, heroIntro, 10); // Much faster
-          console.log("Typed intro");
+          await typeText(nameEl, heroIntro, 54);
           await wait(650);
           await eraseText(nameEl, 0, 34);
-          console.log("Erased intro");
           await wait(140);
           await typeText(nameEl, heroFinal, 60);
-          console.log("Typed final name");
           await wait(220);
           loopRoles(rolesEl);
-          console.log("Started role loop");
         }
- 
+
         /* DARK MODE */
         const themeRoot = document.documentElement;
-        const isDarkTheme = () =>
-          themeRoot.getAttribute("data-theme") === "dark";
+        const isDarkTheme = () => themeRoot.getAttribute("data-theme") === "dark";
         const dmBtn = document.getElementById("dm-btn");
-        const nextSectionBtns = Array.from(
-          document.querySelectorAll(".next-section-btn"),
-        );
+        const nextSectionBtn = document.getElementById("next-section-btn");
         let dark = false;
         dmBtn.querySelector("span").textContent = "dark mode";
         dmBtn.addEventListener("click", () => {
           dark = !dark;
           themeRoot.setAttribute("data-theme", dark ? "dark" : "light");
-          dmBtn.querySelector("span").textContent = dark
-            ? "light mode"
-            : "dark mode";
+          dmBtn.querySelector("span").textContent = dark ? "light mode" : "dark mode";
         });
- 
-        /* SECTION NAVIGATION */
+
+        /* NAV + SCROLL SPY */
         const navItems = document.querySelectorAll(".nav-item");
-        const sectionIds = [
-          "hero",
-          "about",
-          "experience",
-          "projects",
-          "contact",
-        ];
-        let sections = sectionIds
-          .map((id) => document.getElementById(id))
-          .filter(Boolean);
+        const sectionIds = ["hero", "about", "experience", "projects", "contact"];
+        let sections = sectionIds.map((id) => document.getElementById(id)).filter(Boolean);
         let activeSectionId = "";
         let navLabelTimer = null;
+
         function flashActiveNavLabel(sectionId) {
           if (!sectionId) return;
-          const activeNav = document.querySelector(
-            `.nav-item[data-section="${sectionId}"]`,
-          );
+          const activeNav = document.querySelector(`.nav-item[data-section="${sectionId}"]`);
           if (!activeNav) return;
           if (navLabelTimer) window.clearTimeout(navLabelTimer);
           navItems.forEach((item) => item.classList.remove("label-flash"));
           activeNav.classList.add("label-flash");
-          navLabelTimer = window.setTimeout(() => {
-            activeNav.classList.remove("label-flash");
-          }, 1100);
+          navLabelTimer = window.setTimeout(() => activeNav.classList.remove("label-flash"), 1100);
         }
+
         function applyMasterVisibility(hiddenSections) {
           sectionIds.forEach((id) => {
             const sectionEl = document.getElementById(id);
-            const navEl = document.querySelector(
-              `.nav-item[data-section="${id}"]`,
-            );
+            const navEl = document.querySelector(`.nav-item[data-section="${id}"]`);
             const isHidden = hiddenSections.has(id);
-            if (sectionEl) {
-              sectionEl.classList.toggle("is-hidden", isHidden);
-            }
-            if (navEl) {
-              navEl.classList.toggle("is-hidden", isHidden);
-            }
+            if (sectionEl) sectionEl.classList.toggle("is-hidden", isHidden);
+            if (navEl) navEl.classList.toggle("is-hidden", isHidden);
           });
           sections = sectionIds
             .map((id) => document.getElementById(id))
-            .filter(
-              (sectionEl) =>
-                sectionEl && !sectionEl.classList.contains("is-hidden"),
-            );
-          sections.forEach((sectionEl, index) => {
-            sectionEl.setAttribute(
-              "data-display-number",
-              String(index).padStart(2, "0"),
-            );
-          });
+            .filter((el) => el && !el.classList.contains("is-hidden"));
+          sections.forEach((el, i) => el.setAttribute("data-display-number", String(i).padStart(2, "0")));
           sectionIds.forEach((id) => {
-            const sectionEl = document.getElementById(id);
-            if (sectionEl && sectionEl.classList.contains("is-hidden")) {
-              sectionEl.removeAttribute("data-display-number");
-            }
-          });
-          sectionIds.forEach((id) => {
-            const sectionEl = document.getElementById(id);
-            const nextBtn = sectionEl?.querySelector(".next-section-btn");
-            if (!nextBtn) return;
-            const currentIndex = sections.findIndex(
-              (section) => section.id === id,
-            );
-            const nextSection =
-              currentIndex >= 0 ? sections[currentIndex + 1] : null;
-            nextBtn.classList.toggle("is-hidden", !nextSection);
-            if (nextSection) {
-              nextBtn.dataset.targetSection = nextSection.id;
-              nextBtn.setAttribute("aria-label", `Go to ${nextSection.id}`);
-            } else {
-              delete nextBtn.dataset.targetSection;
-              nextBtn.setAttribute("aria-label", "No next section");
-            }
+            const el = document.getElementById(id);
+            if (el && el.classList.contains("is-hidden")) el.removeAttribute("data-display-number");
           });
           navItems.forEach((n) => n.classList.remove("active"));
-          const requestedSection = window.location.hash
-            ? window.location.hash.slice(1)
-            : "";
-          const initialSectionId = sections.some(
-            (section) => section.id === requestedSection,
-          )
-            ? requestedSection
-            : sections[0]?.id || "";
-          if (initialSectionId) {
-            scrollToSection(initialSectionId, {
-              skipHistory: true,
-              behavior: "auto",
-            });
+          if (sections.length) {
+            const firstNav = document.querySelector(`.nav-item[data-section="${sections[0].id}"]`);
+            if (firstNav) firstNav.classList.add("active");
           }
-          updateActiveNav({ skipHistory: true });
+          updateNav();
         }
+
         async function loadMasterVisibility() {
           try {
-            const hiddenSections = new Set(
-              parseListFile(await fetchTextFile("master.txt")).map((line) =>
-                line.toLowerCase(),
-              ),
-            );
+            const lines = parseListFile(await fetchTextFile("master.txt")).map((l) => l.toLowerCase());
+            heroCarouselDisabled = lines.includes("disable-hero-carousel");
+            const hiddenSections = new Set(lines.filter((l) => l !== "disable-hero-carousel"));
             applyMasterVisibility(hiddenSections);
-          } catch (error) {
+          } catch {
             applyMasterVisibility(new Set());
           }
         }
-        function scrollToSection(sectionId, options = {}) {
-          const { skipHistory = false, behavior = "smooth" } = options;
-          const targetSection = sections.find(
-            (section) => section.id === sectionId,
-          );
-          if (!targetSection) return;
-          if (!skipHistory) {
-            window.history.replaceState(null, "", `#${targetSection.id}`);
-          }
-          window.scrollTo({ top: targetSection.offsetTop, behavior });
-        }
-        function updateActiveNav(options = {}) {
-          const { skipHistory = false } = options;
+
+        function updateNav() {
           if (!sections.length) {
             navItems.forEach((n) => n.classList.remove("active"));
+            if (nextSectionBtn) nextSectionBtn.classList.add("is-hidden");
             return;
           }
           const mid = window.scrollY + window.innerHeight / 2;
           let active = sections[0];
-          for (const section of sections) {
-            if (section.offsetTop <= mid) active = section;
-          }
-          navItems.forEach((n) =>
-            n.classList.toggle(
-              "active",
-              active && n.dataset.section === active.id,
-            ),
-          );
+          for (const s of sections) { if (s.offsetTop <= mid) active = s; }
+          navItems.forEach((n) => n.classList.toggle("active", active && n.dataset.section === active.id));
           if (active && active.id !== activeSectionId) {
             activeSectionId = active.id;
             flashActiveNavLabel(activeSectionId);
-            if (!skipHistory) {
-              window.history.replaceState(null, "", `#${activeSectionId}`);
-            }
+          }
+          if (nextSectionBtn) {
+            const activeIndex = sections.findIndex((s) => s === active);
+            const nextSection = activeIndex >= 0 ? sections[activeIndex + 1] : null;
+            nextSectionBtn.classList.toggle("is-hidden", !nextSection);
+            nextSectionBtn.setAttribute("aria-label", nextSection ? `Go to ${nextSection.id}` : "No next section");
           }
         }
+
+        function animateSectionScroll(targetY) {
+          const startY = window.scrollY;
+          const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+          const destY = Math.max(0, Math.min(targetY, maxScroll));
+          const distance = destY - startY;
+          if (Math.abs(distance) < 2) return;
+          const duration = 560;
+          const startTime = performance.now();
+          const ease = (t) => 1 - Math.pow(1 - t, 3);
+          function step(now) {
+            const progress = Math.min((now - startTime) / duration, 1);
+            window.scrollTo(0, startY + distance * ease(progress));
+            if (progress < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        }
+
+        window.addEventListener("scroll", updateNav, { passive: true });
         navItems.forEach((n) => {
           n.addEventListener("click", (e) => {
             e.preventDefault();
-            const targetSection = document.getElementById(n.dataset.section);
-            if (
-              !targetSection ||
-              targetSection.classList.contains("is-hidden")
-            ) {
-              return;
+            const target = document.getElementById(n.dataset.section);
+            if (!target || target.classList.contains("is-hidden")) return;
+            animateSectionScroll(target.offsetTop);
+          });
+        });
+        if (nextSectionBtn) {
+          nextSectionBtn.addEventListener("click", () => {
+            if (!sections.length) return;
+            const mid = window.scrollY + window.innerHeight / 2;
+            let activeIndex = 0;
+            for (let i = 0; i < sections.length; i++) {
+              if (sections[i].offsetTop <= mid) activeIndex = i;
             }
-            scrollToSection(targetSection.id);
+            const next = sections[activeIndex + 1];
+            if (next) animateSectionScroll(next.offsetTop);
           });
-        });
-        nextSectionBtns.forEach((button) => {
-          button.addEventListener("click", () => {
-            const targetSectionId = button.dataset.targetSection;
-            if (!targetSectionId) return;
-            scrollToSection(targetSectionId);
-          });
-        });
-        window.addEventListener(
-          "scroll",
-          () => {
-            updateActiveNav();
-          },
-          { passive: true },
-        );
-        window.addEventListener("resize", () => {
-          updateActiveNav({ skipHistory: true });
-        });
-        window.addEventListener("hashchange", () => {
-          const hashSectionId = window.location.hash.slice(1);
-          if (!hashSectionId) return;
-          scrollToSection(hashSectionId, {
-            skipHistory: true,
-            behavior: "auto",
-          });
-        });
-        loadStyleIndex();
-        loadMasterVisibility();
- 
-        /* ABOUT THOUGHTS */
-        const aboutTrack = document.getElementById("about-track");
-        const aboutCurrent = document.getElementById("about-current");
-        const aboutTotal = document.getElementById("about-total");
-        const aboutPrev = document.getElementById("about-prev");
-        const aboutNext = document.getElementById("about-next");
-        const aboutDotsEl = document.getElementById("about-dots");
-        const aboutResultsCopy = document.getElementById("about-results-copy");
-        const aboutEmpty = document.getElementById("about-empty");
-        const heroCarouselEl = document.getElementById("hero-carousel");
-        const heroCarouselTrack = document.getElementById(
-          "hero-carousel-track",
-        );
-        const heroCarouselCurrent = document.getElementById(
-          "hero-carousel-current",
-        );
-        const heroCarouselTotal = document.getElementById(
-          "hero-carousel-total",
-        );
-        const heroCarouselPrev = document.getElementById("hero-carousel-prev");
-        const heroCarouselNext = document.getElementById("hero-carousel-next");
-        const heroCarouselDotsEl =
-          document.getElementById("hero-carousel-dots");
-        const heroCarouselEmpty = document.getElementById(
-          "hero-carousel-empty",
-        );
-        const experienceList = document.getElementById("experience-list");
-        const experienceTotal = document.getElementById("experience-total");
-        const experienceEmpty = document.getElementById("experience-empty");
-        let aboutEntries = [];
-        let aboutDots = [];
-        let aboutIndex = 0;
-        let heroCarouselEntries = [];
-        let heroCarouselDots = [];
-        let heroCarouselIndex = 0;
-        let heroCarouselTimer = null;
- 
-        function escapeHTML(value) {
-          return value.replace(
-            /[&<>"']/g,
-            (char) =>
-              ({
-                "&": "&amp;",
-                "<": "&lt;",
-                ">": "&gt;",
-                '"': "&quot;",
-                "'": "&#39;",
-              })[char],
-          );
         }
 
- 
-        // Manifest files are newline-separated lists with optional `#` comments.
+        loadMasterVisibility();
+
+        /* SHARED HELPERS */
+        function escapeHTML(v) {
+          return v.replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" })[c]);
+        }
         function parseListFile(source) {
-          return source
-            .split(/\r?\n/)
-            .map((line) => line.trim())
-            .filter((line) => line && !line.startsWith("#"));
+          return source.split(/\r?\n/).map((l) => l.trim()).filter((l) => l && !l.startsWith("#"));
         }
- 
         async function fetchTextFile(path) {
-          const response = await fetch(path, { cache: "no-store" });
-          if (!response.ok) throw new Error(path);
-          return response.text();
+          const res = await fetch(path, { cache: "no-store" });
+          if (!res.ok) throw new Error(path);
+          return res.text();
         }
- 
-        // Content files use a tiny tag format so they stay easy to edit by hand.
         function getTags(source, tag) {
-          const matches = [];
-          const regex = new RegExp(`<${tag}>([\\s\\S]*?)</${tag}>`, "gi");
-          let match;
-          while ((match = regex.exec(source))) {
-            matches.push(match[1].trim());
-          }
+          const matches = [], re = new RegExp(`<${tag}>([\\s\\S]*?)</${tag}>`, "gi");
+          let m;
+          while ((m = re.exec(source))) matches.push(m[1].trim());
           return matches;
         }
- 
-        function normalizeText(text) {
-          return text.replace(/\s+/g, " ").trim();
-        }
-
-        async function loadStyleIndex() {
-          try {
-            const source = await fetchTextFile("index.txt");
-            const styleMap = [
-              ["font-sans", "--font-sans"],
-              ["font-mono", "--font-mono"],
-              ["radius-cursor", "--radius-cursor"],
-              ["radius-cursor-draw", "--radius-cursor-draw"],
-              ["radius-control", "--radius-control"],
-              ["radius-pill", "--radius-pill"],
-              ["radius-card", "--radius-card"],
-              ["light-bg", "--bg-light"],
-              ["light-c1", "--c1-light"],
-              ["light-c2", "--c2-light"],
-              ["light-c3", "--c3-light"],
-              ["light-c4", "--c4-light"],
-              ["light-c5", "--c5-light"],
-              ["light-border", "--border-light"],
-              ["dark-bg", "--bg-dark"],
-              ["dark-c1", "--c1-dark"],
-              ["dark-c2", "--c2-dark"],
-              ["dark-c3", "--c3-dark"],
-              ["dark-c4", "--c4-dark"],
-              ["dark-c5", "--c5-dark"],
-              ["dark-border", "--border-dark"],
-            ];
-
-            styleMap.forEach(([tag, cssVar]) => {
-              const value = getTags(source, tag)[0];
-              if (value) {
-                document.documentElement.style.setProperty(cssVar, value.trim());
-              }
-            });
-          } catch (error) {
-            // Keep the CSS defaults when the editable style index is missing.
-          }
-        }
-
+        function normalizeText(text) { return text.replace(/\s+/g, " ").trim(); }
         function sanitizeUrl(url) {
-          return /^(https?:\/\/|\/|blog\/|projects\/|hero-images\/|experience\/)/i.test(
-            url,
-          )
-            ? url
-            : "#";
+          return /^(https?:\/\/|\/|blog\/|projects\/|hero-images\/|experience\/)/i.test(url) ? url : "#";
         }
- 
         async function loadManifestEntries(manifestPath, basePath, parser) {
           const files = parseListFile(await fetchTextFile(manifestPath));
-          return Promise.all(
-            files.map(async (file) => {
-              const entryPath = `${basePath}/${file}`;
-              return parser(await fetchTextFile(entryPath), file);
-            }),
-          );
+          return Promise.all(files.map(async (file) => parser(await fetchTextFile(`${basePath}/${file}`), file)));
         }
- 
-        // Shared pointer tilt keeps the card motion consistent across sections.
         function attachTiltInteraction(selector) {
           document.querySelectorAll(selector).forEach((card) => {
-            card.addEventListener("mousemove", (event) => {
-              const rect = card.getBoundingClientRect();
-              const px = (event.clientX - rect.left) / rect.width;
-              const py = (event.clientY - rect.top) / rect.height;
-              const tiltX = (0.5 - py) * 8;
-              const tiltY = (px - 0.5) * 12;
-              const shiftX = (px - 0.5) * 18;
-              const shiftY = (py - 0.5) * 10;
-              card.style.setProperty("--card-tilt-x", `${tiltY}deg`);
-              card.style.setProperty("--card-tilt-y", `${tiltX}deg`);
-              card.style.setProperty("--card-shift-x", `${shiftX}px`);
-              card.style.setProperty("--card-shift-y", `${shiftY}px`);
+            card.addEventListener("mousemove", (e) => {
+              const r = card.getBoundingClientRect();
+              const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+              card.style.setProperty("--card-tilt-x", `${(px - 0.5) * 12}deg`);
+              card.style.setProperty("--card-tilt-y", `${(0.5 - py) * 8}deg`);
+              card.style.setProperty("--card-shift-x", `${(px - 0.5) * 18}px`);
+              card.style.setProperty("--card-shift-y", `${(py - 0.5) * 10}px`);
             });
             card.addEventListener("mouseleave", () => {
-              card.style.setProperty("--card-tilt-x", "0deg");
-              card.style.setProperty("--card-tilt-y", "0deg");
-              card.style.setProperty("--card-shift-x", "0px");
-              card.style.setProperty("--card-shift-y", "0px");
+              ["--card-tilt-x","--card-tilt-y","--card-shift-x","--card-shift-y"].forEach((p) =>
+                card.style.setProperty(p, p.includes("tilt") ? "0deg" : "0px")
+              );
             });
           });
         }
- 
+        function parseLinkValue(raw) {
+          const parts = raw.split("|").map((p) => p.trim()).filter(Boolean);
+          return parts.length >= 2
+            ? { label: parts[0], href: sanitizeUrl(parts.slice(1).join("|")) }
+            : { label: raw.trim(), href: "#" };
+        }
+        function getInitials(label) {
+          return normalizeText(label).split(" ").filter(Boolean).slice(0, 2).map((p) => p[0].toUpperCase()).join("");
+        }
+
+        /* HERO CAROUSEL */
+        const heroCarouselEl = document.getElementById("hero-carousel");
+        const heroCarouselTrack = document.getElementById("hero-carousel-track");
+        const heroCarouselCurrent = document.getElementById("hero-carousel-current");
+        const heroCarouselTotal = document.getElementById("hero-carousel-total");
+        const heroCarouselPrev = document.getElementById("hero-carousel-prev");
+        const heroCarouselNext = document.getElementById("hero-carousel-next");
+        const heroCarouselDotsEl = document.getElementById("hero-carousel-dots");
+        const heroCarouselEmpty = document.getElementById("hero-carousel-empty");
+        let heroCarouselEntries = [], heroCarouselDots = [], heroCarouselIndex = 0, heroCarouselTimer = null;
+
         function parseHeroImageFile(source, filename) {
           return {
             image: sanitizeUrl(getTags(source, "image")[0] || ""),
-            subtitle:
-              normalizeText(getTags(source, "subtitle")[0] || "") ||
-              filename
-                .replace(/\.txt$/i, "")
-                .replace(/[-_]+/g, " ")
-                .trim(),
+            subtitle: normalizeText(getTags(source, "subtitle")[0] || "") || filename.replace(/\.txt$/i, "").replace(/[-_]+/g, " ").trim(),
             date: normalizeText(getTags(source, "date")[0] || ""),
           };
         }
- 
         function buildHeroCarouselSlide(entry) {
-          return `
-            <article class="hero-carousel-slide">
-              <div class="hero-carousel-frame">
-                <div class="hero-carousel-image">
-                  ${
-                    entry.image && entry.image !== "#"
-                      ? `<img src="${escapeHTML(entry.image)}" alt="${escapeHTML(entry.subtitle)}" loading="lazy" />`
-                      : ""
-                  }
-                </div>
-                <div class="hero-carousel-entry">
-                  ${
-                    entry.date
-                      ? `<span class="hero-carousel-date">${escapeHTML(entry.date)}</span>`
-                      : ""
-                  }
-                  <p class="hero-carousel-subtitle">${escapeHTML(entry.subtitle)}</p>
-                </div>
-              </div>
-            </article>
-          `;
+          return `<article class="hero-carousel-slide"><div class="hero-carousel-frame"><div class="hero-carousel-image">${
+            entry.image && entry.image !== "#" ? `<img src="${escapeHTML(entry.image)}" alt="${escapeHTML(entry.subtitle)}" loading="lazy" />` : ""
+          }</div><div class="hero-carousel-entry">${
+            entry.date ? `<span class="hero-carousel-date">${escapeHTML(entry.date)}</span>` : ""
+          }<p class="hero-carousel-subtitle">${escapeHTML(entry.subtitle)}</p></div></div></article>`;
         }
- 
         function buildHeroCarouselDot(index) {
           return `<button class="hero-carousel-dot${index === 0 ? " active" : ""}" type="button" aria-label="Go to hero image ${index + 1}" data-hero-dot-index="${index}"></button>`;
         }
- 
         function renderHeroCarousel() {
           if (!heroCarouselTrack) return;
           if (!heroCarouselEntries.length) {
@@ -1073,244 +779,84 @@
           }
           if (heroCarouselEmpty) heroCarouselEmpty.classList.remove("show");
           heroCarouselTrack.style.transform = `translateX(-${heroCarouselIndex * 100}%)`;
-          if (heroCarouselCurrent) {
-            heroCarouselCurrent.textContent = String(
-              heroCarouselIndex + 1,
-            ).padStart(2, "0");
-          }
-          if (heroCarouselTotal) {
-            heroCarouselTotal.textContent = String(
-              heroCarouselEntries.length,
-            ).padStart(2, "0");
-          }
-          heroCarouselDots.forEach((dot, index) =>
-            dot.classList.toggle("active", index === heroCarouselIndex),
-          );
+          if (heroCarouselCurrent) heroCarouselCurrent.textContent = String(heroCarouselIndex + 1).padStart(2, "0");
+          if (heroCarouselTotal) heroCarouselTotal.textContent = String(heroCarouselEntries.length).padStart(2, "0");
+          heroCarouselDots.forEach((dot, i) => dot.classList.toggle("active", i === heroCarouselIndex));
         }
- 
         function startHeroCarouselAuto() {
           clearInterval(heroCarouselTimer);
           if (heroCarouselEntries.length < 2) return;
           heroCarouselTimer = window.setInterval(() => {
-            heroCarouselIndex =
-              (heroCarouselIndex + 1) % heroCarouselEntries.length;
+            heroCarouselIndex = (heroCarouselIndex + 1) % heroCarouselEntries.length;
             renderHeroCarousel();
           }, 3800);
         }
- 
-        function parseLinkValue(raw) {
-          const parts = raw
-            .split("|")
-            .map((part) => part.trim())
-            .filter(Boolean);
-          if (parts.length >= 2) {
-            return {
-              label: parts[0],
-              href: sanitizeUrl(parts.slice(1).join("|")),
-            };
-          }
-          return { label: raw.trim(), href: "#" };
-        }
- 
         async function loadHeroCarouselEntries() {
-          if (
-            !heroCarouselEl ||
-            !heroCarouselTrack ||
-            !heroCarouselDotsEl ||
-            !heroCarouselCurrent ||
-            !heroCarouselTotal ||
-            !heroCarouselPrev ||
-            !heroCarouselNext ||
-            !heroCarouselEmpty
-          ) {
+          if (heroCarouselDisabled) {
+            if (heroCarouselEl) heroCarouselEl.style.display = "none";
             return;
           }
- 
+          if (!heroCarouselEl || !heroCarouselTrack || !heroCarouselDotsEl || !heroCarouselCurrent || !heroCarouselTotal || !heroCarouselPrev || !heroCarouselNext || !heroCarouselEmpty) return;
           try {
-            heroCarouselEntries = await loadManifestEntries(
-              "hero-images/index.txt",
-              "hero-images",
-              parseHeroImageFile,
-            );
- 
+            heroCarouselEntries = await loadManifestEntries("hero-images/index.txt", "hero-images", parseHeroImageFile);
             heroCarouselIndex = 0;
-            heroCarouselTrack.innerHTML = heroCarouselEntries
-              .map((entry) => buildHeroCarouselSlide(entry))
-              .join("");
-            heroCarouselDotsEl.innerHTML = heroCarouselEntries
-              .map((_, index) => buildHeroCarouselDot(index))
-              .join("");
-            heroCarouselDots = Array.from(
-              heroCarouselDotsEl.querySelectorAll(".hero-carousel-dot"),
-            );
+            heroCarouselTrack.innerHTML = heroCarouselEntries.map(buildHeroCarouselSlide).join("");
+            heroCarouselDotsEl.innerHTML = heroCarouselEntries.map((_, i) => buildHeroCarouselDot(i)).join("");
+            heroCarouselDots = Array.from(heroCarouselDotsEl.querySelectorAll(".hero-carousel-dot"));
             heroCarouselDots.forEach((dot) => {
-              dot.addEventListener("click", () => {
-                heroCarouselIndex = Number(dot.dataset.heroDotIndex);
-                renderHeroCarousel();
-                startHeroCarouselAuto();
-              });
+              dot.addEventListener("click", () => { heroCarouselIndex = Number(dot.dataset.heroDotIndex); renderHeroCarousel(); startHeroCarouselAuto(); });
             });
             renderHeroCarousel();
             startHeroCarouselAuto();
-          } catch (error) {
+          } catch {
             clearInterval(heroCarouselTimer);
-            heroCarouselEntries = [];
-            heroCarouselDots = [];
-            heroCarouselTrack.innerHTML = "";
-            heroCarouselDotsEl.innerHTML = "";
-            heroCarouselEmpty.textContent =
-              "couldn't load the hero image archive. serve the site through a local server and check the hero-images folder.";
-            heroCarouselEmpty.classList.add("show");
+            heroCarouselEntries = []; heroCarouselDots = [];
+            if (heroCarouselTrack) heroCarouselTrack.innerHTML = "";
+            if (heroCarouselDotsEl) heroCarouselDotsEl.innerHTML = "";
+            if (heroCarouselEmpty) { heroCarouselEmpty.textContent = "couldn't load the hero image archive. serve the site through a local server and check the hero-images folder."; heroCarouselEmpty.classList.add("show"); }
             renderHeroCarousel();
           }
         }
- 
+        if (heroCarouselPrev) heroCarouselPrev.addEventListener("click", () => { if (!heroCarouselEntries.length) return; heroCarouselIndex = (heroCarouselIndex - 1 + heroCarouselEntries.length) % heroCarouselEntries.length; renderHeroCarousel(); startHeroCarouselAuto(); });
+        if (heroCarouselNext) heroCarouselNext.addEventListener("click", () => { if (!heroCarouselEntries.length) return; heroCarouselIndex = (heroCarouselIndex + 1) % heroCarouselEntries.length; renderHeroCarousel(); startHeroCarouselAuto(); });
+        if (heroCarouselEl) {
+          heroCarouselEl.addEventListener("mouseenter", () => clearInterval(heroCarouselTimer));
+          heroCarouselEl.addEventListener("mouseleave", startHeroCarouselAuto);
+        }
+
+        /* ABOUT THOUGHTS */
+        const aboutTrack = document.getElementById("about-track");
+        const aboutCurrent = document.getElementById("about-current");
+        const aboutTotal = document.getElementById("about-total");
+        const aboutPrev = document.getElementById("about-prev");
+        const aboutNext = document.getElementById("about-next");
+        const aboutDotsEl = document.getElementById("about-dots");
+        const aboutResultsCopy = document.getElementById("about-results-copy");
+        const aboutEmpty = document.getElementById("about-empty");
+        let aboutEntries = [], aboutDots = [], aboutIndex = 0;
+
         function parseThoughtFile(source, filename) {
-          const title =
-            getTags(source, "main")[0] || filename.replace(/\.txt$/i, "");
-          const text = getTags(source, "text")[0] || "";
-          const links = getTags(source, "link");
           return {
-            title,
-            text,
-            preview: normalizeText(text),
-            links: links.map((raw) => parseLinkValue(raw)),
+            title: getTags(source, "main")[0] || filename.replace(/\.txt$/i, ""),
+            text: getTags(source, "text")[0] || "",
+            preview: normalizeText(getTags(source, "text")[0] || ""),
+            links: getTags(source, "link").map(parseLinkValue),
           };
         }
- 
-        function getInitials(label) {
-          return normalizeText(label)
-            .split(" ")
-            .filter(Boolean)
-            .slice(0, 2)
-            .map((part) => part.charAt(0).toUpperCase())
-            .join("");
-        }
- 
-        function parseExperienceFile(source, filename) {
-          const company =
-            getTags(source, "company")[0] || filename.replace(/\.txt$/i, "");
-          return {
-            role: getTags(source, "role")[0] || "role title",
-            company,
-            logo: sanitizeUrl(getTags(source, "logo")[0] || ""),
-            date: getTags(source, "date")[0] || "",
-            location: getTags(source, "location")[0] || "",
-            summary: normalizeText(getTags(source, "summary")[0] || ""),
-            bullets: getTags(source, "bullet")
-              .map((bullet) => normalizeText(bullet))
-              .filter(Boolean),
-            tags: getTags(source, "tag")
-              .map((tag) => normalizeText(tag))
-              .filter(Boolean),
-            badge: getTags(source, "badge")[0] || getInitials(company),
-          };
-        }
- 
-        function buildExperienceCard(entry) {
-          return `
-            <article class="experience-card">
-              <div class="experience-badge${entry.logo && entry.logo !== "#" ? " experience-badge-logo" : ""}" aria-hidden="true">
-                ${
-                  entry.logo && entry.logo !== "#"
-                    ? `<img src="${escapeHTML(entry.logo)}" alt="" loading="lazy" />`
-                    : escapeHTML(entry.badge)
-                }
-              </div>
-              <div class="experience-card-main">
-                <div class="experience-card-top">
-                  <div>
-                    <h3 class="experience-role">${escapeHTML(entry.role)}</h3>
-                    <p class="experience-company">${escapeHTML(entry.company)}</p>
-                  </div>
-                  <div class="experience-meta">
-                    ${entry.date ? `<span class="experience-date">${escapeHTML(entry.date)}</span>` : ""}
-                    ${entry.location ? `<span class="experience-location">${escapeHTML(entry.location)}</span>` : ""}
-                  </div>
-                </div>
-                ${
-                  entry.summary
-                    ? `<p class="experience-summary">${escapeHTML(entry.summary)}</p>`
-                    : ""
-                }
-                ${
-                  entry.bullets.length || entry.tags.length
-                    ? `<div class="experience-card-bottom">
-                        ${
-                          entry.bullets.length
-                            ? `<ul class="experience-bullets">
-                                ${entry.bullets
-                                  .map(
-                                    (bullet) =>
-                                      `<li>${escapeHTML(bullet)}</li>`,
-                                  )
-                                  .join("")}
-                              </ul>`
-                            : ""
-                        }
-                        ${
-                          entry.tags.length
-                            ? `<div class="experience-tags">
-                                ${entry.tags
-                                  .map(
-                                    (tag) =>
-                                      `<span class="experience-tag">${escapeHTML(tag)}</span>`,
-                                  )
-                                  .join("")}
-                              </div>`
-                            : ""
-                        }
-                      </div>`
-                    : ""
-                }
-              </div>
-            </article>
-          `;
-        }
- 
         function buildThoughtCard(entry, index) {
-          return `
-            <article class="about-card">
-              <div class="about-card-inner">
-                <div>
-                  <span class="about-card-num">${String(index + 1).padStart(2, "0")}</span>
-                  <h3 class="about-card-title">${escapeHTML(entry.title)}</h3>
-                </div>
-                <div class="about-card-body">
-                  <p class="about-card-preview">${escapeHTML(entry.preview)}</p>
-                  ${
-                    entry.links.length
-                      ? `<div class="about-card-links">
-                          ${entry.links
-                            .map(
-                              (link) => `
-                                <a class="about-link-btn" href="${escapeHTML(link.href)}" target="_blank" rel="noopener">
-                                  <span>${escapeHTML(link.label)}</span>
-                                </a>
-                              `,
-                            )
-                            .join("")}
-                        </div>`
-                      : ""
-                  }
-                </div>
-              </div>
-            </article>
-          `;
+          return `<article class="about-card"><div class="about-card-inner"><div><span class="about-card-num">${String(index + 1).padStart(2, "0")}</span><h3 class="about-card-title">${escapeHTML(entry.title)}</h3></div><div class="about-card-body"><p class="about-card-preview">${escapeHTML(entry.preview)}</p>${
+            entry.links.length ? `<div class="about-card-links">${entry.links.map((l) => `<a class="about-link-btn" href="${escapeHTML(l.href)}" target="_blank" rel="noopener"><span>${escapeHTML(l.label)}</span></a>`).join("")}</div>` : ""
+          }</div></div></article>`;
         }
- 
         function buildThoughtDot(index) {
           return `<button class="about-dot${index === 0 ? " active" : ""}" type="button" aria-label="Go to thought ${index + 1}" data-dot-index="${index}"></button>`;
         }
- 
         function renderAboutCarousel() {
           if (!aboutEntries.length) {
             aboutTrack.style.transform = "translateX(0)";
-            aboutCurrent.textContent = "00";
-            aboutTotal.textContent = "00";
+            aboutCurrent.textContent = "00"; aboutTotal.textContent = "00";
             aboutResultsCopy.textContent = "showing 0 thoughts";
-            aboutDotsEl.innerHTML = "";
-            aboutEmpty.classList.add("show");
+            aboutDotsEl.innerHTML = ""; aboutEmpty.classList.add("show");
             return;
           }
           aboutEmpty.classList.remove("show");
@@ -1318,392 +864,187 @@
           aboutCurrent.textContent = String(aboutIndex + 1).padStart(2, "0");
           aboutTotal.textContent = String(aboutEntries.length).padStart(2, "0");
           aboutResultsCopy.textContent = `showing ${aboutEntries.length} thoughts`;
-          aboutDots.forEach((dot, idx) =>
-            dot.classList.toggle("active", idx === aboutIndex),
-          );
+          aboutDots.forEach((dot, i) => dot.classList.toggle("active", i === aboutIndex));
         }
- 
         async function loadThoughtEntries() {
           aboutResultsCopy.textContent = "loading thoughts";
           try {
-            aboutEntries = await loadManifestEntries(
-              "blog/index.txt",
-              "blog",
-              parseThoughtFile,
-            );
-            aboutTrack.innerHTML = aboutEntries
-              .map((entry, index) => buildThoughtCard(entry, index))
-              .join("");
+            aboutEntries = await loadManifestEntries("blog/index.txt", "blog", parseThoughtFile);
+            aboutTrack.innerHTML = aboutEntries.map(buildThoughtCard).join("");
             attachTiltInteraction(".about-card");
-            aboutDotsEl.innerHTML = aboutEntries
-              .map((_, index) => buildThoughtDot(index))
-              .join("");
+            aboutDotsEl.innerHTML = aboutEntries.map((_, i) => buildThoughtDot(i)).join("");
             aboutDots = Array.from(aboutDotsEl.querySelectorAll(".about-dot"));
-            aboutDots.forEach((dot) => {
-              dot.addEventListener("click", () => {
-                aboutIndex = Number(dot.dataset.dotIndex);
-                renderAboutCarousel();
-              });
-            });
+            aboutDots.forEach((dot) => { dot.addEventListener("click", () => { aboutIndex = Number(dot.dataset.dotIndex); renderAboutCarousel(); }); });
             renderAboutCarousel();
-          } catch (error) {
-            aboutEntries = [];
-            aboutTrack.innerHTML = "";
-            aboutDotsEl.innerHTML = "";
-            aboutEmpty.textContent =
-              "couldn't load thoughts. serve the site through a local server and check the blog folder.";
+          } catch {
+            aboutEntries = []; aboutTrack.innerHTML = ""; aboutDotsEl.innerHTML = "";
+            aboutEmpty.textContent = "couldn't load thoughts. serve the site through a local server and check the blog folder.";
             aboutEmpty.classList.add("show");
             renderAboutCarousel();
           }
         }
- 
-        aboutPrev.addEventListener("click", () => {
-          if (!aboutEntries.length) return;
-          aboutIndex =
-            (aboutIndex - 1 + aboutEntries.length) % aboutEntries.length;
-          renderAboutCarousel();
-        });
-        aboutNext.addEventListener("click", () => {
-          if (!aboutEntries.length) return;
-          aboutIndex = (aboutIndex + 1) % aboutEntries.length;
-          renderAboutCarousel();
-        });
- 
-        if (heroCarouselPrev) {
-          heroCarouselPrev.addEventListener("click", () => {
-            if (!heroCarouselEntries.length) return;
-            heroCarouselIndex =
-              (heroCarouselIndex - 1 + heroCarouselEntries.length) %
-              heroCarouselEntries.length;
-            renderHeroCarousel();
-            startHeroCarouselAuto();
-          });
-        }
-        if (heroCarouselNext) {
-          heroCarouselNext.addEventListener("click", () => {
-            if (!heroCarouselEntries.length) return;
-            heroCarouselIndex =
-              (heroCarouselIndex + 1) % heroCarouselEntries.length;
-            renderHeroCarousel();
-            startHeroCarouselAuto();
-          });
-        }
-        if (heroCarouselEl) {
-          heroCarouselEl.addEventListener("mouseenter", () => {
-            clearInterval(heroCarouselTimer);
-          });
-          heroCarouselEl.addEventListener("mouseleave", () => {
-            startHeroCarouselAuto();
-          });
-        }
-        
 
-        /* ABOUT AUTO-SWIPE */
+        /* ABOUT AUTO-SWIPE — pauses on manual interaction, resumes after */
         let aboutAutoPlay = setInterval(() => {
+          if (!aboutEntries.length) return;
           aboutIndex = (aboutIndex + 1) % aboutEntries.length;
           renderAboutCarousel();
         }, 6000);
-
-        // Pause on manual interaction, resume after
-        [aboutPrev, aboutNext].forEach(btn => {
+        [aboutPrev, aboutNext].forEach((btn) => {
           btn.addEventListener("click", () => {
             clearInterval(aboutAutoPlay);
             aboutAutoPlay = setInterval(() => {
+              if (!aboutEntries.length) return;
               aboutIndex = (aboutIndex + 1) % aboutEntries.length;
               renderAboutCarousel();
             }, 6000);
           });
         });
 
+        aboutPrev.addEventListener("click", () => { if (!aboutEntries.length) return; aboutIndex = (aboutIndex - 1 + aboutEntries.length) % aboutEntries.length; renderAboutCarousel(); });
+        aboutNext.addEventListener("click", () => { if (!aboutEntries.length) return; aboutIndex = (aboutIndex + 1) % aboutEntries.length; renderAboutCarousel(); });
+
         loadHeroCarouselEntries();
         loadThoughtEntries();
- 
+
         /* EXPERIENCE */
+        const experienceList = document.getElementById("experience-list");
+        const experienceTotal = document.getElementById("experience-total");
+        const experienceEmpty = document.getElementById("experience-empty");
+
+        function parseExperienceFile(source, filename) {
+          const company = getTags(source, "company")[0] || filename.replace(/\.txt$/i, "");
+          return {
+            role: getTags(source, "role")[0] || "role title",
+            company,
+            logo: sanitizeUrl(getTags(source, "logo")[0] || ""),
+            date: getTags(source, "date")[0] || "",
+            location: getTags(source, "location")[0] || "",
+            summary: normalizeText(getTags(source, "summary")[0] || ""),
+            bullets: getTags(source, "bullet").map(normalizeText).filter(Boolean),
+            tags: getTags(source, "tag").map(normalizeText).filter(Boolean),
+            badge: getTags(source, "badge")[0] || getInitials(company),
+          };
+        }
+        function buildExperienceCard(entry) {
+          return `<article class="experience-card"><div class="experience-badge${entry.logo && entry.logo !== "#" ? " experience-badge-logo" : ""}" aria-hidden="true">${
+            entry.logo && entry.logo !== "#" ? `<img src="${escapeHTML(entry.logo)}" alt="" loading="lazy" />` : escapeHTML(entry.badge)
+          }</div><div class="experience-card-main"><div class="experience-card-top"><div><h3 class="experience-role">${escapeHTML(entry.role)}</h3><p class="experience-company">${escapeHTML(entry.company)}</p></div><div class="experience-meta">${
+            entry.date ? `<span class="experience-date">${escapeHTML(entry.date)}</span>` : ""
+          }${entry.location ? `<span class="experience-location">${escapeHTML(entry.location)}</span>` : ""}</div></div>${
+            entry.summary ? `<p class="experience-summary">${escapeHTML(entry.summary)}</p>` : ""
+          }${entry.bullets.length || entry.tags.length ? `<div class="experience-card-bottom">${
+            entry.bullets.length ? `<ul class="experience-bullets">${entry.bullets.map((b) => `<li>${escapeHTML(b)}</li>`).join("")}</ul>` : ""
+          }${entry.tags.length ? `<div class="experience-tags">${entry.tags.map((t) => `<span class="experience-tag">${escapeHTML(t)}</span>`).join("")}</div>` : ""}</div>` : ""
+          }</div></article>`;
+        }
         async function loadExperienceEntries() {
           if (!experienceList || !experienceTotal || !experienceEmpty) return;
- 
           try {
-            const entries = await loadManifestEntries(
-              "experience/index.txt",
-              "experience",
-              parseExperienceFile,
-            );
- 
-            experienceList.innerHTML = entries
-              .map((entry) => buildExperienceCard(entry))
-              .join("");
-            experienceTotal.textContent = String(entries.length).padStart(
-              2,
-              "0",
-            );
+            const entries = await loadManifestEntries("experience/index.txt", "experience", parseExperienceFile);
+            experienceList.innerHTML = entries.map(buildExperienceCard).join("");
+            experienceTotal.textContent = String(entries.length).padStart(2, "0");
             experienceEmpty.classList.toggle("show", entries.length === 0);
-          } catch (error) {
-            experienceList.innerHTML = "";
-            experienceTotal.textContent = "00";
-            experienceEmpty.textContent =
-              "couldn't load experience entries. check the experience folder and serve the site through a local server.";
+          } catch {
+            experienceList.innerHTML = ""; experienceTotal.textContent = "00";
+            experienceEmpty.textContent = "couldn't load experience entries. check the experience folder and serve the site through a local server.";
             experienceEmpty.classList.add("show");
           }
         }
- 
         loadExperienceEntries();
- 
+
         /* PROJECTS */
-        const projectFeaturedGrid = document.getElementById(
-          "project-featured-grid",
-        );
+        const projectFeaturedGrid = document.getElementById("project-featured-grid");
         const projectsRailList = document.getElementById("projects-rail-list");
-        const projectsFeaturedEmpty = document.getElementById(
-          "projects-featured-empty",
-        );
-        const projectsListEmpty = document.getElementById(
-          "projects-list-empty",
-        );
- 
+        const projectsFeaturedEmpty = document.getElementById("projects-featured-empty");
+        const projectsListEmpty = document.getElementById("projects-list-empty");
+
         function parseBooleanTag(value) {
-          return ["true", "yes", "1", "featured"].includes(
-            (value || "").trim().toLowerCase(),
-          );
+          return ["true", "yes", "1", "featured"].includes((value || "").trim().toLowerCase());
         }
-
-        function normalizeProjectValue(value) {
-          return normalizeText(value || "").toLowerCase();
-        }
-
+        function normalizeProjectValue(v) { return normalizeText(v || "").toLowerCase(); }
         function hasProjectKeyword(values, keywords) {
-          const normalizedValues = values
-            .map((value) => normalizeProjectValue(value))
-            .filter(Boolean);
-          return normalizedValues.some((value) =>
-            keywords.some(
-              (keyword) =>
-                value === keyword ||
-                value.includes(keyword) ||
-                value.replace(/[-_]+/g, " ") === keyword,
-            ),
+          return values.map(normalizeProjectValue).filter(Boolean).some((v) =>
+            keywords.some((k) => v === k || v.includes(k) || v.replace(/[-_]+/g, " ") === k)
           );
         }
-
         function parseProjectFile(source, filename) {
-          const title =
-            getTags(source, "main")[0] || filename.replace(/\.txt$/i, "");
+          const title = getTags(source, "main")[0] || filename.replace(/\.txt$/i, "");
           const text = getTags(source, "text")[0] || "";
-          const tags = getTags(source, "tag")
-            .map((tag) => normalizeText(tag))
-            .filter(Boolean);
+          const tags = getTags(source, "tag").map(normalizeText).filter(Boolean);
           const status = normalizeText(getTags(source, "status")[0] || "");
           const layout = normalizeText(getTags(source, "layout")[0] || "");
           const featuredValue = getTags(source, "featured")[0] || "";
-          const keywordValues = [
-            filename.replace(/\.txt$/i, ""),
-            title,
-            status,
-            layout,
-            featuredValue,
-            ...tags,
-          ];
-          const isFeatured =
-            parseBooleanTag(featuredValue) ||
-            hasProjectKeyword(keywordValues, ["featured"]);
-          const isNoteCard =
-            hasProjectKeyword([layout, ...keywordValues], [
-              "note",
-              "notes",
-              "site note",
-              "site-note",
-              "note card",
-              "note-card",
-              "notice",
-            ]) && !isFeatured;
-
+          const keywordValues = [filename.replace(/\.txt$/i, ""), title, status, layout, featuredValue, ...tags];
+          const isFeatured = parseBooleanTag(featuredValue) || hasProjectKeyword(keywordValues, ["featured"]);
+          const isNoteCard = hasProjectKeyword([layout, ...keywordValues], ["note", "notes", "site note", "site-note", "note card", "note-card", "notice"]) && !isFeatured;
           return {
-            title,
-            text,
-            preview: normalizeText(text),
+            title, text, preview: normalizeText(text),
             image: sanitizeUrl(getTags(source, "image")[0] || ""),
             tags,
-            links: getTags(source, "link").map((raw) => parseLinkValue(raw)),
-            featured: isFeatured,
-            isNoteCard,
-            status,
+            links: getTags(source, "link").map(parseLinkValue),
+            featured: isFeatured, isNoteCard, status,
             year: normalizeText(getTags(source, "year")[0] || ""),
           };
         }
- 
-        
         function buildProjectLinks(links) {
           if (!links.length) return "";
-          return `
-            <div class="project-links">
-              ${links
-                .map(
-                  (link) => `
-                    <a class="project-link-btn" href="${escapeHTML(link.href)}" target="_blank" rel="noopener">
-                      <span>${escapeHTML(link.label)}</span>
-                    </a>
-                  `,
-                )
-                .join("")}
-            </div>
-          `;
+          return `<div class="project-links">${links.map((l) => `<a class="project-link-btn" href="${escapeHTML(l.href)}" target="_blank" rel="noopener"><span>${escapeHTML(l.label)}</span></a>`).join("")}</div>`;
         }
- 
+        function buildProjectTags(tags, featured = false) {
+          const tagList = Array.from(new Set(featured ? ["featured", ...tags] : tags));
+          if (!tagList.length) return "";
+          return `<div class="project-tags">${tagList.map((t) => `<span class="project-tag">${escapeHTML(t)}</span>`).join("")}</div>`;
+        }
+        function buildProjectMedia(image, title) {
+          if (!image || image === "#") return "";
+          return `<div class="project-media"><img src="${escapeHTML(image)}" alt="${escapeHTML(title)} preview image" loading="lazy" /></div>`;
+        }
         function buildProjectNoteCard(entry) {
           const noteMeta = entry.status || "note";
           const noteAsideLabel = entry.tags[0] || (entry.year ? "year" : "");
-          const noteAsideValue =
-            entry.tags[1] || entry.year || (entry.links[0] ? entry.links[0].label : "");
-          return `
-            <article class="project-card project-card-note">
-              <div class="project-top">
-                <span class="project-index">${escapeHTML(noteMeta)}</span>
-                ${
-                  entry.year
-                    ? `<span class="project-status">${escapeHTML(entry.year)}</span>`
-                    : ""
-                }
-              </div>
-              <div class="project-note-stack">
-                <h3 class="project-title">${escapeHTML(entry.title)}</h3>
-                <p class="project-note-copy">
-                  ${escapeHTML(entry.preview)}
-                </p>
-                ${
-                  noteAsideLabel && noteAsideValue
-                    ? `
-                      <div class="project-note-inline">
-                        <span class="project-note-label">${escapeHTML(
-                          noteAsideLabel,
-                        )}</span>
-                        <p class="project-note-copy">${escapeHTML(
-                          noteAsideValue,
-                        )}</p>
-                      </div>
-                    `
-                    : ""
-                }
-                ${buildProjectTags(entry.tags, false)}
-                ${buildProjectLinks(entry.links)}
-              </div>
-            </article>
-          `;
+          const noteAsideValue = entry.tags[1] || entry.year || (entry.links[0] ? entry.links[0].label : "");
+          return `<article class="project-card project-card-note"><div class="project-top"><span class="project-index">${escapeHTML(noteMeta)}</span>${entry.year ? `<span class="project-status">${escapeHTML(entry.year)}</span>` : ""}</div><div class="project-note-stack"><h3 class="project-title">${escapeHTML(entry.title)}</h3><p class="project-note-copy">${escapeHTML(entry.preview)}</p>${
+            noteAsideLabel && noteAsideValue ? `<div class="project-note-inline"><span class="project-note-label">${escapeHTML(noteAsideLabel)}</span><p class="project-note-copy">${escapeHTML(noteAsideValue)}</p></div>` : ""
+          }${buildProjectTags(entry.tags, false)}${buildProjectLinks(entry.links)}</div></article>`;
         }
- 
-        function buildProjectMedia(image, title) {
-          if (!image || image === "#") return "";
-          return `
-            <div class="project-media">
-              <img src="${escapeHTML(image)}" alt="${escapeHTML(title)} preview image" loading="lazy" />
-            </div>
-          `;
-        }
- 
-        function buildProjectTags(tags, featured = false) {
-          const tagList = Array.from(
-            new Set(featured ? ["featured", ...tags] : tags),
-          );
-          if (!tagList.length) return "";
-          return `
-            <div class="project-tags">
-              ${tagList
-                .map(
-                  (tag) =>
-                    `<span class="project-tag">${escapeHTML(tag)}</span>`,
-                )
-                .join("")}
-            </div>
-          `;
-        }
- 
         function buildProjectCard(entry, index, featured = false) {
           const meta = [entry.status, entry.year].filter(Boolean).join(" · ");
-          return `
-            <article class="${featured ? "project-featured-card" : "project-card"}">
-              <div class="project-card-frame">
-                <div class="project-top">
-                  <span class="project-index">${String(index + 1).padStart(2, "0")}</span>
-                  ${meta ? `<span class="project-status">${escapeHTML(meta)}</span>` : ""}
-                </div>
-                <div class="project-main">
-                  <h3 class="project-title">${escapeHTML(entry.title)}</h3>
-                  ${buildProjectMedia(entry.image, entry.title)}
-                  <p class="project-copy">${escapeHTML(entry.preview)}</p>
-                </div>
-                <div class="project-bottom">
-                  ${buildProjectTags(entry.tags, featured)}
-                  ${buildProjectLinks(entry.links)}
-                </div>
-              </div>
-            </article>
-          `;
+          return `<article class="${featured ? "project-featured-card" : "project-card"}"><div class="project-card-frame"><div class="project-top"><span class="project-index">${String(index + 1).padStart(2, "0")}</span>${meta ? `<span class="project-status">${escapeHTML(meta)}</span>` : ""}</div><div class="project-main"><h3 class="project-title">${escapeHTML(entry.title)}</h3>${buildProjectMedia(entry.image, entry.title)}<p class="project-copy">${escapeHTML(entry.preview)}</p></div><div class="project-bottom">${buildProjectTags(entry.tags, featured)}${buildProjectLinks(entry.links)}</div></div></article>`;
         }
- 
         async function loadProjectEntries() {
           try {
-            const projectEntries = await loadManifestEntries(
-              "projects/index.txt",
-              "projects",
-              parseProjectFile,
-            );
-
-            const noteEntries = projectEntries.filter((entry) => entry.isNoteCard);
-            const standardEntries = projectEntries.filter(
-              (entry) => !entry.isNoteCard,
-            );
-            const featuredEntries = (
-              standardEntries.some((entry) => entry.featured)
-                ? standardEntries.filter((entry) => entry.featured)
-                : standardEntries
-            );
-            const featuredEntrySet = new Set(featuredEntries);
-            const railEntries = standardEntries.filter(
-              (entry) => !featuredEntrySet.has(entry),
-            );
-
-            projectFeaturedGrid.innerHTML = featuredEntries
-              .map((entry, index) => buildProjectCard(entry, index, true))
-              .join("");
+            const projectEntries = await loadManifestEntries("projects/index.txt", "projects", parseProjectFile);
+            const noteEntries = projectEntries.filter((e) => e.isNoteCard);
+            const standardEntries = projectEntries.filter((e) => !e.isNoteCard);
+            const featuredEntries = standardEntries.some((e) => e.featured) ? standardEntries.filter((e) => e.featured) : standardEntries;
+            const featuredSet = new Set(featuredEntries);
+            const railEntries = standardEntries.filter((e) => !featuredSet.has(e));
+            projectFeaturedGrid.innerHTML = featuredEntries.map((e, i) => buildProjectCard(e, i, true)).join("");
             projectsRailList.innerHTML = [
-              ...noteEntries.map((entry) => buildProjectNoteCard(entry)),
-              ...(railEntries.length ? railEntries : standardEntries).map(
-                (entry, index) => buildProjectCard(entry, index, false),
-              ),
+              ...noteEntries.map(buildProjectNoteCard),
+              ...(railEntries.length ? railEntries : standardEntries).map((e, i) => buildProjectCard(e, i, false)),
             ].join("");
-            projectsFeaturedEmpty.classList.toggle(
-              "show",
-              featuredEntries.length === 0,
-            );
-            projectsListEmpty.classList.toggle(
-              "show",
-              noteEntries.length + standardEntries.length === 0,
-            );
-          } catch (error) {
-            projectFeaturedGrid.innerHTML = "";
-            projectsRailList.innerHTML = "";
-            projectsFeaturedEmpty.textContent =
-              "couldn't load featured projects. check the projects folder and serve the site through a local server.";
-            projectsListEmpty.textContent =
-              "couldn't load the project rail. check the projects folder and serve the site through a local server.";
-            projectsFeaturedEmpty.classList.add("show");
-            projectsListEmpty.classList.add("show");
+            projectsFeaturedEmpty.classList.toggle("show", featuredEntries.length === 0);
+            projectsListEmpty.classList.toggle("show", noteEntries.length + standardEntries.length === 0);
+          } catch {
+            projectFeaturedGrid.innerHTML = ""; projectsRailList.innerHTML = "";
+            projectsFeaturedEmpty.textContent = "couldn't load featured projects. check the projects folder and serve the site through a local server.";
+            projectsListEmpty.textContent = "couldn't load the project rail. check the projects folder and serve the site through a local server.";
+            projectsFeaturedEmpty.classList.add("show"); projectsListEmpty.classList.add("show");
           }
         }
- 
         loadProjectEntries();
- 
+
         /* DRAW MODE */
         const drawBtn = document.getElementById("draw-btn");
         const clearBtn = document.getElementById("clear-btn");
         const drawHint = document.getElementById("draw-hint");
         const drawCanvas = document.getElementById("draw-canvas");
         const dctx = drawCanvas.getContext("2d");
-        let drawMode = false,
-          isDrawing = false,
-          lastDX = 0,
-          lastDY = 0;
+        let drawMode = false, isDrawing = false, lastDX = 0, lastDY = 0;
         drawCanvas.width = window.innerWidth;
         drawCanvas.height = window.innerHeight;
-        // Preserve the existing sketch when the viewport size changes.
         window.addEventListener("resize", () => {
           const img = drawCanvas.toDataURL();
           drawCanvas.width = window.innerWidth;
@@ -1717,55 +1058,62 @@
           document.body.classList.toggle("draw-mode", drawMode);
           drawCanvas.style.pointerEvents = drawMode ? "all" : "none";
           drawBtn.classList.toggle("active", drawMode);
-          drawBtn.querySelector("span").textContent = drawMode
-            ? "exit draw"
-            : "draw";
+          drawBtn.querySelector("span").textContent = drawMode ? "exit draw" : "draw";
           drawHint.classList.toggle("show", drawMode);
           clearBtn.classList.toggle("show", drawMode);
         });
-        clearBtn.addEventListener("click", () =>
-          dctx.clearRect(0, 0, drawCanvas.width, drawCanvas.height),
-        );
-        drawCanvas.addEventListener("mousedown", (e) => {
-          if (!drawMode) return;
-          isDrawing = true;
-          lastDX = e.clientX;
-          lastDY = e.clientY;
-        });
+        clearBtn.addEventListener("click", () => dctx.clearRect(0, 0, drawCanvas.width, drawCanvas.height));
+        drawCanvas.addEventListener("mousedown", (e) => { if (!drawMode) return; isDrawing = true; lastDX = e.clientX; lastDY = e.clientY; });
         drawCanvas.addEventListener("mousemove", (e) => {
           if (!drawMode || !isDrawing) return;
-          dctx.beginPath();
-          dctx.moveTo(lastDX, lastDY);
-          dctx.lineTo(e.clientX, e.clientY);
-          dctx.strokeStyle = isDarkTheme()
-            ? "rgba(138,138,138,0.7)"
-            : "rgba(90,90,90,0.6)";
-          dctx.lineWidth = 1.5;
-          dctx.lineCap = "round";
-          dctx.lineJoin = "round";
-          dctx.stroke();
-          lastDX = e.clientX;
-          lastDY = e.clientY;
+          dctx.beginPath(); dctx.moveTo(lastDX, lastDY); dctx.lineTo(e.clientX, e.clientY);
+          dctx.strokeStyle = isDarkTheme() ? "rgba(138,138,138,0.7)" : "rgba(90,90,90,0.6)";
+          dctx.lineWidth = 1.5; dctx.lineCap = "round"; dctx.lineJoin = "round"; dctx.stroke();
+          lastDX = e.clientX; lastDY = e.clientY;
         });
-        window.addEventListener("mouseup", () => {
-          isDrawing = false;
-        });
- 
+        window.addEventListener("mouseup", () => { isDrawing = false; });
+
+        /* HERO RAIN */
+        (() => {
+          const rc = document.getElementById("hero-rain");
+          const hero = document.getElementById("hero");
+          if (!rc || !hero) return;
+          const rx = rc.getContext("2d");
+          function resizeHeroRain() { rc.width = hero.offsetWidth; rc.height = hero.offsetHeight; }
+          resizeHeroRain();
+          window.addEventListener("resize", resizeHeroRain);
+          const drops = Array.from({ length: 56 }, () => ({
+            x: Math.random(), y: Math.random(),
+            speed: 0.0019 + Math.random() * 0.0028,
+            len: 0.028 + Math.random() * 0.055,
+            op: 0.11 + Math.random() * 0.14,
+            w: 0.55 + Math.random() * 0.5,
+          }));
+          function loopHeroRain() {
+            const W = rc.width, H = rc.height;
+            rx.clearRect(0, 0, W, H);
+            const rgb = isDarkTheme() ? "200,200,200" : "80,72,65";
+            drops.forEach((d) => {
+              d.y += d.speed;
+              if (d.y - d.len > 1) { d.y = -d.len; d.x = Math.random(); }
+              const x = d.x * W, y0 = (d.y - d.len) * H, y1 = d.y * H;
+              const g = rx.createLinearGradient(x, y0, x, y1);
+              g.addColorStop(0, `rgba(${rgb},0)`);
+              g.addColorStop(0.45, `rgba(${rgb},${d.op})`);
+              g.addColorStop(1, `rgba(${rgb},0)`);
+              rx.beginPath(); rx.moveTo(x, y0); rx.lineTo(x, y1);
+              rx.strokeStyle = g; rx.lineWidth = d.w; rx.stroke();
+            });
+            requestAnimationFrame(loopHeroRain);
+          }
+          requestAnimationFrame(loopHeroRain);
+        })();
+
         /* CURSOR TRAIL */
         const cursorEl = document.getElementById("cursor");
         const canvas = document.getElementById("trail-canvas");
         const ctx = canvas.getContext("2d");
-        const isTouchDevice =
-          window.matchMedia("(hover: none), (pointer: coarse)").matches ||
-          navigator.maxTouchPoints > 0;
-        if (isTouchDevice) {
-          cursorEl.style.display = "none";
-          canvas.style.display = "none";
-        }
-        function resizeTrail() {
-          canvas.width = window.innerWidth;
-          canvas.height = window.innerHeight;
-        }
+        function resizeTrail() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         resizeTrail();
         window.addEventListener("resize", resizeTrail);
         const points = [];
@@ -1774,7 +1122,7 @@
         document.addEventListener("mousemove", (e) => {
           cursorEl.style.left = e.clientX + "px";
           cursorEl.style.top = e.clientY + "px";
-          if (drawMode || isTouchDevice) return;
+          if (drawMode) return;
           const now = performance.now();
           if (now - lastTime < 12) return;
           lastTime = now;
@@ -1785,20 +1133,14 @@
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           while (points.length && now - points[0].t > FADE_MS) points.shift();
           if (!drawMode && points.length >= 2) {
-            ctx.lineCap = "round";
-            ctx.lineJoin = "round";
+            ctx.lineCap = "round"; ctx.lineJoin = "round";
             const rgb = isDarkTheme() ? "200,200,200" : "60,60,60";
             for (let i = 1; i < points.length; i++) {
-              const p0 = points[i - 1],
-                p1 = points[i];
+              const p0 = points[i - 1], p1 = points[i];
               const age = (now - p1.t) / FADE_MS;
               const a = Math.max(0, 0.35 * (1 - age * age));
-              ctx.beginPath();
-              ctx.moveTo(p0.x, p0.y);
-              ctx.lineTo(p1.x, p1.y);
-              ctx.strokeStyle = `rgba(${rgb},${a})`;
-              ctx.lineWidth = 1.1 * (1 - age * 0.4);
-              ctx.stroke();
+              ctx.beginPath(); ctx.moveTo(p0.x, p0.y); ctx.lineTo(p1.x, p1.y);
+              ctx.strokeStyle = `rgba(${rgb},${a})`; ctx.lineWidth = 1.1 * (1 - age * 0.4); ctx.stroke();
             }
           }
           requestAnimationFrame(draw);
