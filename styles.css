@@ -196,7 +196,7 @@ body.draw-mode #cursor {
   font-family: var(--font-mono);
   font-size: 0.6rem;
   letter-spacing: 0.1em;
-  color: var(--c3);
+  color: var(--c5);
   text-transform: lowercase;
   transition: color 0.55s ease;
 }
