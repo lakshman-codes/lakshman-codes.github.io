@@ -54,48 +54,50 @@
     </script>
 
     <style>
-      .hero {
-        justify-content: center !important;
-        align-items: stretch !important;
-        padding-top: 52px !important;
-        padding-bottom: 52px !important;
-        gap: 32px !important;
-      }
+      /* scroll-hint: hidden by default, shown only when .visible is added by JS */
       .scroll-hint {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        gap: 10px !important;
-        position: absolute !important;
-        bottom: 32px !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
-        font-family: var(--font-mono) !important;
-        font-size: 0.58rem !important;
-        letter-spacing: 0.22em !important;
-        color: var(--c4) !important;
-        text-transform: lowercase !important;
-        opacity: 0 !important;
-        transition: opacity 0.6s ease 1.2s !important;
-        pointer-events: none !important;
-        white-space: nowrap !important;
-        z-index: 2 !important;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        position: absolute;
+        bottom: 32px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: var(--font-mono);
+        font-size: 0.58rem;
+        letter-spacing: 0.22em;
+        color: var(--c4);
+        text-transform: lowercase;
+        opacity: 0;
+        transition: opacity 0.6s ease 1.2s;
+        pointer-events: none;
+        white-space: nowrap;
+        z-index: 2;
       }
-      .scroll-hint.visible { opacity: 1 !important; }
+      .scroll-hint.visible {
+        display: flex;
+        opacity: 1;
+      }
       .scroll-hint::after {
-        content: "" !important;
-        display: block !important;
-        width: 1px !important;
-        height: 44px !important;
-        background: var(--c5) !important;
-        transform-origin: top !important;
-        animation: scrollLine 2s cubic-bezier(0.22,1,0.36,1) infinite !important;
+        content: "";
+        display: block;
+        width: 1px;
+        height: 44px;
+        background: var(--c5);
+        transform-origin: top;
+        animation: scrollLine 2s cubic-bezier(0.22,1,0.36,1) infinite;
       }
       @keyframes scrollLine {
         0%   { transform: scaleY(0); opacity: 0; }
         20%  { opacity: 1; }
         50%  { transform: scaleY(1); opacity: 1; }
         100% { transform: scaleY(1) translateY(14px); opacity: 0; }
+      }
+
+      /* Mobile hero fix: ensure body has a background color while background image loads */
+      body {
+        background-color: var(--bg, #ffffff);
       }
     </style>
   </head>

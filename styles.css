@@ -57,7 +57,7 @@ html {
   scroll-snap-type: y mandatory;
 }
 body { 
-  background: transparent;
+  background: var(--bg, #ffffff);
   font-family: var(--font-sans);
   color: var(--c5);
   overflow-x: hidden;
@@ -407,6 +407,7 @@ body.draw-mode #cursor {
 /* ── SECTIONS ── */
 section {
   min-height: 100vh;
+  min-height: 100svh;
   position: relative;
   display: flex;
   align-items: flex-start;
@@ -455,12 +456,12 @@ section[data-display-number]::after {
 /* ── HERO ── */
 .hero {
   background: transparent;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
   gap: 32px;
   min-height: 100vh;
-  padding-top: clamp(90px, 18vh, 240px);
+  padding-top: clamp(68px, 12vh, 160px);
 }
 .hero .content {
   position: relative;
@@ -479,9 +480,18 @@ section[data-display-number]::after {
   opacity: 0;
   transform: translateY(18px);
   margin: 0 auto;
+  /* Prevent layout overflow on mobile */
+  overflow: hidden;
 }
 .hero-carousel.visible {
   animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.38s forwards;
+}
+/* Fallback: if JS is slow/blocked, ensure carousel is eventually visible */
+@media (prefers-reduced-motion: reduce) {
+  .hero-carousel {
+    opacity: 1;
+    transform: none;
+  }
 }
 .hero-carousel-shell {
   display: flex;
@@ -600,6 +610,9 @@ section[data-display-number]::after {
   opacity: 0;
   transform: translateY(14px);
   transition: color 0.55s ease;
+  /* Prevent text from causing horizontal overflow on mobile */
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 .name.visible {
   opacity: 1;
@@ -617,6 +630,11 @@ section[data-display-number]::after {
   margin-bottom: 14px;
   opacity: 0;
   transition: color 0.55s ease;
+  /* Prevent long role text from overflowing on narrow screens */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
 }
 .hero-roles.visible {
   opacity: 1;
@@ -630,6 +648,7 @@ section[data-display-number]::after {
   line-height: 1.75;
   letter-spacing: 0.04em;
   opacity: 0;
+  transform: translateY(14px);
   transition: color 0.55s ease;
 }
 .hero-subtitle span {
@@ -654,9 +673,7 @@ section[data-display-number]::after {
 .scroll-hint {
   display: none;
 }
-.scroll-hint.visible {
-  display: none;
-}
+/* .visible state is handled by the inline <style> block */
 
 /* ── ABOUT ── */
 .about .inner {
@@ -2154,7 +2171,12 @@ section[data-display-number]::after {
     min-height: auto;
   }
   .hero {
-    min-height: auto;
+    min-height: 100svh;
+    min-height: 100vh; /* fallback */
+    padding-top: 68px;
+    padding-bottom: 40px;
+    gap: 24px;
+    justify-content: flex-start;
   }
   .hero .content,
   .about .inner,
@@ -2300,7 +2322,12 @@ section[data-display-number]::after {
     padding: var(--section-pad-top) 4vw var(--section-pad-bottom);
   }
   .hero {
-    min-height: auto;
+    min-height: 100svh;
+    min-height: 100vh; /* fallback */
+    padding-top: 64px;
+    padding-bottom: 32px;
+    gap: 20px;
+    justify-content: flex-start;
   }
   .hero-roles {
     font-size: 0.82rem;
@@ -2455,6 +2482,10 @@ section[data-display-number]::after {
 }
 
 @keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
   to {
     opacity: 1;
     transform: translateY(0);
