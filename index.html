@@ -184,7 +184,7 @@
         <div class="hero-subtitle" id="hero-subtitle">
           <span>computer engineering @ waterloo.</span>
           <span>i like building things that work.</span>
-          <span>into hardware, software + optimization, and everything inbetween.</span>
+          <span>into hardware, software + optimization, and everything in between.</span>
         </div>
       </div>
       <div class="hero-carousel" id="hero-carousel" aria-label="Image archive">
@@ -307,7 +307,7 @@
           <p class="projects-note">
             <span class="projects-note-label">featured</span>
             <span>
-              scroll through some of my projects below<br />and on the rail to right
+              scroll through some of my projects below<br />and on the rail to the right
             </span>
           </p>
           <div class="project-featured-grid" id="project-featured-grid"></div>
@@ -451,12 +451,15 @@
       </div>
     </section>
 
-    <div id="draw-hint">click + drag to draw anywhere</div>
+    <div id="draw-hint">tap + drag to draw anywhere</div>
     <button id="next-section-btn" type="button"><span>next</span></button>
     <button id="clear-btn" type="button"><span>clear canvas</span></button>
 
     <script>
       (() => {
+        /* ── DEVICE DETECTION ── */
+        const isTouch = window.matchMedia("(pointer: coarse)").matches;
+
         let heroCarouselDisabled = false;
 
         /* LOADER */
@@ -713,6 +716,7 @@
           return Promise.all(files.map(async (file) => parser(await fetchTextFile(`${basePath}/${file}`), file)));
         }
         function attachTiltInteraction(selector) {
+          if (isTouch) return; /* skip tilt on touch devices — no hover */
           document.querySelectorAll(selector).forEach((card) => {
             card.addEventListener("mousemove", (e) => {
               const r = card.getBoundingClientRect();
@@ -737,6 +741,27 @@
         }
         function getInitials(label) {
           return normalizeText(label).split(" ").filter(Boolean).slice(0, 2).map((p) => p[0].toUpperCase()).join("");
+        }
+
+        /* ── SWIPE HELPER ── */
+        function addSwipeSupport(el, onLeft, onRight) {
+          let startX = 0, startY = 0, dragging = false;
+          el.addEventListener("touchstart", (e) => {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+            dragging = true;
+          }, { passive: true });
+          el.addEventListener("touchend", (e) => {
+            if (!dragging) return;
+            dragging = false;
+            const dx = e.changedTouches[0].clientX - startX;
+            const dy = e.changedTouches[0].clientY - startY;
+            /* Only register as swipe if horizontal movement dominates */
+            if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 44) {
+              dx < 0 ? onLeft() : onRight();
+            }
+          }, { passive: true });
+          el.addEventListener("touchcancel", () => { dragging = false; });
         }
 
         /* HERO CAROUSEL */
@@ -822,6 +847,15 @@
         if (heroCarouselEl) {
           heroCarouselEl.addEventListener("mouseenter", () => clearInterval(heroCarouselTimer));
           heroCarouselEl.addEventListener("mouseleave", startHeroCarouselAuto);
+          /* Touch swipe for hero carousel */
+          const heroViewport = heroCarouselEl.querySelector(".hero-carousel-viewport");
+          if (heroViewport) {
+            addSwipeSupport(
+              heroViewport,
+              () => { if (!heroCarouselEntries.length) return; heroCarouselIndex = (heroCarouselIndex + 1) % heroCarouselEntries.length; renderHeroCarousel(); startHeroCarouselAuto(); },
+              () => { if (!heroCarouselEntries.length) return; heroCarouselIndex = (heroCarouselIndex - 1 + heroCarouselEntries.length) % heroCarouselEntries.length; renderHeroCarousel(); startHeroCarouselAuto(); }
+            );
+          }
         }
 
         /* ABOUT THOUGHTS */
@@ -890,19 +924,32 @@
           aboutIndex = (aboutIndex + 1) % aboutEntries.length;
           renderAboutCarousel();
         }, 6000);
+
+        function resetAboutAutoPlay() {
+          clearInterval(aboutAutoPlay);
+          aboutAutoPlay = setInterval(() => {
+            if (!aboutEntries.length) return;
+            aboutIndex = (aboutIndex + 1) % aboutEntries.length;
+            renderAboutCarousel();
+          }, 6000);
+        }
+
         [aboutPrev, aboutNext].forEach((btn) => {
-          btn.addEventListener("click", () => {
-            clearInterval(aboutAutoPlay);
-            aboutAutoPlay = setInterval(() => {
-              if (!aboutEntries.length) return;
-              aboutIndex = (aboutIndex + 1) % aboutEntries.length;
-              renderAboutCarousel();
-            }, 6000);
-          });
+          btn.addEventListener("click", resetAboutAutoPlay);
         });
 
         aboutPrev.addEventListener("click", () => { if (!aboutEntries.length) return; aboutIndex = (aboutIndex - 1 + aboutEntries.length) % aboutEntries.length; renderAboutCarousel(); });
         aboutNext.addEventListener("click", () => { if (!aboutEntries.length) return; aboutIndex = (aboutIndex + 1) % aboutEntries.length; renderAboutCarousel(); });
+
+        /* Touch swipe for about carousel */
+        const aboutViewport = document.querySelector(".about-viewport");
+        if (aboutViewport) {
+          addSwipeSupport(
+            aboutViewport,
+            () => { if (!aboutEntries.length) return; aboutIndex = (aboutIndex + 1) % aboutEntries.length; renderAboutCarousel(); resetAboutAutoPlay(); },
+            () => { if (!aboutEntries.length) return; aboutIndex = (aboutIndex - 1 + aboutEntries.length) % aboutEntries.length; renderAboutCarousel(); resetAboutAutoPlay(); }
+          );
+        }
 
         loadHeroCarouselEntries();
         loadThoughtEntries();
@@ -1053,6 +1100,12 @@
           image.onload = () => dctx.drawImage(image, 0, 0);
           image.src = img;
         });
+
+        /* Update draw hint label on touch */
+        if (isTouch) {
+          drawHint.textContent = "tap + drag to draw anywhere";
+        }
+
         drawBtn.addEventListener("click", () => {
           drawMode = !drawMode;
           document.body.classList.toggle("draw-mode", drawMode);
@@ -1063,6 +1116,8 @@
           clearBtn.classList.toggle("show", drawMode);
         });
         clearBtn.addEventListener("click", () => dctx.clearRect(0, 0, drawCanvas.width, drawCanvas.height));
+
+        /* Mouse drawing */
         drawCanvas.addEventListener("mousedown", (e) => { if (!drawMode) return; isDrawing = true; lastDX = e.clientX; lastDY = e.clientY; });
         drawCanvas.addEventListener("mousemove", (e) => {
           if (!drawMode || !isDrawing) return;
@@ -1073,7 +1128,27 @@
         });
         window.addEventListener("mouseup", () => { isDrawing = false; });
 
-        /* HERO RAIN */
+        /* Touch drawing */
+        drawCanvas.addEventListener("touchstart", (e) => {
+          if (!drawMode) return;
+          e.preventDefault();
+          isDrawing = true;
+          lastDX = e.touches[0].clientX;
+          lastDY = e.touches[0].clientY;
+        }, { passive: false });
+        drawCanvas.addEventListener("touchmove", (e) => {
+          if (!drawMode || !isDrawing) return;
+          e.preventDefault();
+          const touch = e.touches[0];
+          dctx.beginPath(); dctx.moveTo(lastDX, lastDY); dctx.lineTo(touch.clientX, touch.clientY);
+          dctx.strokeStyle = isDarkTheme() ? "rgba(138,138,138,0.7)" : "rgba(90,90,90,0.6)";
+          dctx.lineWidth = 2.5; dctx.lineCap = "round"; dctx.lineJoin = "round"; dctx.stroke();
+          lastDX = touch.clientX; lastDY = touch.clientY;
+        }, { passive: false });
+        drawCanvas.addEventListener("touchend", () => { isDrawing = false; });
+        drawCanvas.addEventListener("touchcancel", () => { isDrawing = false; });
+
+        /* HERO RAIN — reduced drop count on mobile for performance */
         (() => {
           const rc = document.getElementById("hero-rain");
           const hero = document.getElementById("hero");
@@ -1082,7 +1157,8 @@
           function resizeHeroRain() { rc.width = hero.offsetWidth; rc.height = hero.offsetHeight; }
           resizeHeroRain();
           window.addEventListener("resize", resizeHeroRain);
-          const drops = Array.from({ length: 56 }, () => ({
+          const dropCount = isTouch ? 22 : 56;
+          const drops = Array.from({ length: dropCount }, () => ({
             x: Math.random(), y: Math.random(),
             speed: 0.0019 + Math.random() * 0.0028,
             len: 0.028 + Math.random() * 0.055,
@@ -1109,43 +1185,45 @@
           requestAnimationFrame(loopHeroRain);
         })();
 
-        /* CURSOR TRAIL */
-        const cursorEl = document.getElementById("cursor");
-        const canvas = document.getElementById("trail-canvas");
-        const ctx = canvas.getContext("2d");
-        function resizeTrail() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        resizeTrail();
-        window.addEventListener("resize", resizeTrail);
-        const points = [];
-        const FADE_MS = 1600;
-        let lastTime = 0;
-        document.addEventListener("mousemove", (e) => {
-          cursorEl.style.left = e.clientX + "px";
-          cursorEl.style.top = e.clientY + "px";
-          if (drawMode) return;
-          const now = performance.now();
-          if (now - lastTime < 12) return;
-          lastTime = now;
-          points.push({ x: e.clientX, y: e.clientY, t: now });
-          if (points.length > 90) points.shift();
-        });
-        function draw(now) {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          while (points.length && now - points[0].t > FADE_MS) points.shift();
-          if (!drawMode && points.length >= 2) {
-            ctx.lineCap = "round"; ctx.lineJoin = "round";
-            const rgb = isDarkTheme() ? "200,200,200" : "60,60,60";
-            for (let i = 1; i < points.length; i++) {
-              const p0 = points[i - 1], p1 = points[i];
-              const age = (now - p1.t) / FADE_MS;
-              const a = Math.max(0, 0.35 * (1 - age * age));
-              ctx.beginPath(); ctx.moveTo(p0.x, p0.y); ctx.lineTo(p1.x, p1.y);
-              ctx.strokeStyle = `rgba(${rgb},${a})`; ctx.lineWidth = 1.1 * (1 - age * 0.4); ctx.stroke();
+        /* CURSOR TRAIL — desktop only */
+        if (!isTouch) {
+          const cursorEl = document.getElementById("cursor");
+          const canvas = document.getElementById("trail-canvas");
+          const ctx = canvas.getContext("2d");
+          function resizeTrail() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+          resizeTrail();
+          window.addEventListener("resize", resizeTrail);
+          const points = [];
+          const FADE_MS = 1600;
+          let lastTime = 0;
+          document.addEventListener("mousemove", (e) => {
+            cursorEl.style.left = e.clientX + "px";
+            cursorEl.style.top = e.clientY + "px";
+            if (drawMode) return;
+            const now = performance.now();
+            if (now - lastTime < 12) return;
+            lastTime = now;
+            points.push({ x: e.clientX, y: e.clientY, t: now });
+            if (points.length > 90) points.shift();
+          });
+          function draw(now) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            while (points.length && now - points[0].t > FADE_MS) points.shift();
+            if (!drawMode && points.length >= 2) {
+              ctx.lineCap = "round"; ctx.lineJoin = "round";
+              const rgb = isDarkTheme() ? "200,200,200" : "60,60,60";
+              for (let i = 1; i < points.length; i++) {
+                const p0 = points[i - 1], p1 = points[i];
+                const age = (now - p1.t) / FADE_MS;
+                const a = Math.max(0, 0.35 * (1 - age * age));
+                ctx.beginPath(); ctx.moveTo(p0.x, p0.y); ctx.lineTo(p1.x, p1.y);
+                ctx.strokeStyle = `rgba(${rgb},${a})`; ctx.lineWidth = 1.1 * (1 - age * 0.4); ctx.stroke();
+              }
             }
+            requestAnimationFrame(draw);
           }
           requestAnimationFrame(draw);
         }
-        requestAnimationFrame(draw);
       })();
     </script>
   </body>
