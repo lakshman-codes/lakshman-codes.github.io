@@ -407,7 +407,6 @@ body.draw-mode #cursor {
 /* ── SECTIONS ── */
 section {
   min-height: 100vh;
-  min-height: 100svh;
   position: relative;
   display: flex;
   align-items: flex-start;
@@ -456,12 +455,14 @@ section[data-display-number]::after {
 /* ── HERO ── */
 .hero {
   background: transparent;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 32px;
+  gap: 28px;
   min-height: 100vh;
-  padding-top: clamp(68px, 12vh, 160px);
+  min-height: 100svh;
+  padding-top: 72px;   /* topbar is 52px — give it 20px breathing room */
+  padding-bottom: 80px; /* room for scroll-hint at bottom */
 }
 .hero .content {
   position: relative;
@@ -470,6 +471,8 @@ section[data-display-number]::after {
   max-width: var(--page-max);
   flex: none;
   margin: 0 auto;
+  /* Left-aligned text within a centered block, matching the site's editorial style */
+  text-align: left;
 }
 .hero-carousel {
   position: relative;
@@ -480,18 +483,17 @@ section[data-display-number]::after {
   opacity: 0;
   transform: translateY(18px);
   margin: 0 auto;
-  /* Prevent layout overflow on mobile */
   overflow: hidden;
 }
 .hero-carousel.visible {
   animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.38s forwards;
 }
-/* Fallback: if JS is slow/blocked, ensure carousel is eventually visible */
 @media (prefers-reduced-motion: reduce) {
-  .hero-carousel {
-    opacity: 1;
-    transform: none;
-  }
+  .hero-carousel { opacity: 1; transform: none; }
+  .name { opacity: 1; transform: none; }
+  .hero-roles { opacity: 1; }
+  .divider { opacity: 1; }
+  .hero-subtitle { opacity: 1; transform: none; }
 }
 .hero-carousel-shell {
   display: flex;
@@ -601,48 +603,46 @@ section[data-display-number]::after {
   flex-shrink: 0;
 }
 .name {
-  font-size: clamp(2.6rem, 5.5vw, 4.8rem);
+  font-family: var(--font-sans);
+  font-size: clamp(2.8rem, 8vw, 4.8rem);
   font-weight: 600;
   letter-spacing: -0.03em;
   line-height: 1;
   color: var(--c5);
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   opacity: 0;
   transform: translateY(14px);
   transition: color 0.55s ease;
-  /* Prevent text from causing horizontal overflow on mobile */
-  word-break: break-word;
-  overflow-wrap: break-word;
 }
 .name.visible {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22,1,0.36,1), color 0.55s ease;
+  transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22,1,0.36,1), color 0.55s ease;
 }
 .hero-roles {
   font-family: var(--font-mono);
-  font-size: clamp(0.92rem, 1.45vw, 1.08rem);
+  font-size: clamp(0.88rem, 2vw, 1.08rem);
   font-weight: 300;
   color: var(--c4);
   line-height: 1.6;
   letter-spacing: 0.02em;
-  min-height: 1.8em;
+  min-height: 1.6em;
   margin-bottom: 14px;
   opacity: 0;
   transition: color 0.55s ease;
-  /* Prevent long role text from overflowing on narrow screens */
+  /* Prevent typed text from wrapping and shifting layout */
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
   max-width: 100%;
 }
 .hero-roles.visible {
   opacity: 1;
-  transition: opacity 0.7s ease 0.15s, color 0.55s ease;
+  transition: opacity 0.65s ease 0.12s, color 0.55s ease;
 }
 .hero-subtitle {
   font-family: var(--font-mono);
-  font-size: clamp(0.72rem, 1.05vw, 0.84rem);
+  font-size: clamp(0.72rem, 1.8vw, 0.84rem);
   font-weight: 300;
   color: var(--c4);
   line-height: 1.75;
@@ -670,10 +670,11 @@ section[data-display-number]::after {
 }
 
 /* ── SCROLL HINT ── */
+/* Scroll hint display/animation is controlled by the inline <style> block in <head>.
+   Hidden by default; .visible class applied by JS after loader completes. */
 .scroll-hint {
   display: none;
 }
-/* .visible state is handled by the inline <style> block */
 
 /* ── ABOUT ── */
 .about .inner {
@@ -2171,12 +2172,13 @@ section[data-display-number]::after {
     min-height: auto;
   }
   .hero {
+    /* Override section padding; hero manages its own spacing */
+    padding: 64px 5vw 72px;
+    min-height: 100vh;
     min-height: 100svh;
-    min-height: 100vh; /* fallback */
-    padding-top: 68px;
-    padding-bottom: 40px;
     gap: 24px;
-    justify-content: flex-start;
+    justify-content: center;
+    align-items: center;
   }
   .hero .content,
   .about .inner,
@@ -2322,12 +2324,12 @@ section[data-display-number]::after {
     padding: var(--section-pad-top) 4vw var(--section-pad-bottom);
   }
   .hero {
+    padding: 60px 4vw 68px;
+    min-height: 100vh;
     min-height: 100svh;
-    min-height: 100vh; /* fallback */
-    padding-top: 64px;
-    padding-bottom: 32px;
     gap: 20px;
-    justify-content: flex-start;
+    justify-content: center;
+    align-items: center;
   }
   .hero-roles {
     font-size: 0.82rem;
