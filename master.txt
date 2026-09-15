@@ -3,6 +3,6 @@
 # hero
 # about
 # experience
-# projects
+projects
 # contact
 disable-hero-carousel
