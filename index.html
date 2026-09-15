@@ -749,6 +749,10 @@
           try {
             const lines = parseListFile(await fetchTextFile("master.txt")).map((l) => l.toLowerCase());
             heroCarouselDisabled = lines.includes("disable-hero-carousel");
+            if (heroCarouselDisabled && heroCarouselEl) {
+              heroCarouselEl.style.display = "none";
+              clearInterval(heroCarouselTimer);
+            }
             const hiddenSections = new Set(lines.filter((l) => l !== "disable-hero-carousel"));
             applyMasterVisibility(hiddenSections);
           } catch {
