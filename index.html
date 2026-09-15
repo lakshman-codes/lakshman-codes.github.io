@@ -97,6 +97,136 @@
         50%  { transform: scaleY(1); opacity: 1; }
         100% { transform: scaleY(1) translateY(14px); opacity: 0; }
       }
+
+      /* ── EXPERIENCE CARD COLOR ACCENT ── */
+      .experience-card[style*="--xp-color"] {
+        position: relative;
+        overflow: hidden;
+        border-left: 2.5px solid transparent !important;
+        border-image: linear-gradient(
+          to bottom,
+          var(--xp-color) 0%,
+          color-mix(in srgb, var(--xp-color) 35%, transparent) 55%,
+          transparent 100%
+        ) 1 !important;
+      }
+
+      .experience-card[style*="--xp-color"]::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          105deg,
+          color-mix(in srgb, var(--xp-color) 9%, transparent) 0%,
+          transparent 52%
+        );
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .experience-card[style*="--xp-color"] > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .experience-card[style*="--xp-color"] .experience-role {
+        background: linear-gradient(
+          90deg,
+          var(--xp-color) 0%,
+          color-mix(in srgb, var(--xp-color) 50%, var(--c1, #111)) 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: inline-block;
+      }
+
+      .experience-card[style*="--xp-color"] .experience-company::before {
+        content: "";
+        display: inline-block;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--xp-color);
+        margin-right: 6px;
+        vertical-align: middle;
+        opacity: 0.7;
+        position: relative;
+        top: -1px;
+      }
+
+      .experience-card[style*="--xp-color"] .experience-tag {
+        border-color: color-mix(in srgb, var(--xp-color) 35%, transparent);
+        color: color-mix(in srgb, var(--xp-color) 75%, var(--c1, #111));
+      }
+
+      /* ── PROJECTS: FULL-BLEED STICKY SPLIT LAYOUT ── */
+      #projects.projects-section {
+        position: relative !important;
+        width: 100vw !important;
+        max-width: none !important;
+        left: 50% !important;
+        margin-left: -50vw !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+        overflow: visible !important;
+      }
+      #projects .projects-layout {
+        display: grid !important;
+        grid-template-columns: 55fr 45fr !important;
+        align-items: stretch !important;
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      /* LEFT: natural height, no scroll — grows with content */
+      #projects .projects-left {
+        box-sizing: border-box !important;
+        padding: clamp(40px,5.5vw,80px) clamp(20px,3vw,48px) clamp(40px,5.5vw,80px) clamp(28px,6vw,96px) !important;
+        overflow: visible !important;
+      }
+      #projects .projects-left > *,
+      #projects .projects-left .project-featured-grid,
+      #projects .projects-left .projects-empty {
+        width: 100% !important;
+        max-width: none !important;
+        box-sizing: border-box !important;
+      }
+      /* RIGHT: matches left height exactly, rail scrolls inside it */
+      #projects .projects-right {
+        display: flex !important;
+        flex-direction: column !important;
+        align-self: stretch !important;
+        box-sizing: border-box !important;
+        padding: clamp(40px,5.5vw,80px) clamp(28px,6vw,96px) clamp(40px,5.5vw,80px) clamp(20px,3vw,48px) !important;
+        border-left: 1px solid var(--border, rgba(0,0,0,0.09)) !important;
+        overflow: hidden !important;
+      }
+      #projects .projects-right-top {
+        flex-shrink: 0 !important;
+        margin-bottom: 16px !important;
+      }
+      #projects .projects-rail {
+        flex: 1 1 0 !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        scrollbar-width: thin !important;
+        scrollbar-color: var(--c4, rgba(0,0,0,0.18)) transparent !important;
+      }
+      #projects .projects-rail::-webkit-scrollbar { width: 3px !important; }
+      #projects .projects-rail::-webkit-scrollbar-track { background: transparent !important; }
+      #projects .projects-rail::-webkit-scrollbar-thumb {
+        background: var(--c4, rgba(0,0,0,0.18)) !important;
+        border-radius: 2px !important;
+      }
+      #projects .projects-rail-list {
+        width: 100% !important;
+        max-width: none !important;
+        display: flex !important;
+        flex-direction: column !important;
+      }
+      #projects .projects-empty { flex-shrink: 0 !important; }
     </style>
   </head>
   <body>
@@ -150,12 +280,10 @@
           <span class="nav-tick"></span>
           <span class="nav-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24">
-              <path d="M4.5 7.5h15v11h-15z" />
-              <path d="M8 7.5V5.5h8v2" />
-              <path d="M8 12h8" />
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
             </svg>
           </span>
-          <span class="nav-label">🛠️ projects</span>
+          <span class="nav-label">/ projects</span>
         </a>
         <a class="nav-item" href="#contact" data-section="contact">
           <span class="nav-tick"></span>
@@ -307,7 +435,8 @@
           <p class="projects-note">
             <span class="projects-note-label">featured</span>
             <span>
-              scroll through some of my projects below<br />and on the rail to the right
+              scroll through some of my projects below<br />and on the rail to
+              right
             </span>
           </p>
           <div class="project-featured-grid" id="project-featured-grid"></div>
@@ -712,12 +841,21 @@
         function sanitizeUrl(url) {
           return /^(https?:\/\/|\/|blog\/|projects\/|hero-images\/|experience\/)/i.test(url) ? url : "#";
         }
+        function sanitizeColor(raw) {
+          if (!raw) return "";
+          const v = raw.trim();
+          if (/^#([0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})$/i.test(v)) return v;
+          if (/^[a-z]+$/i.test(v) && v.length <= 32) return v;
+          if (/^(rgb|hsl|hwb|lch|lab|oklch|oklab|color)\s*\(/i.test(v) && v.endsWith(")")) return v;
+          return "";
+        }
+
         async function loadManifestEntries(manifestPath, basePath, parser) {
           const files = parseListFile(await fetchTextFile(manifestPath));
           return Promise.all(files.map(async (file) => parser(await fetchTextFile(`${basePath}/${file}`), file)));
         }
         function attachTiltInteraction(selector) {
-          if (isTouch) return; /* skip tilt on touch devices — no hover */
+          if (isTouch) return;
           document.querySelectorAll(selector).forEach((card) => {
             card.addEventListener("mousemove", (e) => {
               const r = card.getBoundingClientRect();
@@ -757,7 +895,6 @@
             dragging = false;
             const dx = e.changedTouches[0].clientX - startX;
             const dy = e.changedTouches[0].clientY - startY;
-            /* Only register as swipe if horizontal movement dominates */
             if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 44) {
               dx < 0 ? onLeft() : onRight();
             }
@@ -848,7 +985,6 @@
         if (heroCarouselEl) {
           heroCarouselEl.addEventListener("mouseenter", () => clearInterval(heroCarouselTimer));
           heroCarouselEl.addEventListener("mouseleave", startHeroCarouselAuto);
-          /* Touch swipe for hero carousel */
           const heroViewport = heroCarouselEl.querySelector(".hero-carousel-viewport");
           if (heroViewport) {
             addSwipeSupport(
@@ -919,13 +1055,11 @@
           }
         }
 
-        /* ABOUT AUTO-SWIPE — pauses on manual interaction, resumes after */
         let aboutAutoPlay = setInterval(() => {
           if (!aboutEntries.length) return;
           aboutIndex = (aboutIndex + 1) % aboutEntries.length;
           renderAboutCarousel();
         }, 6000);
-
         function resetAboutAutoPlay() {
           clearInterval(aboutAutoPlay);
           aboutAutoPlay = setInterval(() => {
@@ -934,15 +1068,9 @@
             renderAboutCarousel();
           }, 6000);
         }
-
-        [aboutPrev, aboutNext].forEach((btn) => {
-          btn.addEventListener("click", resetAboutAutoPlay);
-        });
-
+        [aboutPrev, aboutNext].forEach((btn) => { btn.addEventListener("click", resetAboutAutoPlay); });
         aboutPrev.addEventListener("click", () => { if (!aboutEntries.length) return; aboutIndex = (aboutIndex - 1 + aboutEntries.length) % aboutEntries.length; renderAboutCarousel(); });
         aboutNext.addEventListener("click", () => { if (!aboutEntries.length) return; aboutIndex = (aboutIndex + 1) % aboutEntries.length; renderAboutCarousel(); });
-
-        /* Touch swipe for about carousel */
         const aboutViewport = document.querySelector(".about-viewport");
         if (aboutViewport) {
           addSwipeSupport(
@@ -963,22 +1091,30 @@
         function parseExperienceFile(source, filename) {
           const company = getTags(source, "company")[0] || filename.replace(/\.txt$/i, "");
           return {
-            role: getTags(source, "role")[0] || "role title",
+            role:     getTags(source, "role")[0]     || "role title",
             company,
-            logo: sanitizeUrl(getTags(source, "logo")[0] || ""),
-            date: getTags(source, "date")[0] || "",
+            logo:     sanitizeUrl(getTags(source, "logo")[0]     || ""),
+            date:     getTags(source, "date")[0]     || "",
             location: getTags(source, "location")[0] || "",
-            summary: normalizeText(getTags(source, "summary")[0] || ""),
-            bullets: getTags(source, "bullet").map(normalizeText).filter(Boolean),
-            tags: getTags(source, "tag").map(normalizeText).filter(Boolean),
-            badge: getTags(source, "badge")[0] || getInitials(company),
+            summary:  normalizeText(getTags(source, "summary")[0] || ""),
+            bullets:  getTags(source, "bullet").map(normalizeText).filter(Boolean),
+            tags:     getTags(source, "tag").map(normalizeText).filter(Boolean),
+            badge:    getTags(source, "badge")[0]    || getInitials(company),
+            color:    sanitizeColor(getTags(source, "color")[0]  || ""),
           };
         }
+
         function buildExperienceCard(entry) {
-          return `<article class="experience-card"><div class="experience-badge${entry.logo && entry.logo !== "#" ? " experience-badge-logo" : ""}" aria-hidden="true">${
-            entry.logo && entry.logo !== "#" ? `<img src="${escapeHTML(entry.logo)}" alt="" loading="lazy" />` : escapeHTML(entry.badge)
+          const colorAttr = entry.color
+            ? ` style="--xp-color: ${entry.color};"`
+            : "";
+
+          return `<article class="experience-card"${colorAttr}><div class="experience-badge${entry.logo && entry.logo !== "#" ? " experience-badge-logo" : ""}" aria-hidden="true">${
+            entry.logo && entry.logo !== "#"
+              ? `<img src="${escapeHTML(entry.logo)}" alt="" loading="lazy" />`
+              : escapeHTML(entry.badge)
           }</div><div class="experience-card-main"><div class="experience-card-top"><div><h3 class="experience-role">${escapeHTML(entry.role)}</h3><p class="experience-company">${escapeHTML(entry.company)}</p></div><div class="experience-meta">${
-            entry.date ? `<span class="experience-date">${escapeHTML(entry.date)}</span>` : ""
+            entry.date     ? `<span class="experience-date">${escapeHTML(entry.date)}</span>`         : ""
           }${entry.location ? `<span class="experience-location">${escapeHTML(entry.location)}</span>` : ""}</div></div>${
             entry.summary ? `<p class="experience-summary">${escapeHTML(entry.summary)}</p>` : ""
           }${entry.bullets.length || entry.tags.length ? `<div class="experience-card-bottom">${
@@ -986,6 +1122,7 @@
           }${entry.tags.length ? `<div class="experience-tags">${entry.tags.map((t) => `<span class="experience-tag">${escapeHTML(t)}</span>`).join("")}</div>` : ""}</div>` : ""
           }</div></article>`;
         }
+
         async function loadExperienceEntries() {
           if (!experienceList || !experienceTotal || !experienceEmpty) return;
           try {
@@ -1010,78 +1147,157 @@
         function parseBooleanTag(value) {
           return ["true", "yes", "1", "featured"].includes((value || "").trim().toLowerCase());
         }
-        function normalizeProjectValue(v) { return normalizeText(v || "").toLowerCase(); }
-        function hasProjectKeyword(values, keywords) {
-          return values.map(normalizeProjectValue).filter(Boolean).some((v) =>
-            keywords.some((k) => v === k || v.includes(k) || v.replace(/[-_]+/g, " ") === k)
-          );
-        }
+
         function parseProjectFile(source, filename) {
-          const title = getTags(source, "main")[0] || filename.replace(/\.txt$/i, "");
-          const text = getTags(source, "text")[0] || "";
-          const tags = getTags(source, "tag").map(normalizeText).filter(Boolean);
-          const status = normalizeText(getTags(source, "status")[0] || "");
-          const layout = normalizeText(getTags(source, "layout")[0] || "");
-          const featuredValue = getTags(source, "featured")[0] || "";
-          const keywordValues = [filename.replace(/\.txt$/i, ""), title, status, layout, featuredValue, ...tags];
-          const isFeatured = parseBooleanTag(featuredValue) || hasProjectKeyword(keywordValues, ["featured"]);
-          const isNoteCard = hasProjectKeyword([layout, ...keywordValues], ["note", "notes", "site note", "site-note", "note card", "note-card", "notice"]) && !isFeatured;
           return {
-            title, text, preview: normalizeText(text),
+            title:
+              getTags(source, "main")[0] || filename.replace(/\.txt$/i, ""),
+            text: getTags(source, "text")[0] || "",
+            preview: normalizeText(getTags(source, "text")[0] || ""),
             image: sanitizeUrl(getTags(source, "image")[0] || ""),
-            tags,
-            links: getTags(source, "link").map(parseLinkValue),
-            featured: isFeatured, isNoteCard, status,
-            year: normalizeText(getTags(source, "year")[0] || ""),
+            tags: getTags(source, "tag"),
+            links: getTags(source, "link").map((raw) => parseLinkValue(raw)),
+            featured: parseBooleanTag(getTags(source, "featured")[0] || ""),
+            status: getTags(source, "status")[0] || "",
+            year: getTags(source, "year")[0] || "",
           };
         }
+
         function buildProjectLinks(links) {
           if (!links.length) return "";
-          return `<div class="project-links">${links.map((l) => `<a class="project-link-btn" href="${escapeHTML(l.href)}" target="_blank" rel="noopener"><span>${escapeHTML(l.label)}</span></a>`).join("")}</div>`;
+          return `
+            <div class="project-links">
+              ${links
+                .map(
+                  (link) => `
+                    <a class="project-link-btn" href="${escapeHTML(link.href)}" target="_blank" rel="noopener">
+                      <span>${escapeHTML(link.label)}</span>
+                    </a>
+                  `,
+                )
+                .join("")}
+            </div>
+          `;
         }
-        function buildProjectTags(tags, featured = false) {
-          const tagList = Array.from(new Set(featured ? ["featured", ...tags] : tags));
-          if (!tagList.length) return "";
-          return `<div class="project-tags">${tagList.map((t) => `<span class="project-tag">${escapeHTML(t)}</span>`).join("")}</div>`;
+
+        function buildProjectNoticeCard() {
+          return `
+            <article class="project-card project-card-note">
+              <div class="project-top">
+                <span class="project-index">site note</span>
+                <span class="project-status">updating</span>
+              </div>
+              <div class="project-note-stack">
+                <h3 class="project-title">archive still loading in.</h3>
+                <p class="project-note-copy">
+                  this is a partial snapshot for now. i am still digging up
+                  older builds, polishing them a little, and getting them onto
+                  the site.
+                </p>
+                <div class="project-note-inline">
+                  <span class="project-note-label">eta</span>
+                  <p class="project-note-copy">
+                    somewhere between 1 hour and 1 century.
+                  </p>
+                </div>
+              </div>
+            </article>
+          `;
         }
+
         function buildProjectMedia(image, title) {
           if (!image || image === "#") return "";
-          return `<div class="project-media"><img src="${escapeHTML(image)}" alt="${escapeHTML(title)} preview image" loading="lazy" /></div>`;
+          return `
+            <div class="project-media">
+              <img src="${escapeHTML(image)}" alt="${escapeHTML(title)} preview image" loading="lazy" />
+            </div>
+          `;
         }
-        function buildProjectNoteCard(entry) {
-          const noteMeta = entry.status || "note";
-          const noteAsideLabel = entry.tags[0] || (entry.year ? "year" : "");
-          const noteAsideValue = entry.tags[1] || entry.year || (entry.links[0] ? entry.links[0].label : "");
-          return `<article class="project-card project-card-note"><div class="project-top"><span class="project-index">${escapeHTML(noteMeta)}</span>${entry.year ? `<span class="project-status">${escapeHTML(entry.year)}</span>` : ""}</div><div class="project-note-stack"><h3 class="project-title">${escapeHTML(entry.title)}</h3><p class="project-note-copy">${escapeHTML(entry.preview)}</p>${
-            noteAsideLabel && noteAsideValue ? `<div class="project-note-inline"><span class="project-note-label">${escapeHTML(noteAsideLabel)}</span><p class="project-note-copy">${escapeHTML(noteAsideValue)}</p></div>` : ""
-          }${buildProjectTags(entry.tags, false)}${buildProjectLinks(entry.links)}</div></article>`;
+
+        function buildProjectTags(tags, featured = false) {
+          const tagList = featured ? ["featured", ...tags] : tags;
+          if (!tagList.length) return "";
+          return `
+            <div class="project-tags">
+              ${tagList
+                .map(
+                  (tag) =>
+                    `<span class="project-tag">${escapeHTML(tag)}</span>`,
+                )
+                .join("")}
+            </div>
+          `;
         }
+
         function buildProjectCard(entry, index, featured = false) {
           const meta = [entry.status, entry.year].filter(Boolean).join(" · ");
-          return `<article class="${featured ? "project-featured-card" : "project-card"}"><div class="project-card-frame"><div class="project-top"><span class="project-index">${String(index + 1).padStart(2, "0")}</span>${meta ? `<span class="project-status">${escapeHTML(meta)}</span>` : ""}</div><div class="project-main"><h3 class="project-title">${escapeHTML(entry.title)}</h3>${buildProjectMedia(entry.image, entry.title)}<p class="project-copy">${escapeHTML(entry.preview)}</p></div><div class="project-bottom">${buildProjectTags(entry.tags, featured)}${buildProjectLinks(entry.links)}</div></div></article>`;
+          return `
+            <article class="${featured ? "project-featured-card" : "project-card"}">
+              <div class="project-card-frame">
+                <div class="project-top">
+                  <span class="project-index">${String(index + 1).padStart(2, "0")}</span>
+                  ${meta ? `<span class="project-status">${escapeHTML(meta)}</span>` : ""}
+                </div>
+                <div class="project-main">
+                  <h3 class="project-title">${escapeHTML(entry.title)}</h3>
+                  ${buildProjectMedia(entry.image, entry.title)}
+                  <p class="project-copy">${escapeHTML(entry.preview)}</p>
+                </div>
+                <div class="project-bottom">
+                  ${buildProjectTags(entry.tags, featured)}
+                  ${buildProjectLinks(entry.links)}
+                </div>
+              </div>
+            </article>
+          `;
         }
+
         async function loadProjectEntries() {
           try {
-            const projectEntries = await loadManifestEntries("projects/index.txt", "projects", parseProjectFile);
-            const noteEntries = projectEntries.filter((e) => e.isNoteCard);
-            const standardEntries = projectEntries.filter((e) => !e.isNoteCard);
-            const featuredEntries = standardEntries.some((e) => e.featured) ? standardEntries.filter((e) => e.featured) : standardEntries;
-            const featuredSet = new Set(featuredEntries);
-            const railEntries = standardEntries.filter((e) => !featuredSet.has(e));
-            projectFeaturedGrid.innerHTML = featuredEntries.map((e, i) => buildProjectCard(e, i, true)).join("");
-            projectsRailList.innerHTML = [
-              ...noteEntries.map(buildProjectNoteCard),
-              ...(railEntries.length ? railEntries : standardEntries).map((e, i) => buildProjectCard(e, i, false)),
-            ].join("");
-            projectsFeaturedEmpty.classList.toggle("show", featuredEntries.length === 0);
-            projectsListEmpty.classList.toggle("show", noteEntries.length + standardEntries.length === 0);
-          } catch {
-            projectFeaturedGrid.innerHTML = ""; projectsRailList.innerHTML = "";
-            projectsFeaturedEmpty.textContent = "couldn't load featured projects. check the projects folder and serve the site through a local server.";
-            projectsListEmpty.textContent = "couldn't load the project rail. check the projects folder and serve the site through a local server.";
-            projectsFeaturedEmpty.classList.add("show"); projectsListEmpty.classList.add("show");
+            const projectEntries = await loadManifestEntries(
+              "projects/index.txt",
+              "projects",
+              parseProjectFile,
+            );
+
+            const featuredEntries = (
+              projectEntries.some((entry) => entry.featured)
+                ? projectEntries.filter((entry) => entry.featured)
+                : projectEntries
+            ).slice(0, 2);
+            const featuredEntrySet = new Set(featuredEntries);
+            const railEntries = projectEntries.filter(
+              (entry) => !featuredEntrySet.has(entry),
+            );
+
+            projectFeaturedGrid.innerHTML = featuredEntries
+              .map((entry, index) => buildProjectCard(entry, index, true))
+              .join("");
+            projectsRailList.innerHTML =
+              buildProjectNoticeCard() +
+              (railEntries.length ? railEntries : projectEntries)
+                .map((entry, index) => buildProjectCard(entry, index, false))
+                .join("");
+            projectsFeaturedEmpty.classList.toggle(
+              "show",
+              featuredEntries.length === 0,
+            );
+            projectsListEmpty.classList.toggle(
+              "show",
+              projectEntries.length === 0,
+            );
+          } catch (error) {
+            projectFeaturedGrid.innerHTML = "";
+            projectsRailList.innerHTML = "";
+            projectsFeaturedEmpty.textContent =
+              "couldn't load featured projects. check the projects folder and serve the site through a local server.";
+            projectsListEmpty.textContent =
+              "couldn't load the project rail. check the projects folder and serve the site through a local server.";
+            projectsFeaturedEmpty.classList.add("show");
+            projectsListEmpty.classList.add("show");
           }
         }
+
         loadProjectEntries();
 
         /* DRAW MODE */
@@ -1101,12 +1317,7 @@
           image.onload = () => dctx.drawImage(image, 0, 0);
           image.src = img;
         });
-
-        /* Update draw hint label on touch */
-        if (isTouch) {
-          drawHint.textContent = "tap + drag to draw anywhere";
-        }
-
+        if (isTouch) { drawHint.textContent = "tap + drag to draw anywhere"; }
         drawBtn.addEventListener("click", () => {
           drawMode = !drawMode;
           document.body.classList.toggle("draw-mode", drawMode);
@@ -1117,8 +1328,6 @@
           clearBtn.classList.toggle("show", drawMode);
         });
         clearBtn.addEventListener("click", () => dctx.clearRect(0, 0, drawCanvas.width, drawCanvas.height));
-
-        /* Mouse drawing */
         drawCanvas.addEventListener("mousedown", (e) => { if (!drawMode) return; isDrawing = true; lastDX = e.clientX; lastDY = e.clientY; });
         drawCanvas.addEventListener("mousemove", (e) => {
           if (!drawMode || !isDrawing) return;
@@ -1128,15 +1337,7 @@
           lastDX = e.clientX; lastDY = e.clientY;
         });
         window.addEventListener("mouseup", () => { isDrawing = false; });
-
-        /* Touch drawing */
-        drawCanvas.addEventListener("touchstart", (e) => {
-          if (!drawMode) return;
-          e.preventDefault();
-          isDrawing = true;
-          lastDX = e.touches[0].clientX;
-          lastDY = e.touches[0].clientY;
-        }, { passive: false });
+        drawCanvas.addEventListener("touchstart", (e) => { if (!drawMode) return; e.preventDefault(); isDrawing = true; lastDX = e.touches[0].clientX; lastDY = e.touches[0].clientY; }, { passive: false });
         drawCanvas.addEventListener("touchmove", (e) => {
           if (!drawMode || !isDrawing) return;
           e.preventDefault();
@@ -1149,7 +1350,7 @@
         drawCanvas.addEventListener("touchend", () => { isDrawing = false; });
         drawCanvas.addEventListener("touchcancel", () => { isDrawing = false; });
 
-        /* HERO RAIN — reduced drop count on mobile for performance */
+        /* HERO RAIN */
         (() => {
           const rc = document.getElementById("hero-rain");
           const hero = document.getElementById("hero");
