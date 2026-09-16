@@ -1,0 +1,14 @@
+<role>Systems Engineering Intern</role>
+<company>Ally Solutions</company>
+<logo>experience/assets/AllySolutions_logo.png</logo>
+<date>Jun 2026 – Sep 2026</date>
+<location>Arvada, CO (Remote)</location>
+<summary>Ally Solutions develops healthcare technology solutions. Worked on the elegibility platform building eligibility verification, automated dispatching, and configurable workflow tools across multiple internal services for dialer agents..</summary>
+<bullet>Designed and implemented dialing agents and dispatch logic for a <strong>~18-rule eligibility platform</strong> in <strong>Python</strong>, shipped to <strong>2 clinic chains</strong>.</bullet>
+<bullet>Achieved <strong>90%+ accuracy</strong> in benefits eligibility verification by developing Python-based matching and validation logic, integrating third-party eligibility APIs, and testing historical service-utilization data to identify potential coverage matches with AI.</bullet>
+<bullet>Enabled clients to customize call workflows and reporting by building configurable dashboard features in <strong>TypeScript</strong> and <strong>Next.js</strong>, including controls for call dispatch timing and report formatting.</bullet>
+<bullet>Connected the eligibility engine across <strong>3 internal services</strong> by developing backend APIs that automated data flow between dispatching, matching, and verification systems.</bullet>
+<tag>backend</tag>
+<tag>ai</tag>
+<tag>systems</tag>
+<badge>se</badge>

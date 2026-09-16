@@ -3,8 +3,8 @@
 <logo>experience/assets/Servicedeck_logo.png</logo>
 <date>Jun 2025 – Sep 2025</date>
 <location>Mississauga, ON</location>
-<summary>ServiceDeck is a platform connecting service businesses with customers. Worked on the backend team building AI-powered automation tools that helped businesses onboard, manage client communications, and process incoming service requests at scale.</summary>
-<bullet>Co-Built a <strong>Python</strong> and <strong>C++</strong> data pipeline implementing AI to clean, validate, and reformat <strong>80k+ customer Excel records</strong>, automating field verification and missing field detection while reducing a <strong>4-hour manual process by 90%</strong> with a cost-efficient AI design.</bullet>
+<summary>ServiceDeck is a platform connecting service businesses with customers. Worked on the backend R&D team building AI-powered automation tools that helped businesses onboard, manage client communications, and process incoming service requests at scale.</summary>
+<bullet>Co-Built a <storng>Python</strong> and <strong>C++</strong> data pipeline implementing AI to clean, validate, and reformat <strong>80k+ customer Excel records</strong>, automating field verification and missing field detection while reducing a <strong>4-hour manual process by 90%</strong> with a cost-efficient AI design.</bullet>
 <bullet>Built an AI service chat agent, deployable to businesses on the ServiceDeck platform, that scraped client data and documents, handled customer queries across WhatsApp and SMS via <strong>Twilio</strong>, identified potential leads, and automated appointment booking.</bullet>
 <bullet>Implemented an email forwarding extension in <strong>Python</strong> that used AI to categorize and process incoming client emails and automatically convert them into structured service request events, achieving <strong>85% conversion accuracy</strong> on live client data.</bullet>
 <tag>backend</tag>

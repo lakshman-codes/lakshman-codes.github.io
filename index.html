@@ -827,6 +827,9 @@
         function escapeHTML(v) {
           return v.replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" })[c]);
         }
+        function formatExperienceText(value) {
+          return escapeHTML(value).replace(/&lt;(strong|bold)&gt;([\s\S]*?)&lt;\/\1&gt;/gi, "<strong>$2</strong>");
+        }
         function parseListFile(source) {
           return source.split(/\r?\n/).map((l) => l.trim()).filter((l) => l && !l.startsWith("#"));
         }
@@ -1116,14 +1119,14 @@
           return `<article class="experience-card"${colorAttr}><div class="experience-badge${entry.logo && entry.logo !== "#" ? " experience-badge-logo" : ""}" aria-hidden="true">${
             entry.logo && entry.logo !== "#"
               ? `<img src="${escapeHTML(entry.logo)}" alt="" loading="lazy" />`
-              : escapeHTML(entry.badge)
-          }</div><div class="experience-card-main"><div class="experience-card-top"><div><h3 class="experience-role">${escapeHTML(entry.role)}</h3><p class="experience-company">${escapeHTML(entry.company)}</p></div><div class="experience-meta">${
-            entry.date     ? `<span class="experience-date">${escapeHTML(entry.date)}</span>`         : ""
-          }${entry.location ? `<span class="experience-location">${escapeHTML(entry.location)}</span>` : ""}</div></div>${
-            entry.summary ? `<p class="experience-summary">${escapeHTML(entry.summary)}</p>` : ""
+              : formatExperienceText(entry.badge)
+          }</div><div class="experience-card-main"><div class="experience-card-top"><div><h3 class="experience-role">${formatExperienceText(entry.role)}</h3><p class="experience-company">${formatExperienceText(entry.company)}</p></div><div class="experience-meta">${
+            entry.date     ? `<span class="experience-date">${formatExperienceText(entry.date)}</span>`         : ""
+          }${entry.location ? `<span class="experience-location">${formatExperienceText(entry.location)}</span>` : ""}</div></div>${
+            entry.summary ? `<p class="experience-summary">${formatExperienceText(entry.summary)}</p>` : ""
           }${entry.bullets.length || entry.tags.length ? `<div class="experience-card-bottom">${
-            entry.bullets.length ? `<ul class="experience-bullets">${entry.bullets.map((b) => `<li>${escapeHTML(b)}</li>`).join("")}</ul>` : ""
-          }${entry.tags.length ? `<div class="experience-tags">${entry.tags.map((t) => `<span class="experience-tag">${escapeHTML(t)}</span>`).join("")}</div>` : ""}</div>` : ""
+            entry.bullets.length ? `<ul class="experience-bullets">${entry.bullets.map((b) => `<li>${formatExperienceText(b)}</li>`).join("")}</ul>` : ""
+          }${entry.tags.length ? `<div class="experience-tags">${entry.tags.map((t) => `<span class="experience-tag">${formatExperienceText(t)}</span>`).join("")}</div>` : ""}</div>` : ""
           }</div></article>`;
         }
 
