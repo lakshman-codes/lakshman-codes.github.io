@@ -1044,6 +1044,17 @@ section[data-display-number]::after {
   color: var(--c4);
   text-transform: lowercase;
 }
+.experience-company a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--c3);
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+.experience-company a:hover {
+  color: var(--c5);
+  text-decoration-color: var(--c5);
+}
 .experience-meta {
   display: flex;
   flex-direction: column;

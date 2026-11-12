@@ -552,7 +552,7 @@
         </a>
 
         <div class="resume-actions">
-          <a class="resume-btn" href="https://1drv.ms/b/c/3dff5d964f45c124/IQBKrlGx5zLuQrR_MerrC5PGAUR3CEWyEC0CMVHYutzer0E?e=PfDG4g" target="_blank" rel="noopener">
+          <a class="resume-btn" href="Lakshman_Ramanathan_Resume.pdf" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
               <polyline points="14 2 14 8 20 8" />
@@ -561,7 +561,7 @@
             </svg>
             <span>view resume online</span>
           </a>
-          <a class="resume-btn" href="LakshmanR_TechnicalResume2025_MAY.pdf" download="LakshmanR_TechnicalResume2025_MAY.pdf">
+          <a class="resume-btn" href="Lakshman_Ramanathan_Resume.pdf" download="Lakshman_Ramanathan_Resume.pdf">
             <svg viewBox="0 0 24 24">
               <path d="M12 3v12" />
               <polyline points="7 11 12 16 17 11" />
@@ -1097,9 +1097,11 @@
 
         function parseExperienceFile(source, filename) {
           const company = getTags(source, "company")[0] || filename.replace(/\.txt$/i, "");
+          const linkRaw = getTags(source, "link")[0] || getTags(source, "website")[0] || "";
           return {
             role:     getTags(source, "role")[0]     || "role title",
             company,
+            link:     linkRaw ? sanitizeUrl(linkRaw) : "",
             logo:     sanitizeUrl(getTags(source, "logo")[0]     || ""),
             date:     getTags(source, "date")[0]     || "",
             location: getTags(source, "location")[0] || "",
@@ -1116,11 +1118,15 @@
             ? ` style="--xp-color: ${entry.color};"`
             : "";
 
+          const companyHtml = entry.link && entry.link !== "#"
+            ? `<a href="${escapeHTML(entry.link)}" target="_blank" rel="noopener">${formatExperienceText(entry.company)}</a>`
+            : formatExperienceText(entry.company);
+
           return `<article class="experience-card"${colorAttr}><div class="experience-badge${entry.logo && entry.logo !== "#" ? " experience-badge-logo" : ""}" aria-hidden="true">${
             entry.logo && entry.logo !== "#"
               ? `<img src="${escapeHTML(entry.logo)}" alt="" loading="lazy" />`
               : formatExperienceText(entry.badge)
-          }</div><div class="experience-card-main"><div class="experience-card-top"><div><h3 class="experience-role">${formatExperienceText(entry.role)}</h3><p class="experience-company">${formatExperienceText(entry.company)}</p></div><div class="experience-meta">${
+          }</div><div class="experience-card-main"><div class="experience-card-top"><div><h3 class="experience-role">${formatExperienceText(entry.role)}</h3><p class="experience-company">${companyHtml}</p></div><div class="experience-meta">${
             entry.date     ? `<span class="experience-date">${formatExperienceText(entry.date)}</span>`         : ""
           }${entry.location ? `<span class="experience-location">${formatExperienceText(entry.location)}</span>` : ""}</div></div>${
             entry.summary ? `<p class="experience-summary">${formatExperienceText(entry.summary)}</p>` : ""
