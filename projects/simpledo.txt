@@ -1,0 +1,10 @@
+<main>simpledo</main>
+<text>Clean, minimal to-do list, habit tracker, and calendar application designed for frictionless task management synced across mobile and desktop.</text>
+<tag>typescript</tag>
+<tag>react</tag>
+<tag>productivity</tag>
+<status>shipped</status>
+<year>2025</year>
+<featured>false</featured>
+<link>github | https://github.com/LaxExe/SimpleDo</link>
+<link>live | https://laxexe.github.io/SimpleDo/</link>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520">
+  <rect width="800" height="520" fill="#edece8"/>
+  <rect x="70" y="70" width="660" height="380" rx="8" fill="#f8f7f5" stroke="#5a564c" stroke-width="2"/>
+  <rect x="106" y="112" width="270" height="230" rx="6" fill="#dedbd2"/>
+  <rect x="126" y="136" width="160" height="18" rx="3" fill="#5a564c"/>
+  <rect x="126" y="168" width="220" height="12" rx="2" fill="#878071"/>
+  <rect x="126" y="190" width="200" height="12" rx="2" fill="#878071"/>
+  <rect x="126" y="212" width="230" height="12" rx="2" fill="#878071"/>
+  <rect x="126" y="244" width="180" height="12" rx="2" fill="#b3ad9f"/>
+  <rect x="126" y="266" width="140" height="12" rx="2" fill="#b3ad9f"/>
+  <!-- Agent Workflow -->
+  <rect x="406" y="112" width="288" height="66" rx="6" fill="#c7c1b3"/>
+  <text x="426" y="140" fill="#38352e" font-family="'DM Mono', monospace" font-size="12">AI AGENT TAILORING</text>
+  <text x="426" y="162" fill="#2d6a4f" font-family="'DM Mono', monospace" font-weight="600" font-size="14">✓ Resume Match: 98%</text>
+  <rect x="406" y="194" width="288" height="66" rx="6" fill="#dedbd2"/>
+  <text x="426" y="222" fill="#38352e" font-family="'DM Mono', monospace" font-size="12">JOB POSTING PIPELINE</text>
+  <text x="426" y="244" fill="#5a564c" font-family="'DM Mono', monospace" font-size="13">End-to-End Submission</text>
+  <rect x="406" y="276" width="136" height="30" rx="4" fill="#5a564c"/>
+  <text x="424" y="296" fill="#fff" font-family="'DM Mono', monospace" font-size="11">Next.js</text>
+  <rect x="554" y="276" width="140" height="30" rx="4" fill="#878071"/>
+  <text x="572" y="296" fill="#fff" font-family="'DM Mono', monospace" font-size="11">Firebase</text>
+  <text x="106" y="420" fill="#2a2824" font-family="'DM Sans', sans-serif" font-weight="600" font-size="28">hireme · agent job workflow</text>
+</svg>

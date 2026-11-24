@@ -1,0 +1,12 @@
+<main>inline auto-correct</main>
+<text>Ultra-lightweight native macOS C++20 system-wide autocorrect and predictive ghost text engine running 100% on-device. Uses OS hooks, SymSpell 243K-bigram lookup, and embedded SmolLM2-135M via llama.cpp with ~15ms latency.</text>
+<tag>c++20</tag>
+<tag>macos</tag>
+<tag>llama.cpp</tag>
+<tag>llm</tag>
+<status>shipped</status>
+<year>2026</year>
+<featured>true</featured>
+<image>projects/assets/inline.svg</image>
+<link>github | https://github.com/LaxExe/Inline-MacOS-Win32Build</link>
+<link>website | https://laxexe.github.io/Inline-MacOS-Win32Build/</link>

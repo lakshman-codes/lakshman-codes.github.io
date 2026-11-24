@@ -1,7 +1,8 @@
-northstar.txt
-signal-board.txt
-orbit-ui.txt
-benchlab.txt
-pulse-notes.txt
-field-kit.txt
-window-seat.txt
+inline.txt
+ledger-service.txt
+hireme.txt
+highlights.txt
+voice-browser.txt
+service-chat-agent.txt
+simpledo.txt
+pingme.txt

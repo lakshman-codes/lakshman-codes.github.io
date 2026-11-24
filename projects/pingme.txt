@@ -1,0 +1,10 @@
+<main>pingme</main>
+<text>Lightweight, event-driven notification and reminder system that calls your phone with scheduled tasks to ensure critical reminders are impossible to miss.</text>
+<tag>typescript</tag>
+<tag>node.js</tag>
+<tag>twilio</tag>
+<tag>systems</tag>
+<status>systems</status>
+<year>2025</year>
+<featured>false</featured>
+<link>github | https://github.com/LaxExe/PingMe</link>

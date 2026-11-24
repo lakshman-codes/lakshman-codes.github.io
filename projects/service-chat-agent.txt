@@ -1,0 +1,10 @@
+<main>service chat agent</main>
+<text>Conversational AI agent deployable to service businesses that scrapes documentation, handles customer inquiries across WhatsApp and SMS via Twilio, and automates appointment bookings.</text>
+<tag>python</tag>
+<tag>ai</tag>
+<tag>twilio</tag>
+<tag>flask</tag>
+<status>ai agent</status>
+<year>2025</year>
+<featured>false</featured>
+<link>github | https://github.com/LaxExe/Service-Chat-Agent</link>

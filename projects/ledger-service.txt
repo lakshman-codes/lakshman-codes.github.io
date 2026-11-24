@@ -1,0 +1,12 @@
+<main>double-entry ledger</main>
+<text>Double-entry banking REST API built with Java 21, Spring Boot 3.3, and PostgreSQL 16. Guarantees exact zero-sum balances across concurrent threads using ascending account row locking, transactional integrity, and idempotency key constraints.</text>
+<tag>java</tag>
+<tag>spring boot</tag>
+<tag>postgresql</tag>
+<tag>docker</tag>
+<status>backend api</status>
+<year>2026</year>
+<featured>true</featured>
+<image>projects/assets/ledger-service.svg</image>
+<link>github | https://github.com/LaxExe/ledger-service</link>
+<link>docs | https://laxexe.github.io/ledger-service/</link>

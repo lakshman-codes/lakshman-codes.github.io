@@ -1,0 +1,10 @@
+<main>voice browser automation</main>
+<text>Chrome extension that enables hands-free voice browser control, routed through an LLM with parallel background execution mode to execute actions without losing active tab focus.</text>
+<tag>chrome extension</tag>
+<tag>llm</tag>
+<tag>typescript</tag>
+<tag>voice control</tag>
+<status>extension</status>
+<year>2026</year>
+<featured>false</featured>
+<link>github | https://github.com/LaxExe/VoiceBasedAgenticBrowserAutomationTool</link>

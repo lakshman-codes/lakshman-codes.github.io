@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520">
+  <rect width="800" height="520" fill="#ede8e1"/>
+  <rect x="70" y="70" width="660" height="380" rx="8" fill="#f7f4ee" stroke="#6e6255" stroke-width="2"/>
+  <!-- macOS style window dots -->
+  <circle cx="106" cy="106" r="6" fill="#c49b88"/>
+  <circle cx="126" cy="106" r="6" fill="#d9bf9c"/>
+  <circle cx="146" cy="106" r="6" fill="#a4b39e"/>
+  <!-- Editor mockup line -->
+  <rect x="106" y="148" width="220" height="18" rx="3" fill="#6e6255"/>
+  <rect x="336" y="148" width="140" height="18" rx="3" fill="#bfae9e"/>
+  <rect x="486" y="148" width="80" height="18" rx="3" fill="#dfd6cb"/>
+  <rect x="106" y="184" width="310" height="16" rx="3" fill="#99897a"/>
+  <!-- Autocomplete Ghost Box -->
+  <rect x="106" y="224" width="380" height="76" rx="6" fill="#e8dfd5" stroke="#99897a" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <rect x="126" y="244" width="160" height="16" rx="3" fill="#6e6255"/>
+  <rect x="296" y="244" width="160" height="16" rx="3" fill="#b3a393"/>
+  <rect x="126" y="270" width="90" height="12" rx="3" fill="#887a6d"/>
+  <!-- C++20 / 15ms latency badges -->
+  <rect x="530" y="224" width="160" height="32" rx="4" fill="#6e6255"/>
+  <text x="550" y="245" fill="#f7f4ee" font-family="'DM Mono', monospace" font-size="13">C++20 · 15ms</text>
+  <rect x="530" y="268" width="160" height="32" rx="4" fill="#bfae9e"/>
+  <text x="554" y="289" fill="#362f27" font-family="'DM Mono', monospace" font-size="13">SmolLM2-135M</text>
+  <text x="106" y="420" fill="#362f27" font-family="'DM Sans', sans-serif" font-weight="600" font-size="28">inline system wide auto-correct</text>
+</svg>

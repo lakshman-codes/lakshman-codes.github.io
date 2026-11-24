@@ -1,0 +1,12 @@
+<main>hireme</main>
+<text>Autonomous agent platform that tailors your master resume to job postings and navigates the full application workflow end to end with intelligent matching and automated tracking.</text>
+<tag>ai agents</tag>
+<tag>next.js</tag>
+<tag>typescript</tag>
+<tag>firebase</tag>
+<status>active</status>
+<year>2026</year>
+<featured>false</featured>
+<image>projects/assets/hireme.svg</image>
+<link>github | https://github.com/LaxExe/HireMe</link>
+<link>demo | https://hireme-henna.vercel.app/</link>

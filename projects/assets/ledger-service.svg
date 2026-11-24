@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520">
+  <rect width="800" height="520" fill="#e7ebed"/>
+  <rect x="70" y="70" width="660" height="380" rx="8" fill="#f4f7f8" stroke="#4a5f68" stroke-width="2"/>
+  <!-- Ledger rows -->
+  <rect x="106" y="112" width="588" height="32" rx="4" fill="#3d525c"/>
+  <text x="126" y="133" fill="#f4f7f8" font-family="'DM Mono', monospace" font-size="12">ACCOUNT ID</text>
+  <text x="310" y="133" fill="#f4f7f8" font-family="'DM Mono', monospace" font-size="12">DEBIT</text>
+  <text x="440" y="133" fill="#f4f7f8" font-family="'DM Mono', monospace" font-size="12">CREDIT</text>
+  <text x="560" y="133" fill="#f4f7f8" font-family="'DM Mono', monospace" font-size="12">STATUS</text>
+  <!-- Data row 1 -->
+  <rect x="106" y="156" width="588" height="38" rx="4" fill="#e3eaed"/>
+  <rect x="126" y="170" width="110" height="12" rx="2" fill="#586f7a"/>
+  <rect x="310" y="170" width="70" height="12" rx="2" fill="#2d6a4f"/>
+  <rect x="440" y="170" width="70" height="12" rx="2" fill="#b0bec5"/>
+  <rect x="560" y="166" width="80" height="18" rx="9" fill="#2d6a4f"/>
+  <text x="578" y="179" fill="#fff" font-family="'DM Mono', monospace" font-size="10">LOCKED</text>
+  <!-- Data row 2 -->
+  <rect x="106" y="204" width="588" height="38" rx="4" fill="#f4f7f8" stroke="#cfd8dc" stroke-width="1"/>
+  <rect x="126" y="218" width="130" height="12" rx="2" fill="#586f7a"/>
+  <rect x="310" y="218" width="70" height="12" rx="2" fill="#b0bec5"/>
+  <rect x="440" y="218" width="70" height="12" rx="2" fill="#b71c1c"/>
+  <rect x="560" y="214" width="80" height="18" rx="9" fill="#4a5f68"/>
+  <text x="574" y="227" fill="#fff" font-family="'DM Mono', monospace" font-size="10">COMMITTED</text>
+  <!-- Balance Card -->
+  <rect x="106" y="258" width="280" height="60" rx="4" fill="#d0dce0"/>
+  <text x="126" y="282" fill="#2a383e" font-family="'DM Mono', monospace" font-size="12">ZERO-SUM VERIFIED</text>
+  <text x="126" y="304" fill="#1b4332" font-family="'DM Mono', monospace" font-weight="600" font-size="16">Δ 0.00000000 (16 THREADS)</text>
+  <!-- Tech chips -->
+  <rect x="414" y="268" width="130" height="26" rx="4" fill="#3d525c"/>
+  <text x="430" y="285" fill="#fff" font-family="'DM Mono', monospace" font-size="11">Java 21 · Spring</text>
+  <rect x="554" y="268" width="140" height="26" rx="4" fill="#586f7a"/>
+  <text x="568" y="285" fill="#fff" font-family="'DM Mono', monospace" font-size="11">PostgreSQL 16</text>
+  <text x="106" y="420" fill="#202b30" font-family="'DM Sans', sans-serif" font-weight="600" font-size="28">double-entry ledger service</text>
+</svg>

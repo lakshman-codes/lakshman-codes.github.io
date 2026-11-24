@@ -1,0 +1,12 @@
+<main>highlights</main>
+<text>Social productivity web app built to keep you motivated — log daily wins, keep streaks alive with friends, and track your habits with an algorithm designed around personal growth.</text>
+<tag>next.js</tag>
+<tag>typescript</tag>
+<tag>supabase</tag>
+<tag>prisma</tag>
+<status>web app</status>
+<year>2026</year>
+<featured>false</featured>
+<image>projects/assets/highlights.svg</image>
+<link>github | https://github.com/LaxExe/HighlightsApp</link>
+<link>live | https://highlights-kappa.vercel.app/home</link>
