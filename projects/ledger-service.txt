@@ -7,6 +7,6 @@
 <status>backend api</status>
 <year>2026</year>
 <featured>true</featured>
-<image>projects/assets/ledger-service.svg</image>
+<image>projects/assets/ledger.png</image>
 <link>github | https://github.com/LaxExe/ledger-service</link>
 <link>docs | https://laxexe.github.io/ledger-service/</link>

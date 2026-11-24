@@ -7,6 +7,6 @@
 <status>active</status>
 <year>2026</year>
 <featured>false</featured>
-<image>projects/assets/hireme.svg</image>
+<image>projects/assets/hireme.png</image>
 <link>github | https://github.com/LaxExe/HireMe</link>
 <link>demo | https://hireme-henna.vercel.app/</link>

@@ -394,7 +394,7 @@
     </section>
 
     <!-- EXPERIENCE -->
-    <section class="experience-section" id="experience">
+    <section class="experience-section hide-details" id="experience" data-hide-details="true">
       <div class="experience-layout">
         <div class="experience-copy">
           <p class="sec-label">// experience</p>
@@ -412,9 +412,12 @@
         <aside class="experience-panel">
           <div class="experience-panel-top">
             <p class="experience-panel-label">employment</p>
-            <p class="about-counter">
-              <span id="experience-total">00</span> roles
-            </p>
+            <div class="experience-panel-actions">
+              <button class="experience-toggle-btn" id="experience-toggle-btn" type="button" aria-pressed="true" data-state="hidden" title="Toggle bullets and tags">show details</button>
+              <p class="about-counter">
+                <span id="experience-total">00</span> roles
+              </p>
+            </div>
           </div>
           <div class="experience-rail">
             <div class="experience-list" id="experience-list"></div>
@@ -753,7 +756,20 @@
               heroCarouselEl.style.display = "none";
               clearInterval(heroCarouselTimer);
             }
-            const hiddenSections = new Set(lines.filter((l) => l !== "disable-hero-carousel"));
+            if (lines.includes("hide-experience-details") || lines.includes("hide-experience-bullets-tags")) {
+              setExperienceDetailsHidden(true);
+            } else if (lines.includes("show-experience-details")) {
+              setExperienceDetailsHidden(false);
+            }
+            const specialDirectives = new Set([
+              "disable-hero-carousel",
+              "hide-experience-details",
+              "hide-experience-bullets",
+              "hide-experience-tags",
+              "hide-experience-bullets-tags",
+              "show-experience-details"
+            ]);
+            const hiddenSections = new Set(lines.filter((l) => !specialDirectives.has(l) && sectionIds.includes(l)));
             applyMasterVisibility(hiddenSections);
           } catch {
             applyMasterVisibility(new Set());
@@ -887,6 +903,9 @@
         }
         function getInitials(label) {
           return normalizeText(label).split(" ").filter(Boolean).slice(0, 2).map((p) => p[0].toUpperCase()).join("");
+        }
+        function parseBooleanTag(value) {
+          return ["true", "yes", "1", "featured"].includes((value || "").trim().toLowerCase());
         }
 
         /* ── SWIPE HELPER ── */
@@ -1094,22 +1113,63 @@
         const experienceList = document.getElementById("experience-list");
         const experienceTotal = document.getElementById("experience-total");
         const experienceEmpty = document.getElementById("experience-empty");
+        const experienceToggleBtn = document.getElementById("experience-toggle-btn");
+        let experienceDetailsHidden = true;
+
+        function setExperienceDetailsHidden(hidden) {
+          experienceDetailsHidden = !!hidden;
+          const expSection = document.getElementById("experience");
+          if (expSection) {
+            expSection.classList.toggle("hide-details", experienceDetailsHidden);
+            expSection.setAttribute("data-hide-details", experienceDetailsHidden ? "true" : "false");
+          }
+          if (experienceList) {
+            experienceList.classList.toggle("hide-details", experienceDetailsHidden);
+          }
+          if (experienceToggleBtn) {
+            experienceToggleBtn.textContent = experienceDetailsHidden ? "show details" : "hide details";
+            experienceToggleBtn.setAttribute("aria-pressed", experienceDetailsHidden ? "true" : "false");
+            experienceToggleBtn.setAttribute("data-state", experienceDetailsHidden ? "hidden" : "visible");
+          }
+          return experienceDetailsHidden;
+        }
+
+        function toggleExperienceDetails(force) {
+          const next = typeof force === "boolean" ? force : !experienceDetailsHidden;
+          return setExperienceDetailsHidden(next);
+        }
+
+        window.toggleExperienceDetails = toggleExperienceDetails;
+        window.hideExperienceDetails = (hide = true) => setExperienceDetailsHidden(hide);
+        window.showExperienceDetails = () => setExperienceDetailsHidden(false);
+
+        if (experienceToggleBtn) {
+          experienceToggleBtn.addEventListener("click", () => {
+            toggleExperienceDetails();
+          });
+        }
 
         function parseExperienceFile(source, filename) {
           const company = getTags(source, "company")[0] || filename.replace(/\.txt$/i, "");
           const linkRaw = getTags(source, "link")[0] || getTags(source, "website")[0] || "";
+          const hideDetailsTag = parseBooleanTag(getTags(source, "hide-details")[0] || getTags(source, "hidedetails")[0] || "");
+          const hideBulletsTag = parseBooleanTag(getTags(source, "hide-bullets")[0] || getTags(source, "hidebullets")[0] || "");
+          const hideTagsTag = parseBooleanTag(getTags(source, "hide-tags")[0] || getTags(source, "hidetags")[0] || "");
           return {
-            role:     getTags(source, "role")[0]     || "role title",
+            role:        getTags(source, "role")[0]     || "role title",
             company,
-            link:     linkRaw ? sanitizeUrl(linkRaw) : "",
-            logo:     sanitizeUrl(getTags(source, "logo")[0]     || ""),
-            date:     getTags(source, "date")[0]     || "",
-            location: getTags(source, "location")[0] || "",
-            summary:  normalizeText(getTags(source, "summary")[0] || ""),
-            bullets:  getTags(source, "bullet").map(normalizeText).filter(Boolean),
-            tags:     getTags(source, "tag").map(normalizeText).filter(Boolean),
-            badge:    getTags(source, "badge")[0]    || getInitials(company),
-            color:    sanitizeColor(getTags(source, "color")[0]  || ""),
+            link:        linkRaw ? sanitizeUrl(linkRaw) : "",
+            logo:        sanitizeUrl(getTags(source, "logo")[0]     || ""),
+            date:        getTags(source, "date")[0]     || "",
+            location:    getTags(source, "location")[0] || "",
+            summary:     normalizeText(getTags(source, "summary")[0] || ""),
+            bullets:     getTags(source, "bullet").map(normalizeText).filter(Boolean),
+            tags:        getTags(source, "tag").map(normalizeText).filter(Boolean),
+            badge:       getTags(source, "badge")[0]    || getInitials(company),
+            color:       sanitizeColor(getTags(source, "color")[0]  || ""),
+            hideDetails: hideDetailsTag,
+            hideBullets: hideBulletsTag,
+            hideTags:    hideTagsTag,
           };
         }
 
@@ -1122,7 +1182,14 @@
             ? `<a href="${escapeHTML(entry.link)}" target="_blank" rel="noopener">${formatExperienceText(entry.company)}</a>`
             : formatExperienceText(entry.company);
 
-          return `<article class="experience-card"${colorAttr}><div class="experience-badge${entry.logo && entry.logo !== "#" ? " experience-badge-logo" : ""}" aria-hidden="true">${
+          const cardClasses = [
+            "experience-card",
+            entry.hideDetails ? "hide-details" : "",
+            entry.hideBullets ? "hide-bullets" : "",
+            entry.hideTags ? "hide-tags" : ""
+          ].filter(Boolean).join(" ");
+
+          return `<article class="${cardClasses}"${colorAttr}><div class="experience-badge${entry.logo && entry.logo !== "#" ? " experience-badge-logo" : ""}" aria-hidden="true">${
             entry.logo && entry.logo !== "#"
               ? `<img src="${escapeHTML(entry.logo)}" alt="" loading="lazy" />`
               : formatExperienceText(entry.badge)
@@ -1143,6 +1210,7 @@
             experienceList.innerHTML = entries.map(buildExperienceCard).join("");
             experienceTotal.textContent = String(entries.length).padStart(2, "0");
             experienceEmpty.classList.toggle("show", entries.length === 0);
+            setExperienceDetailsHidden(experienceDetailsHidden);
           } catch {
             experienceList.innerHTML = ""; experienceTotal.textContent = "00";
             experienceEmpty.textContent = "couldn't load experience entries. check the experience folder and serve the site through a local server.";
@@ -1156,10 +1224,6 @@
         const projectsRailList = document.getElementById("projects-rail-list");
         const projectsFeaturedEmpty = document.getElementById("projects-featured-empty");
         const projectsListEmpty = document.getElementById("projects-list-empty");
-
-        function parseBooleanTag(value) {
-          return ["true", "yes", "1", "featured"].includes((value || "").trim().toLowerCase());
-        }
 
         function parseProjectFile(source, filename) {
           return {

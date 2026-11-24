@@ -6,3 +6,9 @@
 # projects
 # contact
 disable-hero-carousel
+
+# Experience display controls:
+# hide-experience-details (hides all bullets and tags)
+# hide-experience-bullets (hides only bullets)
+# hide-experience-tags (hides only tags)
+hide-experience-details

@@ -7,4 +7,5 @@
 <status>extension</status>
 <year>2026</year>
 <featured>false</featured>
+<image>projects/assets/voice-browser.png</image>
 <link>github | https://github.com/LaxExe/VoiceBasedAgenticBrowserAutomationTool</link>

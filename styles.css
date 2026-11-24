@@ -955,6 +955,32 @@ section[data-display-number]::after {
   gap: 18px;
   margin-bottom: 14px;
 }
+.experience-panel-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.experience-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  color: var(--c4);
+  background: color-mix(in srgb, var(--c1) 32%, transparent);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: color 0.16s ease, border-color 0.16s ease, background 0.16s ease;
+}
+.experience-toggle-btn:hover {
+  color: var(--c5);
+  border-color: var(--c3);
+  background: color-mix(in srgb, var(--c1) 70%, transparent);
+}
 .experience-rail {
   flex: none;
   min-height: 0;
@@ -1105,6 +1131,27 @@ section[data-display-number]::after {
   text-transform: lowercase;
   background: color-mix(in srgb, var(--c1) 84%, var(--bg));
   border-radius: var(--radius-pill);
+}
+/* Experience visibility controls: tag and function toggles */
+.experience-section.hide-details .experience-card-bottom,
+.experience-section[data-hide-details="true"] .experience-card-bottom,
+.experience-list.hide-details .experience-card-bottom,
+.experience-card.hide-details .experience-card-bottom {
+  display: none !important;
+}
+
+.experience-section.hide-bullets .experience-bullets,
+.experience-section[data-hide-bullets="true"] .experience-bullets,
+.experience-list.hide-bullets .experience-bullets,
+.experience-card.hide-bullets .experience-bullets {
+  display: none !important;
+}
+
+.experience-section.hide-tags .experience-tags,
+.experience-section[data-hide-tags="true"] .experience-tags,
+.experience-list.hide-tags .experience-tags,
+.experience-card.hide-tags .experience-tags {
+  display: none !important;
 }
 .experience-empty {
   display: none;

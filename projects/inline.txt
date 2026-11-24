@@ -7,6 +7,6 @@
 <status>shipped</status>
 <year>2026</year>
 <featured>true</featured>
-<image>projects/assets/inline.svg</image>
+<image>projects/assets/inline.png</image>
 <link>github | https://github.com/LaxExe/Inline-MacOS-Win32Build</link>
 <link>website | https://laxexe.github.io/Inline-MacOS-Win32Build/</link>

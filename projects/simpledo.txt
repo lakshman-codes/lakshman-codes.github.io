@@ -6,5 +6,6 @@
 <status>shipped</status>
 <year>2025</year>
 <featured>false</featured>
+<image>projects/assets/simpledo.png</image>
 <link>github | https://github.com/LaxExe/SimpleDo</link>
 <link>live | https://laxexe.github.io/SimpleDo/</link>

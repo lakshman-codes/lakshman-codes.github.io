@@ -7,6 +7,6 @@
 <status>web app</status>
 <year>2026</year>
 <featured>false</featured>
-<image>projects/assets/highlights.svg</image>
+<image>projects/assets/highlights.png</image>
 <link>github | https://github.com/LaxExe/HighlightsApp</link>
 <link>live | https://highlights-kappa.vercel.app/home</link>

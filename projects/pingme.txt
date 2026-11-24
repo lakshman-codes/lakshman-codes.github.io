@@ -7,4 +7,5 @@
 <status>systems</status>
 <year>2025</year>
 <featured>false</featured>
+<image>projects/assets/pingme.png</image>
 <link>github | https://github.com/LaxExe/PingMe</link>

@@ -7,4 +7,5 @@
 <status>ai agent</status>
 <year>2025</year>
 <featured>false</featured>
+<image>projects/assets/service-chat-agent.png</image>
 <link>github | https://github.com/LaxExe/Service-Chat-Agent</link>
