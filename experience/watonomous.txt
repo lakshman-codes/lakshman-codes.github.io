@@ -4,7 +4,7 @@
 <link>https://www.watonomous.ca</link>
 <date>Oct 2026 – Present</date>
 <location>Waterloo, ON</location>
-<summary>WATonomous is the University of Waterloo's autonomous student design team competing in the SAE AutoDrive Challenge II. Working on the perception and navigation stack to build motion planning and vehicle control systems.</summary>
+<summary>Developing the autonomous navigation stack in C++ and ROS 2, focusing on 2D costmaps, motion planning, and vehicle path tracking for Waterloo's AutoDrive Challenge II team.</summary>
 <bullet>Contributed to the autonomous navigation stack in <strong>C++</strong> and <strong>ROS 2</strong>, setting up 2D costmaps, an <strong>A* planner</strong>, and <strong>Pure Pursuit</strong> path tracking tested in <strong>Dockerized Gazebo</strong> simulations while debugging control latency in <strong>Foxglove Studio</strong>.</bullet>
 <tag>autonomy</tag>
 <tag>c++</tag>

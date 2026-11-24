@@ -4,7 +4,7 @@
 <link>https://www.allysolutions.ai</link>
 <date>Jun 2026 – Sep 2026</date>
 <location>Arvada, CO (Remote)</location>
-<summary>Ally Solutions develops healthcare technology solutions. Worked on the eligibility platform building eligibility verification, automated dispatching, and configurable workflow tools across multiple internal services for dialer agents.</summary>
+<summary>Engineered automated dialer agents, rule-based dispatch pipelines, and REST APIs across internal services for healthcare patient eligibility verification.</summary>
 <bullet>Reduced manual coordination by <strong>over 80%</strong> for <strong>2 clinics</strong> by building <strong>Python</strong> dialing agents and rule-based dispatch logic that automate data gathering from insurance providers for patient coverage verification.</bullet>
 <bullet>Achieved <strong>90%+ eligibility accuracy</strong> on test data by building a <strong>Python</strong> rule engine, integrating external <strong>REST APIs</strong>, and using local <strong>LLM inference</strong> to predict procedure coverage from prior patient visits.</bullet>
 <bullet>Developed <strong>REST APIs</strong> and relational <strong>PostgreSQL</strong> schemas to standardize eligibility records across <strong>3 internal services</strong>.</bullet>

@@ -4,7 +4,7 @@
 <link>https://servicedeck.io</link>
 <date>Jun 2025 – Sep 2025</date>
 <location>Toronto, ON</location>
-<summary>ServiceDeck is a platform connecting service businesses with customers. Worked on the backend R&D team building AI-powered automation tools that helped businesses onboard, manage client communications, and process incoming service requests at scale.</summary>
+<summary>Architected automated data processing pipelines, conversational messaging agents, and email classification services on the backend R&D team.</summary>
 <bullet>Reduced manual data processing time by <strong>90% (from 4 hours)</strong> in an <strong>Agile</strong> team by architecting a <strong>Python</strong> pipeline using <strong>Pandas</strong> and <strong>LLM extraction</strong> to clean, validate, and reformat <strong>20k+ customer Excel line records</strong>.</bullet>
 <bullet>Automated lead generation with a conversational agent that scraped client data, handled WhatsApp/SMS via <strong>Twilio</strong>, and booked appointments; deployed on <strong>Firebase Cloud Functions</strong> and tested on <strong>100 trial interactions</strong>.</bullet>
 <bullet>Automated service-request intake with a <strong>Python</strong> email classifier extension for service providers using <strong>LLM prompt engineering</strong> and persisting structured events via <strong>Flask</strong> backend <strong>APIs</strong> to <strong>Supabase</strong>.</bullet>
