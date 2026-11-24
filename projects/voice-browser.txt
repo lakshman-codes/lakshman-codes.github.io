@@ -1,4 +1,4 @@
-<main>voice browser automation</main>
+<main>voice browser automation for ai agents</main>
 <text>Chrome extension that enables hands-free voice browser control, routed through an LLM with parallel background execution mode to execute actions without losing active tab focus.</text>
 <tag>chrome extension</tag>
 <tag>llm</tag>

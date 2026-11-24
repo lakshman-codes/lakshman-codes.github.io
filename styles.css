@@ -1293,11 +1293,12 @@ section[data-display-number]::after {
   border-radius: var(--radius-card);
 }
 .project-card {
-  aspect-ratio: 1 / 1;
-  min-height: 220px;
+  aspect-ratio: auto;
+  height: auto;
+  min-height: 0;
 }
 .project-featured-card {
-  min-height: clamp(250px, 30vh, 340px);
+  min-height: 0;
   height: auto;
   flex: 0 0 auto;
   padding: 22px;
@@ -1356,9 +1357,9 @@ section[data-display-number]::after {
 .project-card-frame {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 18px;
-  height: 100%;
+  height: auto;
 }
 .project-featured-card .project-card-frame {
   transition: filter 0.18s cubic-bezier(0.22, 1, 0.36, 1);
@@ -1417,28 +1418,22 @@ section[data-display-number]::after {
 .project-media {
   position: relative;
   flex: 0 0 auto;
+  width: 100%;
+  height: auto;
   min-height: 0;
-  aspect-ratio: 16 / 7;
   border: 1px solid color-mix(in srgb, var(--c1) 22%, transparent);
-  background:
-    radial-gradient(
-      circle at 22% 20%,
-      color-mix(in srgb, var(--c1) 44%, transparent),
-      transparent 34%
-    ),
-    color-mix(in srgb, var(--bg) 92%, transparent);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
   overflow: hidden;
   border-radius: var(--radius-card);
 }
 .project-featured-card .project-media {
-  aspect-ratio: 16 / 6;
+  height: auto;
 }
 .project-media img {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+  height: auto;
+  object-fit: contain;
 }
 .project-tags {
   display: flex;
@@ -1944,7 +1939,7 @@ section[data-display-number]::after {
   }
   .project-featured-card {
     height: auto;
-    min-height: 240px;
+    min-height: 0;
   }
   .projects-rail {
     height: auto;
@@ -1997,10 +1992,12 @@ section[data-display-number]::after {
     padding: 14px;
   }
   .project-card {
-    min-height: 180px;
+    min-height: 0;
+    height: auto;
   }
   .project-featured-card {
-    min-height: clamp(220px, 24vh, 300px);
+    min-height: 0;
+    height: auto;
   }
   .about-card-inner {
     gap: 14px;
