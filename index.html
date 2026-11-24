@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Lakshman</title>
     <link rel="icon" type="image/svg+xml" href="android-chrome-192x192.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -227,6 +227,41 @@
         flex-direction: column !important;
       }
       #projects .projects-empty { flex-shrink: 0 !important; }
+
+      /* ── MOBILE & TABLET OVERRIDES FOR INLINE LAYOUT RULES ── */
+      @media (max-width: 900px) {
+        .hero {
+          padding: 76px 20px 104px !important;
+          align-items: center !important;
+          gap: 20px !important;
+        }
+        .scroll-hint {
+          bottom: calc(82px + env(safe-area-inset-bottom, 0px)) !important;
+        }
+        #projects.projects-section {
+          width: 100% !important;
+          left: auto !important;
+          margin-left: 0 !important;
+          padding: var(--section-pad-top) 0 var(--section-pad-bottom) !important;
+        }
+        #projects .projects-layout {
+          grid-template-columns: 1fr !important;
+          gap: 32px !important;
+        }
+        #projects .projects-left {
+          padding: 0 20px !important;
+        }
+        #projects .projects-right {
+          padding: 28px 20px 0 !important;
+          border-left: none !important;
+          border-top: 1px solid var(--border, rgba(0,0,0,0.09)) !important;
+          overflow: visible !important;
+        }
+        #projects .projects-rail {
+          flex: none !important;
+          overflow: visible !important;
+        }
+      }
     </style>
   </head>
   <body>
@@ -413,7 +448,6 @@
           <div class="experience-panel-top">
             <p class="experience-panel-label">employment</p>
             <div class="experience-panel-actions">
-              <button class="experience-toggle-btn" id="experience-toggle-btn" type="button" aria-pressed="true" data-state="hidden" title="Toggle bullets and tags">show details</button>
               <p class="about-counter">
                 <span id="experience-total">00</span> roles
               </p>
